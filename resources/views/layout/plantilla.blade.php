@@ -15,7 +15,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="/adminlte/dist/css/adminlte.min.css">
   <!-- SEGAT Custom Theme -->
-  <link rel="stylesheet" href="/css/segat-theme.css">
+  <link rel="stylesheet" href="/general/css/segat-theme.css">
   @yield('estilos')
   
 </head>
@@ -291,7 +291,7 @@
               <div class="carousel-inner rounded-3" style="height: 500px; overflow: hidden;">
                 <!-- Slide 1 -->
                 <div class="carousel-item active" data-bs-interval="5000">
-                  <img src="/img/segat-slide-1.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Gestión de Actividades">
+                  <img src="/general/img/segat-slide-1.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Gestión de Actividades">
                   <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
                     <h5>Gestión de Actividades</h5>
                     <p>Organiza y controla todas tus actividades en un solo lugar</p>
@@ -300,7 +300,7 @@
                 
                 <!-- Slide 2 -->
                 <div class="carousel-item" data-bs-interval="5000">
-                  <img src="/img/segat-slide-2.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Reportes en Tiempo Real">
+                  <img src="/general/img/segat-slide-2.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Reportes en Tiempo Real">
                   <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
                     <h5>Reportes en Tiempo Real</h5>
                     <p>Visualiza el progreso de tus proyectos al instante</p>
@@ -309,7 +309,7 @@
                 
                 <!-- Slide 3 -->
                 <div class="carousel-item" data-bs-interval="5000">
-                  <img src="/img/segat-slide-3.jpeg" class="d-block w-100 h-100 object-fit-cover" alt="Seguimiento de Tareas">
+                  <img src="/general/img/segat-slide-3.jpeg" class="d-block w-100 h-100 object-fit-cover" alt="Seguimiento de Tareas">
                   <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
                     <h5>Seguimiento de Tareas</h5>
                     <p>Mantén a todos tus equipos informados y coordinados</p>
@@ -318,7 +318,7 @@
                 
                 <!-- Slide 4 -->
                 <div class="carousel-item" data-bs-interval="5000">
-                  <img src="/img/segat-slide-4.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Análisis de Productividad">
+                  <img src="/general/img/segat-slide-4.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Análisis de Productividad">
                   <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
                     <h5>Análisis de Productividad</h5>
                     <p>Mejora el rendimiento de tu equipo con datos precisos</p>
@@ -327,7 +327,7 @@
                 
                 <!-- Slide 5 -->
                 <div class="carousel-item" data-bs-interval="5000">
-                  <img src="/img/segat-slide-5.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Integración de Equipos">
+                  <img src="/general/img/segat-slide-5.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Integración de Equipos">
                   <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
                     <h5>Integración de Equipos</h5>
                     <p>Colabora eficientemente con herramientas integradas</p>
