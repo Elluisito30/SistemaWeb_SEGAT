@@ -43,7 +43,6 @@
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
       <li class="nav-item">
-
         <div class="navbar-search-block">
           <form class="form-inline">
             <div class="input-group input-group-sm">
@@ -118,15 +117,15 @@
           <img src="/adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Usuario Administrador</a>
+          <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+          <small class="text-muted">{{ ucfirst(Auth::user()->role) }}</small>
         </div>
       </div>
 
       <!-- Sidebar Menu -->
-  <nav class="mt-2">
+      <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+          
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-leaf"></i>
@@ -139,7 +138,6 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="" class="nav-link">
-                    <!-- route('categoria.index')  +  ese route debe ir entre 2 corchetes = Todo lo anterior en el href-->
                   <i class="fas fa-seedling nav-icon"></i>
                   <p>Áreas Verdes</p>
                 </a>
@@ -147,7 +145,6 @@
               
               <li class="nav-item">
                 <a href="" class="nav-link">
-                    <!-- route('unidades.index')  +  ese route debe ir entre 2 corchetes = Todo lo anterior en el href-->
                   <i class="fas fa-briefcase nav-icon"></i>
                   <p>Actividades de mantenimiento</p>
                 </a>
@@ -155,21 +152,17 @@
 
               <li class="nav-item">
                 <a href="" class="nav-link">
-                    <!-- route('producto.index')  +  ese route debe ir entre 2 corchetes = Todo lo anterior en el href-->
                   <i class="fas fa-clock nav-icon"></i>
                   <p>Programación de actividades</p>
                 </a>
               </li>
               
-
               <li class="nav-item">
                 <a href="" class="nav-link">
-                    <!-- route('empleado.index')  +  ese route debe ir entre 2 corchetes = Todo lo anterior en el href-->
                   <i class="fas fa-file-alt nav-icon"></i>
                   <p>Solicitudes ciudadanas</p>
                 </a>
               </li>
-
             </ul>
           </li>
 
@@ -182,7 +175,6 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="fas fa-receipt nav-icon"></i>
@@ -221,18 +213,23 @@
           </li>
           
           <li class="nav-item">
-            <a href="{{ route('logout') }}" class="nav-link">
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>Cerrar Sesión</p>
             </a>
           </li>
-        </li>
-      </ul>
-    </nav>
-    <!-- /.sidebar-menu -->
-  </div>
-  <!-- /.sidebar -->
-</aside>
+          
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Formulario de Logout (fuera del menú) -->
+  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+  </form>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -352,7 +349,6 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
 
 <!-- Popper JS -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
