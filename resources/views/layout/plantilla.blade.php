@@ -129,9 +129,10 @@
                with font-awesome or any other icon font library -->
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-cogs"></i>
+              <i class="nav-icon fas fa-leaf"></i>
               <p>
-                Configuración
+                Mantenimiento de<br>
+                Áreas Verdes
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -139,93 +140,74 @@
               <li class="nav-item">
                 <a href="" class="nav-link">
                     <!-- route('categoria.index')  +  ese route debe ir entre 2 corchetes = Todo lo anterior en el href-->
-                  <i class="fas fa-tags nav-icon"></i>
-                  <p>Categorías</p>
+                  <i class="fas fa-seedling nav-icon"></i>
+                  <p>Áreas Verdes</p>
                 </a>
               </li>
               
               <li class="nav-item">
                 <a href="" class="nav-link">
                     <!-- route('unidades.index')  +  ese route debe ir entre 2 corchetes = Todo lo anterior en el href-->
-                  <i class="fas fa-building nav-icon"></i>
-                  <p>Departamentos</p>
+                  <i class="fas fa-briefcase nav-icon"></i>
+                  <p>Actividades de mantenimiento</p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="" class="nav-link">
                     <!-- route('producto.index')  +  ese route debe ir entre 2 corchetes = Todo lo anterior en el href-->
-                  <i class="fas fa-tasks nav-icon"></i>
-                  <p>Actividades</p>
+                  <i class="fas fa-clock nav-icon"></i>
+                  <p>Programación de actividades</p>
                 </a>
               </li>
               
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                    <!-- route('cliente.index')  +  ese route debe ir entre 2 corchetes = Todo lo anterior en el href-->
-                  <i class="fas fa-briefcase nav-icon"></i>
-                  <p>Proyectos</p>
-                </a>
-              </li>
 
               <li class="nav-item">
                 <a href="" class="nav-link">
                     <!-- route('empleado.index')  +  ese route debe ir entre 2 corchetes = Todo lo anterior en el href-->
-                  <i class="fas fa-users nav-icon"></i>
-                  <p>Empleados</p>
+                  <i class="fas fa-file-alt nav-icon"></i>
+                  <p>Solicitudes ciudadanas</p>
                 </a>
               </li>
-
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                    <!-- route('usuario.index')  +  ese route debe ir entre 2 corchetes = Todo lo anterior en el href-->
-                  <i class="fas fa-user-cog nav-icon"></i>
-                  <p>Usuarios</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                    <!-- route('venta.index')  +  ese route debe ir entre 2 corchetes = Todo lo anterior en el href-->
-                  <i class="fas fa-clock nav-icon"></i>
-                  <p>Seguimiento</p>
-                </a>
-              </li>              
 
             </ul>
           </li>
 
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chart-line"></i>
+              <i class="nav-icon fas fa-ban"></i>
               <p>
-                Reportes
+                Procedimientos <br> Sancionadores
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
+              
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="fas fa-chart-bar nav-icon"></i>
-                  <p>Productividad</p>
+                  <i class="fas fa-receipt nav-icon"></i>
+                  <p>Infracciones</p>
                 </a>
               </li>
+              
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="fas fa-calendar-check nav-icon"></i>
-                  <p>Cumplimiento</p>
+                  <i class="fas fa-search nav-icon"></i>
+                  <p>Detalle de infracción</p>
                 </a>
               </li>
+              
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="fas fa-stopwatch nav-icon"></i>
-                  <p>Tiempos</p>
+                  <i class="fas fa-money-bill-wave nav-icon"></i>
+                  <p>Fraccionamiento y deudas</p>
                 </a>
               </li>
+              
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="fas fa-file-export nav-icon"></i>
-                  <p>Exportar Datos</p>
+                  <i class="fas fa-stream nav-icon"></i>
+                  <p>Estados del procedimiento</p>
                 </a>
               </li>
             </ul>
