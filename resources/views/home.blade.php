@@ -1,5 +1,84 @@
 @extends('layout.plantilla')
 @section('titulo','Bienvenido')
+
+@section('carrusel')
+<!-- Carrusel SEGAT -->
+<div class="container-fluid mb-4">
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+      <div id="segatCarousel" class="carousel slide carousel-fade shadow-lg" data-bs-ride="carousel" data-bs-interval="5000">
+        <!-- Indicadores del carrusel -->
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#segatCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#segatCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#segatCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <button type="button" data-bs-target="#segatCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+          <button type="button" data-bs-target="#segatCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+        </div>
+        
+        <!-- Items del carrusel -->
+        <div class="carousel-inner rounded-3" style="height: 500px; overflow: hidden;">
+          <!-- Slide 1 -->
+          <div class="carousel-item active" data-bs-interval="5000">
+            <img src="/general/img/segat-slide-1.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Gestión de Actividades">
+            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
+              <h5>Gestión de Actividades</h5>
+              <p>Organiza y controla todas tus actividades en un solo lugar</p>
+            </div>
+          </div>
+          
+          <!-- Slide 2 -->
+          <div class="carousel-item" data-bs-interval="5000">
+            <img src="/general/img/segat-slide-2.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Reportes en Tiempo Real">
+            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
+              <h5>Reportes en Tiempo Real</h5>
+              <p>Visualiza el progreso de tus proyectos al instante</p>
+            </div>
+          </div>
+          
+          <!-- Slide 3 -->
+          <div class="carousel-item" data-bs-interval="5000">
+            <img src="/general/img/segat-slide-3.jpeg" class="d-block w-100 h-100 object-fit-cover" alt="Seguimiento de Tareas">
+            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
+              <h5>Seguimiento de Tareas</h5>
+              <p>Mantén a todos tus equipos informados y coordinados</p>
+            </div>
+          </div>
+          
+          <!-- Slide 4 -->
+          <div class="carousel-item" data-bs-interval="5000">
+            <img src="/general/img/segat-slide-4.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Análisis de Productividad">
+            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
+              <h5>Análisis de Productividad</h5>
+              <p>Mejora el rendimiento de tu equipo con datos precisos</p>
+            </div>
+          </div>
+          
+          <!-- Slide 5 -->
+          <div class="carousel-item" data-bs-interval="5000">
+            <img src="/general/img/segat-slide-5.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Integración de Equipos">
+            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
+              <h5>Integración de Equipos</h5>
+              <p>Colabora eficientemente con herramientas integradas</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Controles del carrusel -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#segatCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#segatCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Siguiente</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+@endsection
+
 @section('contenido')
 <div class="container-fluid">
     <div class="row mb-4">
