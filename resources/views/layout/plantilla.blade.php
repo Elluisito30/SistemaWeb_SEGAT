@@ -116,11 +116,11 @@
           </li>
           
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-bell"></i>
-              <p>Notificaciones</p>
+            <a href="{{ route('trabajador.index')}}" class="nav-link">
+              <i class="nav-icon fas fa-id-card"></i>
+              <p>Registro de Trabajadores</p>
             </a>
-          </li>
+          </li>          
           
           <li class="nav-item">
             <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">

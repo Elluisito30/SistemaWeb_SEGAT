@@ -82,7 +82,7 @@ class InfraccionController extends Controller
             // Datos del detalle de infracción
             'lugarOcurrencia' => 'required|max:50',
             'fechaHora' => 'required|date',
-            'tipoInfraccion' => 'required|exists:tipoinfracccion,tipoInfraccion',
+            'tipoInfraccion' => 'required|exists:tipoinfraccion,tipoInfraccion',
             
             // Datos de la infracción
             'montoMulta' => 'required|numeric|min:0|max:99999999.99',

@@ -77,3 +77,10 @@ Route::get('/infraccion/{id}/confirmar', [InfraccionController::class, 'confirma
 Route::get('/cancelar',function(){
     return redirect()->route('infraccion.index')->with('datos','Acción cancelada  !!!');
 })->name('infraccion.cancelar');
+
+// Ruta para Trabajador
+Route::Resource('/trabajador', TrabajadorController::class);
+Route::get('/trabajador/{id}/confirmar', [TrabajadorController::class, 'confirmar'])->name('trabajador.confirmar');
+Route::get('/cancelar',function(){
+    return redirect()->route('trabajador.index')->with('datos','Acción cancelada  !!!');
+})->name('trabajador.cancelar');
