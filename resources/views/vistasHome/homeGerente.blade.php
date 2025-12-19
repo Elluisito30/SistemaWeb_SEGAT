@@ -1,46 +1,250 @@
 @extends('layout.plantilla')
 
-@section('titulo', 'Dashboard Gerente')
+@section('titulo', 'Home Gerencia')
 
 @section('contenido')
-<section class="content">
-  <div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="card welcome-card shadow-lg border-0" style="max-width: 800px; width: 100%; background: #e3f2fd;">
-      <div class="card-body d-flex flex-wrap justify-content-center text-center p-4">
+<section class="content pt-4">
+  <div class="container-fluid">
+    
+    <!-- Card contenedor general -->
+    <div class="card border-0 shadow-sm" style="border-radius: 20px;">
+      <div class="card-body p-4">
         
-        <!-- Texto de bienvenida -->
-        <div class="welcome-text w-100">
-          <h3 class="text-primary font-weight-bold">¡BIENVENIDO A LA SECCIÓN GERENCIA!</h3>
-          <p class="text-dark font-weight-bold mt-3" style="text-align: justify;">
-            Desde esta sección podrás supervisar y gestionar todas las operaciones municipales del 
-            <span class="font-weight-bold" style="color: #1976d2;">Sistema SEGAT</span>, incluyendo la aprobación de solicitudes ciudadanas,
-            la administración de áreas verdes, la supervisión de trabajadores y el control general de infracciones y servicios municipales.
-          </p>
-          <p class="text-muted font-weight-bold" style="text-align: justify;">
-            Utiliza el panel lateral para acceder a las funciones de gestión. Esta interfaz te permitirá
-            coordinar eficientemente todas las actividades municipales, manteniendo un control
-            organizado de solicitudes, trabajadores, áreas verdes y el seguimiento de servicios prestados a los ciudadanos.
-          </p>
+        <!-- Hero Section compacto -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="card border-0 shadow-sm" style="border-radius: 15px; background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);">
+              <div class="card-body py-3 px-4">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div class="text-white">
+                    <h4 class="font-weight-bold mb-1">
+                      <i class="fas fa-user-shield mr-2"></i>Panel de Gerencia
+                    </h4>
+                    <p class="mb-0" style="font-size: 0.9rem; opacity: 0.9;">
+                      Bienvenido, <strong>{{ Auth::user()->name }}</strong> | 
+                      <i class="fas fa-calendar-alt ml-2 mr-1"></i>{{ date('d/m/Y') }} 
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Estadísticas rápidas -->
-        <div class="row w-100 mt-3">
+        <!-- Tarjetas de estadísticas -->
+        <div class="row mb-4">
+          <!-- Solicitudes Pendientes -->
+          <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card border-0 shadow-sm h-100 card-hover" style="border-radius: 15px; transition: transform 0.3s;">
+              <div class="card-body text-center p-4">
+                <div class="icon-circle mx-auto mb-3" 
+                     style="width: 70px; height: 70px; background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                  <i class="fas fa-file-signature fa-2x text-white"></i>
+                </div>
+                <h3 class="font-weight-bold mb-1" style="color: #16a34a;">24</h3>
+                <h6 class="font-weight-bold text-muted mb-2">Solicitudes Pendientes</h6>
+                <small class="text-muted">Requieren aprobación</small>
+              </div>
+              <div class="card-footer bg-transparent border-0 text-center pb-3">
+                <a href="#" class="btn btn-sm btn-outline-success rounded-pill px-4">
+                  <i class="fas fa-eye mr-2"></i>Ver Detalles
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Áreas Verdes -->
+          <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card border-0 shadow-sm h-100 card-hover" style="border-radius: 15px; transition: transform 0.3s;">
+              <div class="card-body text-center p-4">
+                <div class="icon-circle mx-auto mb-3" 
+                     style="width: 70px; height: 70px; background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                  <i class="fas fa-tree fa-2x text-white"></i>
+                </div>
+                <h3 class="font-weight-bold mb-1" style="color: #22c55e;">48</h3>
+                <h6 class="font-weight-bold text-muted mb-2">Áreas Verdes</h6>
+                <small class="text-muted">Bajo gestión municipal</small>
+              </div>
+              <div class="card-footer bg-transparent border-0 text-center pb-3">
+                <a href="#" class="btn btn-sm btn-outline-success rounded-pill px-4">
+                  <i class="fas fa-map-marked-alt mr-2"></i>Ver Áreas
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trabajadores Activos -->
+          <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card border-0 shadow-sm h-100 card-hover" style="border-radius: 15px; transition: transform 0.3s;">
+              <div class="card-body text-center p-4">
+                <div class="icon-circle mx-auto mb-3" 
+                     style="width: 70px; height: 70px; background: linear-gradient(135deg, #84cc16 0%, #65a30d 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                  <i class="fas fa-users fa-2x text-white"></i>
+                </div>
+                <h3 class="font-weight-bold mb-1" style="color: #84cc16;">32</h3>
+                <h6 class="font-weight-bold text-muted mb-2">Trabajadores Activos</h6>
+                <small class="text-muted">Personal municipal</small>
+              </div>
+              <div class="card-footer bg-transparent border-0 text-center pb-3">
+                <a href="#" class="btn btn-sm btn-outline-success rounded-pill px-4">
+                  <i class="fas fa-users-cog mr-2"></i>Gestionar
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Infracciones -->
+          <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card border-0 shadow-sm h-100 card-hover" style="border-radius: 15px; transition: transform 0.3s;">
+              <div class="card-body text-center p-4">
+                <div class="icon-circle mx-auto mb-3" 
+                     style="width: 70px; height: 70px; background: linear-gradient(135deg, #15803d 0%, #14532d 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                  <i class="fas fa-exclamation-triangle fa-2x text-white"></i>
+                </div>
+                <h3 class="font-weight-bold mb-1" style="color: #15803d;">12</h3>
+                <h6 class="font-weight-bold text-muted mb-2">Infracciones Activas</h6>
+                <small class="text-muted">Pendientes de resolución</small>
+              </div>
+              <div class="card-footer bg-transparent border-0 text-center pb-3">
+                <a href="#" class="btn btn-sm btn-outline-success rounded-pill px-4">
+                  <i class="fas fa-clipboard-list mr-2"></i>Revisar
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Funciones Principales -->
+        <div class="row mb-4">
           <div class="col-12">
-            <div class="alert alert-info">
-              <h6><i class="fas fa-info-circle"></i> Funciones Principales:</h6>
-              <ul class="mb-0 text-left">
-                <li><strong>Aprobar Solicitudes:</strong> Revisa y aprueba las solicitudes ciudadanas</li>
-                <li><strong>Gestionar Áreas Verdes:</strong> Administra los espacios verdes del municipio</li>
-                <li><strong>Supervisar Trabajadores:</strong> Monitorea el desempeño del personal municipal</li>
-                <li><strong>Control de Infracciones:</strong> Visualiza y gestiona las infracciones registradas</li>
-                <li><strong>Reportes Generales:</strong> Accede a estadísticas y reportes del sistema</li>
-              </ul>
+            <div class="card border-0 shadow-sm" style="border-radius: 15px;">
+              <div class="card-header bg-white border-0 pt-4 pb-3">
+                <h5 class="font-weight-bold mb-0">
+                  <i class="fas fa-tasks mr-2" style="color: #16a34a;"></i>Funciones Principales
+                </h5>
+              </div>
+              <div class="card-body p-4">
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <div class="d-flex align-items-start">
+                      <div class="icon-box mr-3" 
+                           style="width: 50px; height: 50px; background: #dcfce7; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-check-circle fa-lg" style="color: #16a34a;"></i>
+                      </div>
+                      <div>
+                        <h6 class="font-weight-bold mb-1">Aprobar Solicitudes</h6>
+                        <p class="text-muted small mb-0">Revisa y aprueba las solicitudes ciudadanas</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <div class="d-flex align-items-start">
+                      <div class="icon-box mr-3" 
+                           style="width: 50px; height: 50px; background: #d1fae5; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-leaf fa-lg" style="color: #22c55e;"></i>
+                      </div>
+                      <div>
+                        <h6 class="font-weight-bold mb-1">Gestionar Áreas Verdes</h6>
+                        <p class="text-muted small mb-0">Administra los espacios verdes del municipio</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <div class="d-flex align-items-start">
+                      <div class="icon-box mr-3" 
+                           style="width: 50px; height: 50px; background: #ecfccb; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-user-check fa-lg" style="color: #84cc16;"></i>
+                      </div>
+                      <div>
+                        <h6 class="font-weight-bold mb-1">Supervisar Trabajadores</h6>
+                        <p class="text-muted small mb-0">Monitorea el desempeño del personal</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <div class="d-flex align-items-start">
+                      <div class="icon-box mr-3" 
+                           style="width: 50px; height: 50px; background: #f0fdf4; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-ban fa-lg" style="color: #15803d;"></i>
+                      </div>
+                      <div>
+                        <h6 class="font-weight-bold mb-1">Control de Infracciones</h6>
+                        <p class="text-muted small mb-0">Visualiza y gestiona las infracciones</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <div class="d-flex align-items-start">
+                      <div class="icon-box mr-3" 
+                           style="width: 50px; height: 50px; background: #dcfce7; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-chart-bar fa-lg" style="color: #16a34a;"></i>
+                      </div>
+                      <div>
+                        <h6 class="font-weight-bold mb-1">Reportes Generales</h6>
+                        <p class="text-muted small mb-0">Accede a estadísticas y reportes del sistema</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <div class="d-flex align-items-start">
+                      <div class="icon-box mr-3" 
+                           style="width: 50px; height: 50px; background: #d1fae5; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-cogs fa-lg" style="color: #22c55e;"></i>
+                      </div>
+                      <div>
+                        <h6 class="font-weight-bold mb-1">Configuración</h6>
+                        <p class="text-muted small mb-0">Gestiona parámetros del sistema</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Información del Sistema -->
+        <div class="row">
+          <div class="col-12">
+            <div class="card border-0 shadow-sm" style="border-radius: 15px; background: linear-gradient(135deg, #dcfce715 0%, #16a34a15 100%);">
+              <div class="card-body p-4">
+                <div class="d-flex align-items-center">
+                  <div class="mr-4">
+                    <i class="fas fa-info-circle fa-3x" style="color: #16a34a;"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-weight-bold mb-2" style="color: #16a34a;">Sistema de Gestión Ambiental de Trujillo</h5>
+                    <p class="text-muted mb-2">
+                      Este módulo de gerencia te permite supervisar de manera eficiente todas las operaciones municipales del sistema SEGAT, 
+                      asegurando un control organizado de solicitudes ciudadanas, personal municipal, áreas verdes e infracciones registradas.
+                    </p>
+                    <p class="text-muted mb-0 small">
+                      <i class="fas fa-lightbulb mr-2" style="color: #84cc16;"></i>
+                      <strong>Tip:</strong> Utiliza el menú lateral para acceder rápidamente a todas las funciones disponibles.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
       </div>
     </div>
+    <!-- Fin card contenedor -->
+
   </div>
 </section>
+
+<style>
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(22, 163, 74, 0.2) !important;
+}
+</style>
 @endsection
