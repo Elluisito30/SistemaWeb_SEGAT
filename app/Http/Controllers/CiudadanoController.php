@@ -8,6 +8,6 @@ class CiudadanoController extends Controller
 {
     public function dashboard()
     {
-        return view('mantenedor.vistasHome.homeCiudadano');
+        return view('vistasHome.homeCiudadano');
     }
 }

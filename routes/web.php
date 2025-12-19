@@ -69,7 +69,9 @@ Route::get('/home', function () {   // Al entrar en la ruta Home redirige al hom
 })->name('home')->middleware('auth');
 
 
-//Rutas para infracción
+// -----------------------------
+// RUTAS PARA INFRACCIÓN
+// -----------------------------
 Route::Resource('/infraccion', InfraccionController::class);
 Route::get('/infraccion/{id}/confirmar', [InfraccionController::class, 'confirmar'])->name('infraccion.confirmar');
 Route::get('/cancelar',function(){
