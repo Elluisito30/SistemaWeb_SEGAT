@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RegistroController; 
 use App\Http\Controllers\GerenteController;
 use App\Http\Controllers\TrabajadorController;
 use App\Http\Controllers\CiudadanoController;
@@ -12,6 +13,12 @@ use App\Http\Controllers\CiudadanoController;
 // -----------------------------------
 Route::get('/', [UserController::class, 'showLogin'])->name('login');
 Route::post('/identificacion', [UserController::class, 'verificalogin'])->name('identificacion');
+
+// --------------------
+// RUTA PARA REGISTRARSE
+// --------------------
+Route::get('/registrarse', [RegistroController::class, 'showRegistrationForm'])->name('registro');
+Route::post('/registrarse', [RegistroController::class, 'verificarRegistro'])->name('registrarse');
 
 // --------------------
 // RUTA PARA CERRAR SESIÓN

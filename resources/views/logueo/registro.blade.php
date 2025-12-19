@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="utf-8"/>
-    <title>SEGAT - Inicio de Sesión</title>
+    <title>SEGAT - Registro de Ciudadano</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 
@@ -12,24 +12,59 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Tu CSS personalizado -->
+    <!-- Tu CSS personalizado (el mismo del login) -->
     <link rel="stylesheet" href="{{ asset('login/login.css') }}">
 
 </head>
-<body>
+<body class="registro-page">  <!-- ← AGREGAR ESTA CLASE -->
     <div class="login-container">
         <div class="login-card">
             <div class="card-header">
                 <div class="logo-container">
                     <img src="{{ asset('login/img/segat_Logo.png') }}" alt="SEGAT Logo">
                 </div>
-                <h4 class="card-title">INICIO DE SESIÓN</h4>
+                <h4 class="card-title">REGISTRO DE CIUDADANO</h4>
             </div>
 
             <div class="card-body">
-                <form method="POST" action="{{ route('identificacion') }}">                     
+                <!-- Mensajes de error -->
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-custom">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('registrarse') }}">                     
                     @csrf  
 
+                    <!-- Nombre -->
+                    <div class="form-group">
+                        <label class="form-label" for="name">Nombre Completo</label>
+                        <div class="input-wrapper">
+                            <input 
+                                class="form-control @error('name') is-invalid @enderror"  
+                                type="text"  
+                                placeholder="Ingrese su nombre completo"
+                                id="name"
+                                name="name"
+                                value="{{ old('name') }}"
+                                required
+                                autofocus
+                            />
+                            <i class="fas fa-user input-icon"></i>
+                            @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Email -->
                     <div class="form-group">
                         <label class="form-label" for="email">Correo Electrónico</label>
                         <div class="input-wrapper">
@@ -42,7 +77,6 @@
                                 value="{{ old('email') }}"
                                 required
                                 autocomplete="email"
-                                autofocus
                             />
                             <i class="fas fa-envelope input-icon"></i>
                             @error('email')
@@ -53,17 +87,18 @@
                         </div>
                     </div>
 
+                    <!-- Contraseña -->
                     <div class="form-group">
                         <label class="form-label" for="password">Contraseña</label>
                         <div class="input-wrapper">
                             <input 
                                 class="form-control @error('password') is-invalid @enderror" 
                                 type="password" 
-                                placeholder="••••••••"
+                                placeholder="Mínimo 8 caracteres"
                                 id="password" 
                                 name="password"
                                 required
-                                autocomplete="current-password"
+                                autocomplete="new-password"
                             />
                             <i class="fas fa-lock input-icon"></i>
                             @error('password')
@@ -74,21 +109,34 @@
                         </div>
                     </div>
 
+                    <!-- Confirmar Contraseña -->
+                    <div class="form-group">
+                        <label class="form-label" for="password_confirmation">Confirmar Contraseña</label>
+                        <div class="input-wrapper">
+                            <input 
+                                class="form-control" 
+                                type="password" 
+                                placeholder="Repita su contraseña"
+                                id="password_confirmation" 
+                                name="password_confirmation"
+                                required
+                                autocomplete="new-password"
+                            />
+                            <i class="fas fa-lock input-icon"></i>
+                        </div>
+                    </div>
+
                     <hr class="divider" />
 
                     <button type="submit" class="btn-login">
-                        <i class="fas fa-sign-in-alt me-2"></i> Ingresar
+                        <i class="fas fa-user-check me-2"></i> Registrarse
                     </button>
                 </form>
 
-                <a href="{{ route('registro') }}" class="btn-login btn-register-green">
-                    <i class="fas fa-user-plus me-2"></i> Registrarse 
+                <a href="{{ route('login') }}" class="btn-login btn-register-green">
+                    <i class="fas fa-arrow-left me-2"></i> Volver al Inicio de Sesión
                 </a>
             </div>
-        </div>
-
-        <div class="copyright">
-            <i class="far fa-copyright"></i> 2025 Servicio de Gestión Ambiental de Trujillo (SEGAT)
         </div>
     </div>
 

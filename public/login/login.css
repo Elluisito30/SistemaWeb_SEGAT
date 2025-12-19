@@ -35,7 +35,7 @@ body::before {
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 450px;
+    max-width: 660px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -65,7 +65,7 @@ body::before {
 
 .card-header {
     background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-    padding: 40px 30px;
+    padding: 15px 10px;
     text-align: center;
 }
 
@@ -202,6 +202,114 @@ body::before {
     box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.1);
 }
 
+.btn-register-green {
+    margin-top: 15px;
+    text-decoration: none !important;
+    display: block;
+    text-align: center;
+}
+
+.btn-register-green:hover {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.btn-register-green:focus,
+.btn-register-green:active,
+.btn-register-green:visited {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.alert-custom {
+    background-color: #fee2e2;
+    border: 2px solid #dc3545;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #dc3545;
+}
+
+.alert-custom ul {
+    list-style-position: inside;
+    padding-left: 0;
+}
+
+.alert-custom li {
+    margin-bottom: 5px;
+}
+
+/* ========================================
+   ESTILOS ESPECÍFICOS PARA REGISTRO
+   ======================================== */
+
+body.registro-page .login-container {
+    max-width: 660px;
+    gap: 15px;
+}
+
+body.registro-page .card-header {
+    padding: 15px 10px;
+}
+
+body.registro-page .card-body {
+    padding: 25px 20px;
+}
+
+body.registro-page .logo-container {
+    margin-bottom: 15px;
+}
+
+body.registro-page .logo-container img {
+    max-width: 140px;
+}
+
+body.registro-page .card-title {
+    font-size: 20px;
+}
+
+body.registro-page .form-group {
+    margin-bottom: 18px;
+}
+
+body.registro-page .form-label {
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+body.registro-page .form-control {
+    padding: 12px 12px 12px 40px;
+    font-size: 14px;
+    border-radius: 10px;
+}
+
+body.registro-page .input-icon {
+    left: 12px;
+    font-size: 16px;
+}
+
+body.registro-page .btn-login {
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 10px;
+}
+
+body.registro-page .divider {
+    margin: 5px 0;
+}
+
+body.registro-page .btn-register-green {
+    margin-top: 12px;
+}
+
+body.registro-page .copyright {
+    font-size: 12px;
+    padding: 12px 15px;
+    border-radius: 10px;
+}
+
+/* Responsive */
 @media (max-width: 576px) {
     .card-body {
         padding: 30px 20px;
