@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -15,10 +15,10 @@ class UserController extends Controller
 
     public function verificalogin(Request $request)
     {
-        $data = $request->validate(
+        $credentials = $request->validate(
             [
-                'email' => 'required|email',
-                'password' => 'required'
+                'email' => ['required', 'email'],
+                'password' => ['required'],
             ],
             [
                 'email.required' => 'Ingrese correo',
@@ -27,19 +27,33 @@ class UserController extends Controller
             ]
         );
 
-        if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('home');
+            $user = Auth::user();
+            
+            // Redirigir según el rol
+            switch ($user->role) {
+                case 'gerente':
+                    return redirect()->route('gerente.dashboard');
+                case 'trabajador':
+                    return redirect()->route('trabajador.dashboard');
+                case 'ciudadano':
+                    return redirect()->route('ciudadano.dashboard');
+                default:
+                    return redirect()->route('login');
+            }
         }
 
         return back()->withErrors([
-            'email' => 'Credenciales incorrectas'
+            'email' => 'Email o contraseña incorrectos',
         ])->withInput();
     }
 
-    public function salir()
+    public function salir(Request $request)
     {
         Auth::logout();
-        return redirect('/');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login')->with('mensaje', 'Sesión cerrada correctamente');
     }
 }
