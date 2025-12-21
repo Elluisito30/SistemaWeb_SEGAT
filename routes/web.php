@@ -7,7 +7,6 @@ use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\GerenteController;
 use App\Http\Controllers\TrabajadorController;
 use App\Http\Controllers\CiudadanoController;
-use App\Http\Controllers\InfraccionController;
 
 // -----------------------------------
 // RUTAS DE LOGIN
@@ -68,15 +67,6 @@ Route::get('/home', function () {   // Al entrar en la ruta Home redirige al hom
     return redirect()->route('login');
 })->name('home')->middleware('auth');
 
-
-// -----------------------------
-// RUTAS PARA INFRACCIÓN
-// -----------------------------
-Route::Resource('/infraccion', InfraccionController::class);
-Route::get('/infraccion/{id}/confirmar', [InfraccionController::class, 'confirmar'])->name('infraccion.confirmar');
-Route::get('/cancelar',function(){
-    return redirect()->route('infraccion.index')->with('datos','Acción cancelada  !!!');
-})->name('infraccion.cancelar');
 
 // Ruta para Trabajador
 Route::Resource('/trabajador', TrabajadorController::class);

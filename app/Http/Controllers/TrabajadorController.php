@@ -21,12 +21,12 @@ class TrabajadorController extends Controller
             ->orWhere('apellidos', 'like', '%'.$buscarpor.'%')
             ->paginate($this::PAGINATION);
 
-        return view('mantenedor.trabajador.index', compact('trabajadores', 'buscarpor'));
+        return view('mantenedor.gerente.trabajador.index', compact('trabajadores', 'buscarpor'));
     }
 
     public function create()
     {
-        return view('mantenedor.trabajador.create');
+        return view('mantenedor.gerente.trabajador.create');
     }
 
     public function store(Request $request)
@@ -80,7 +80,7 @@ class TrabajadorController extends Controller
     public function edit(string $id)
     {
         $trabajador = Trabajador::findOrFail($id);
-        return view('mantenedor.trabajador.edit', compact('trabajador'));
+        return view('mantenedor.gerente.trabajador.edit', compact('trabajador'));
     }
 
     public function update(Request $request, string $id)
@@ -134,7 +134,7 @@ class TrabajadorController extends Controller
     public function confirmar($id)
     {
         $trabajador = Trabajador::findOrFail($id);
-        return view('mantenedor.trabajador.confirmar', compact('trabajador'));
+        return view('mantenedor.gerente.trabajador.confirmar', compact('trabajador'));
     }
 
     public function destroy(string $id)

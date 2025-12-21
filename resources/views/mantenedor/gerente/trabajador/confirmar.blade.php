@@ -1,4 +1,4 @@
-@extends('layout.plantilla')
+@extends('layout.plantillaGerente')
 @section('titulo','Confirmar Eliminación')
 @section('contenido')
     <div class="container">

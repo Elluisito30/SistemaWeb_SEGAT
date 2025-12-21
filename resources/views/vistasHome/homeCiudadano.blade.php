@@ -1,4 +1,4 @@
-@extends('layout.plantilla')
+@extends('layout.plantillaCiudadano')
 
 @section('titulo', 'Home Ciudadano')
 
