@@ -1,8 +1,8 @@
+
 @extends('layout.plantillaCiudadano')
-
 @section('titulo', 'Home Ciudadano')
-
 @section('contenido')
+
 <section class="content pt-4">
   <div class="container-fluid">
     
@@ -23,6 +23,32 @@
                     <p class="mb-0" style="font-size: 0.9rem; opacity: 0.9;">
                       Bienvenido, <strong>{{ Auth::user()->name }}</strong> | 
                       <i class="fas fa-calendar-alt ml-2 mr-1"></i>{{ date('d/m/Y') }} 
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Información del Sistema -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="card border-0 shadow-sm" style="border-radius: 15px; background: linear-gradient(135deg, #dcfce715 0%, #16a34a15 100%);">
+              <div class="card-body p-4">
+                <div class="d-flex align-items-center">
+                  <div class="mr-4">
+                    <i class="fas fa-info-circle fa-3x" style="color: #16a34a;"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-weight-bold mb-2" style="color: #16a34a;">Portal del Ciudadano - Sistema SEGAT</h5>
+                    <p class="text-muted mb-2">
+                      Desde este portal podrás realizar todas tus gestiones municipales de forma rápida y sencilla. 
+                      Crea solicitudes de servicios, consulta el estado de tus trámites, revisa tus infracciones y realiza pagos en línea.
+                    </p>
+                    <p class="text-muted mb-0 small">
+                      <i class="fas fa-lightbulb mr-2" style="color: #84cc16;"></i>
+                      <strong>Tip:</strong> Mantén actualizados tus datos de contacto para recibir notificaciones sobre el estado de tus trámites.
                     </p>
                   </div>
                 </div>
@@ -176,7 +202,7 @@
         </div>
 
         <!-- Funciones Disponibles -->
-        <div class="row mb-4">
+        <div class="row">
           <div class="col-12">
             <div class="card border-0 shadow-sm" style="border-radius: 15px;">
               <div class="card-header bg-white border-0 pt-4 pb-3">
@@ -262,32 +288,6 @@
                         <p class="text-muted small mb-0">Mantente informado de tus trámites</p>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Información del Sistema -->
-        <div class="row">
-          <div class="col-12">
-            <div class="card border-0 shadow-sm" style="border-radius: 15px; background: linear-gradient(135deg, #dcfce715 0%, #16a34a15 100%);">
-              <div class="card-body p-4">
-                <div class="d-flex align-items-center">
-                  <div class="mr-4">
-                    <i class="fas fa-info-circle fa-3x" style="color: #16a34a;"></i>
-                  </div>
-                  <div>
-                    <h5 class="font-weight-bold mb-2" style="color: #16a34a;">Portal Ciudadano - Sistema SEGAT</h5>
-                    <p class="text-muted mb-2">
-                      Desde este portal podrás realizar todas tus gestiones municipales de forma rápida y sencilla. 
-                      Crea solicitudes de servicios, consulta el estado de tus trámites, revisa tus infracciones y realiza pagos en línea.
-                    </p>
-                    <p class="text-muted mb-0 small">
-                      <i class="fas fa-lightbulb mr-2" style="color: #84cc16;"></i>
-                      <strong>Tip:</strong> Mantén actualizados tus datos de contacto para recibir notificaciones sobre el estado de tus trámites.
-                    </p>
                   </div>
                 </div>
               </div>

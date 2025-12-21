@@ -1,6 +1,8 @@
+
 @extends('layout.plantillaGerente')
 @section('titulo','Confirmar Eliminación')
 @section('contenido')
+
     <div class="container">
 
         <h1>¿Desea eliminar el siguiente trabajador?</h1>

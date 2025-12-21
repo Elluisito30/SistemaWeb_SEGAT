@@ -1,8 +1,8 @@
+
 @extends('layout.plantillaTrabajador')
-
 @section('titulo', 'Home Trabajador')
-
 @section('contenido')
+
 <section class="content pt-4">
   <div class="container-fluid">
     
@@ -18,7 +18,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div class="text-white">
                     <h4 class="font-weight-bold mb-1">
-                      <i class="fas fa-hard-hat mr-2"></i>Panel de Trabajador
+                      <i class="fas fa-hard-hat mr-2"></i>Portal de Trabajador
                     </h4>
                     <p class="mb-0" style="font-size: 0.9rem; opacity: 0.9;">
                       Bienvenido, <strong>{{ Auth::user()->name }}</strong> | 
@@ -28,6 +28,32 @@
                   </div>
                   <div class="text-white d-none d-md-block">
                     <i class="fas fa-tools" style="font-size: 50px; opacity: 0.2;"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Información del Sistema -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="card border-0 shadow-sm" style="border-radius: 15px; background: linear-gradient(135deg, #dcfce715 0%, #16a34a15 100%);">
+              <div class="card-body p-4">
+                <div class="d-flex align-items-center">
+                  <div class="mr-4">
+                    <i class="fas fa-info-circle fa-3x" style="color: #16a34a;"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-weight-bold mb-2" style="color: #16a34a;">Panel de Trabajador - Sistema SEGAT</h5>
+                    <p class="text-muted mb-2">
+                      Desde este panel podrás realizar tus labores diarias como trabajador municipal. 
+                      Registra infracciones, atiende solicitudes asignadas, reporta actividades realizadas y gestiona servicios en áreas verdes.
+                    </p>
+                    <p class="text-muted mb-0 small">
+                      <i class="fas fa-lightbulb mr-2" style="color: #84cc16;"></i>
+                      <strong>Tip:</strong> Mantén actualizado el estado de tus tareas para una mejor coordinación con el equipo.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -266,32 +292,6 @@
                         <p class="text-muted small mb-0">Revisa tus actividades anteriores</p>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Información del Sistema -->
-        <div class="row">
-          <div class="col-12">
-            <div class="card border-0 shadow-sm" style="border-radius: 15px; background: linear-gradient(135deg, #dcfce715 0%, #16a34a15 100%);">
-              <div class="card-body p-4">
-                <div class="d-flex align-items-center">
-                  <div class="mr-4">
-                    <i class="fas fa-info-circle fa-3x" style="color: #16a34a;"></i>
-                  </div>
-                  <div>
-                    <h5 class="font-weight-bold mb-2" style="color: #16a34a;">Panel de Trabajador - Sistema SEGAT</h5>
-                    <p class="text-muted mb-2">
-                      Desde este panel podrás realizar tus labores diarias como trabajador municipal. 
-                      Registra infracciones, atiende solicitudes asignadas, reporta actividades realizadas y gestiona servicios en áreas verdes.
-                    </p>
-                    <p class="text-muted mb-0 small">
-                      <i class="fas fa-lightbulb mr-2" style="color: #84cc16;"></i>
-                      <strong>Tip:</strong> Mantén actualizado el estado de tus tareas para una mejor coordinación con el equipo.
-                    </p>
                   </div>
                 </div>
               </div>

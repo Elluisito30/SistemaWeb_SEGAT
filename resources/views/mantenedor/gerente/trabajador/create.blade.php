@@ -1,3 +1,4 @@
+
 @extends('layout.plantillaGerente')
 @section('titulo','Nuevo Trabajador')
 @section('contenido')

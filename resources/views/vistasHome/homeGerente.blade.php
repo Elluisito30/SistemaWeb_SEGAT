@@ -1,8 +1,8 @@
+
 @extends('layout.plantillaGerente')
-
 @section('titulo', 'Home Gerencia')
-
 @section('contenido')
+
 <section class="content pt-4">
   <div class="container-fluid">
     
@@ -18,11 +18,37 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div class="text-white">
                     <h4 class="font-weight-bold mb-1">
-                      <i class="fas fa-user-shield mr-2"></i>Panel de Gerencia
+                      <i class="fas fa-user-shield mr-2"></i>Portal Gerencial
                     </h4>
                     <p class="mb-0" style="font-size: 0.9rem; opacity: 0.9;">
                       Bienvenido, <strong>{{ Auth::user()->name }}</strong> | 
                       <i class="fas fa-calendar-alt ml-2 mr-1"></i>{{ date('d/m/Y') }} 
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Información del Sistema -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="card border-0 shadow-sm" style="border-radius: 15px; background: linear-gradient(135deg, #dcfce715 0%, #16a34a15 100%);">
+              <div class="card-body p-4">
+                <div class="d-flex align-items-center">
+                  <div class="mr-4">
+                    <i class="fas fa-info-circle fa-3x" style="color: #16a34a;"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-weight-bold mb-2" style="color: #16a34a;">Sistema de Gestión Ambiental de Trujillo</h5>
+                    <p class="text-muted mb-2">
+                      Este módulo de gerencia te permite supervisar de manera eficiente todas las operaciones municipales del sistema SEGAT, 
+                      asegurando un control organizado de solicitudes ciudadanas, personal municipal, áreas verdes e infracciones registradas.
+                    </p>
+                    <p class="text-muted mb-0 small">
+                      <i class="fas fa-lightbulb mr-2" style="color: #84cc16;"></i>
+                      <strong>Tip:</strong> Utiliza el menú lateral para acceder rápidamente a todas las funciones disponibles.
                     </p>
                   </div>
                 </div>
@@ -201,32 +227,6 @@
                         <p class="text-muted small mb-0">Gestiona parámetros del sistema</p>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Información del Sistema -->
-        <div class="row">
-          <div class="col-12">
-            <div class="card border-0 shadow-sm" style="border-radius: 15px; background: linear-gradient(135deg, #dcfce715 0%, #16a34a15 100%);">
-              <div class="card-body p-4">
-                <div class="d-flex align-items-center">
-                  <div class="mr-4">
-                    <i class="fas fa-info-circle fa-3x" style="color: #16a34a;"></i>
-                  </div>
-                  <div>
-                    <h5 class="font-weight-bold mb-2" style="color: #16a34a;">Sistema de Gestión Ambiental de Trujillo</h5>
-                    <p class="text-muted mb-2">
-                      Este módulo de gerencia te permite supervisar de manera eficiente todas las operaciones municipales del sistema SEGAT, 
-                      asegurando un control organizado de solicitudes ciudadanas, personal municipal, áreas verdes e infracciones registradas.
-                    </p>
-                    <p class="text-muted mb-0 small">
-                      <i class="fas fa-lightbulb mr-2" style="color: #84cc16;"></i>
-                      <strong>Tip:</strong> Utiliza el menú lateral para acceder rápidamente a todas las funciones disponibles.
-                    </p>
                   </div>
                 </div>
               </div>

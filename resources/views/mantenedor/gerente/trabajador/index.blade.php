@@ -1,7 +1,8 @@
+
 @extends('layout.plantillaGerente')
 @section('titulo','Trabajadores')
 @section('contenido')
-      <!-- Default box -->
+
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">GESTIÓN DE TRABAJADORES</h3>

@@ -25,8 +25,11 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-success elevation-4">
     <!-- Brand Logo -->
-    <a href="{{route('home')}}" class="brand-link">
-      <i class="fas fa-clipboard-list brand-image img-circle elevation-3 text-white" style="font-size: 2rem; margin-left: 8px;"></i>
+    <a href="{{ route('home') }}" class="brand-link d-flex align-items-center" style="padding: 0.5rem 0.75rem;">
+      <img src="{{ asset('login/img/segat_Logo.png') }}" 
+          alt="Logo SEGAT" 
+          class="brand-image img-circle elevation-3"
+          style="opacity: .8; width: 2.25rem; height: 2.25rem; margin-right: 0.75rem;">
       <span class="brand-text font-weight-bold">SEGAT</span>
     </a>
 
