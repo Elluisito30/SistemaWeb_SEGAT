@@ -35,6 +35,15 @@ class User extends Authenticatable
     ];
 
     // ========================================
+    // MÉTODOS ASOCIADOS CON RELACIONES
+    // ========================================
+
+    public function contribuyente()
+    {
+        return $this->hasOne(\App\Models\Contribuyente::class, 'user_id', 'id');
+    }
+
+    // ========================================
     // MÉTODOS PARA VERIFICAR ROLES
     // ========================================
 

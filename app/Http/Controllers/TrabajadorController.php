@@ -143,5 +143,4 @@ class TrabajadorController extends Controller
         $trabajador->delete();
         return redirect()->route('trabajador.index')->with('datos', 'Trabajador eliminado correctamente');
     }
-
 }

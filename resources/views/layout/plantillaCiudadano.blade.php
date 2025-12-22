@@ -16,6 +16,13 @@
   <link rel="stylesheet" href="/adminlte/dist/css/adminlte.min.css">
   <!-- SEGAT Custom Theme -->
   <link rel="stylesheet" href="/general/css/segat-theme.css">
+  
+  <style>
+    .content-wrapper .content {
+      padding: 1rem !important;
+    }
+  </style>
+  
   @yield('estilos')
   
 </head>
@@ -50,7 +57,7 @@
 
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{ route('ciudadano.solicitud.index') }}" class="nav-link">
                   <i class="fas fa-broom nav-icon"></i>
                   <p>Solicitud de limpieza</p>
                 </a>
