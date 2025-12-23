@@ -19,9 +19,9 @@ class PagoController extends Controller
         // Obtener el usuario logueado
         $user = Auth::user();
         
-        // Buscar el contribuyente asociado al usuario (por email)
+        // Buscar el contribuyente asociado al usuario (por user_id)
         $contribuyente = Contribuyente::with('domicilio.distrito')
-            ->where('email', $user->email)
+            ->where('user_id', $user->id)
             ->first();
         
         // Si no existe el contribuyente, mostrar mensaje

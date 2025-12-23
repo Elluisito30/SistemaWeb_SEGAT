@@ -8,6 +8,7 @@ use App\Http\Controllers\GerenteController;
 use App\Http\Controllers\TrabajadorController;
 use App\Http\Controllers\CiudadanoController;
 use App\Http\Controllers\SolicitudLimpiezaController;
+use App\Http\Controllers\PagoController;
 
 // -----------------------------------
 // RUTAS DE LOGIN
@@ -55,6 +56,8 @@ Route::middleware(['auth', 'role:trabajador'])->prefix('trabajador')->name('trab
 Route::middleware(['auth', 'role:ciudadano'])->prefix('ciudadano')->name('ciudadano.')->group(function () {
     Route::get('/dashboard', [CiudadanoController::class, 'dashboard'])->name('dashboard');
     // Aquí irán más rutas del ciudadano según tu proyecto
+    Route::get('/pagos', [PagoController::class, 'index'])->name('pagos.index');
+
 });
 
 // -----------------------------
