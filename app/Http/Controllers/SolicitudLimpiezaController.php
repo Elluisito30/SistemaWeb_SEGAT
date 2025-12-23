@@ -16,8 +16,16 @@ class SolicitudLimpiezaController extends Controller
     public function index(Request $request)
     {
         $buscarpor = $request->get('buscarpor');
-
-        $solicitud = SolicitudLimpieza::where('descripcion', 'like', '%' . $buscarpor . '%')
+        
+        $solicitud = SolicitudLimpieza::with([
+                'detalleSolicitud.areaVerde',
+                'servicio'
+            ])
+            ->whereHas('detalleSolicitud.areaVerde', function ($query) use ($buscarpor) {
+                if ($buscarpor) {
+                    $query->where('nombre', 'like', '%' . $buscarpor . '%');
+                }
+            })
             ->paginate(self::PAGINATION);
 
         return view('mantenedor.ciudadano.solicitud_limpieza.index', compact('solicitud', 'buscarpor'));
@@ -72,6 +80,7 @@ class SolicitudLimpiezaController extends Controller
         $solicitud->descripcion = $request->descripcion;
         $solicitud->fechaTentativaEjecucion = $request->fechaTentativaEjecucion;
         $solicitud->documentoAdjunto = $request->documentoAdjunto ?? '';
+        $solicitud->estado = 'registrada';
         $solicitud->save();
 
         return redirect()->route('ciudadano.solicitud.index')->with('datos', 'Registro nuevo guardado.');

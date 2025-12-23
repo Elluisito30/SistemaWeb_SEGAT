@@ -106,7 +106,7 @@
                 <div class="col-md-6">
                     <form class="form-inline justify-content-end" method="GET">
                         <div class="input-group shadow-sm">
-                            <input name="buscarpor" class="form-control border-0" type="search" placeholder="Buscar por descripción" aria-label="Search" value="{{ $buscarpor }}" style="background-color: #f8f9fa;">
+                            <input name="buscarpor" class="form-control border-0" type="search" placeholder="Buscar por zona" aria-label="Search" value="{{ $buscarpor }}" style="background-color: #f8f9fa;">
                             <div class="input-group-append">
                                 <button class="btn text-white" type="submit" style="background-color: #2d5f3f;">
                                     <i class="fas fa-search"></i> Buscar
@@ -134,7 +134,7 @@
                         <tr>
                             <th class="border-0">Código</th>
                             <th class="border-0">Zona</th>
-                            <th class="border-0">Descripción</th>
+                            <th class="border-0">Tipo de Servicio</th> {{-- ✅ CAMBIADO --}}
                             <th class="border-0">Prioridad</th>
                             <th class="border-0">Fecha Tentativa</th>
                             <th class="border-0">Estado</th>
@@ -158,11 +158,11 @@
                                         </span>
                                     </td>
                                     <td class="align-middle">
-                                        <i class="fas fa-map-marker-alt" style="color: #2d5f3f;"></i>
+                                        <i class="fas fa-map-marker-alt me-1" style="color: #2d5f3f;"></i>
                                         {{ $itemsolicitud->detalleSolicitud->areaVerde->nombre ?? 'N/A' }}
                                     </td>
-                                    <td class="align-middle text-left">
-                                        {{ Str::limit($itemsolicitud->descripcion, 50) }}
+                                    <td class="align-middle"> 
+                                        {{ $itemsolicitud->servicio->descripcionServicio ?? 'N/A' }}
                                     </td>
                                     <td class="align-middle">
                                         @if($itemsolicitud->prioridad == 'ALTA')
@@ -180,13 +180,34 @@
                                         @endif
                                     </td>
                                     <td class="align-middle">
-                                        <i class="far fa-calendar-alt text-muted"></i>
+                                        <i class="far fa-calendar-alt text-muted me-1"></i>
                                         {{ date('d/m/Y', strtotime($itemsolicitud->fechaTentativaEjecucion)) }}
                                     </td>
-                                    <td class="align-middle">
-                                        <span class="badge badge-warning px-3 py-2">
-                                            <i class="fas fa-clock"></i> Pendiente
-                                        </span>
+                                    <td class="align-middle"> 
+                                        @switch($itemsolicitud->estado)
+                                            @case('registrada')
+                                                <span class="badge bg-info px-3 py-2">
+                                                    <i class="fas fa-file-alt me-1"></i> Registrada
+                                                </span>
+                                                @break
+                                            @case('en_atencion')
+                                                <span class="badge bg-warning px-3 py-2">
+                                                    <i class="fas fa-user-clock me-1"></i> En atención
+                                                </span>
+                                                @break
+                                            @case('atendida')
+                                                <span class="badge bg-success px-3 py-2">
+                                                    <i class="fas fa-check-circle me-1"></i> Atendida
+                                                </span>
+                                                @break
+                                            @case('rechazada')
+                                                <span class="badge bg-danger px-3 py-2">
+                                                    <i class="fas fa-times-circle me-1"></i> Ninguno
+                                                </span>
+                                                @break
+                                            @default
+                                                <span class="badge bg-secondary px-3 py-2">Desconocido</span>
+                                        @endswitch
                                     </td>
                                     <td class="align-middle">
                                         <div class="btn-group" role="group">
@@ -233,7 +254,6 @@
         if (mensaje) mensaje.remove();
     }, 3000);
     
-    // Inicializar tooltips
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     });
