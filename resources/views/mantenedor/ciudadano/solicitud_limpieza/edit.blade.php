@@ -1,22 +1,13 @@
-
 @extends('layout.plantillaCiudadano')
 @section('titulo', 'Edición de Solicitud de Limpieza')
 @section('contenido')
 
-<div class="container mt-5">
+<div class="container-fluid mt-3 px-1">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h5 class="m-0">EDITAR SOLICITUD DE LIMPIEZA</h5>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool text-white" data-card-widget="collapse" title="Collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool text-white" data-card-widget="remove" title="Remove">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
                 </div>
 
                 <div class="card-body">
@@ -31,11 +22,11 @@
 
                         <div class="form-group mt-3">
                             <label for="id_servicio">Tipo de Servicio</label>
-                            <select class="form-control @error('id_servicio') is-invalid @enderror" id="id_servicio" name="id_servicio">
+                            <select class="form-control select-wide @error('id_servicio') is-invalid @enderror" id="id_servicio" name="id_servicio">
                                 <option disabled value="">-- Seleccione un servicio --</option>
                                 @foreach($servicios as $servicio)
                                     <option value="{{ $servicio->id_servicio }}" {{ old('id_servicio', $solicitud->id_servicio) == $servicio->id_servicio ? 'selected' : '' }}>
-                                        {{ $servicio->descripcion }}
+                                        {{ $servicio->descripcionServicio }} {{-- ✅ CORREGIDO: era 'descripcion', ahora 'descripcionServicio' --}}
                                     </option>
                                 @endforeach
                             </select>
@@ -48,7 +39,7 @@
 
                         <div class="form-group mt-3">
                             <label for="id_area">Zona (Área Verde)</label>
-                            <select class="form-control @error('id_area') is-invalid @enderror" id="id_area" name="id_area">
+                            <select class="form-control select-wide @error('id_area') is-invalid @enderror" id="id_area" name="id_area">
                                 <option disabled value="">-- Seleccione una zona --</option>
                                 @foreach($areas as $area)
                                     <option value="{{ $area->id_area }}" {{ old('id_area', $solicitud->detalleSolicitud->id_area) == $area->id_area ? 'selected' : '' }}>
@@ -75,7 +66,7 @@
 
                         <div class="form-group mt-4">
                             <label for="prioridad">Prioridad</label>
-                            <select class="form-control @error('prioridad') is-invalid @enderror" id="prioridad" name="prioridad">
+                            <select class="form-control select-wide @error('prioridad') is-invalid @enderror" id="prioridad" name="prioridad">
                                 <option disabled value="">-- Seleccione prioridad --</option>
                                 <option value="ALTA" {{ old('prioridad', $solicitud->prioridad) == 'ALTA' ? 'selected' : '' }}>Alta</option>
                                 <option value="MEDIA" {{ old('prioridad', $solicitud->prioridad) == 'MEDIA' ? 'selected' : '' }}>Media</option>
@@ -98,12 +89,12 @@
                             @enderror
                         </div>
 
-                        <div class="form-group mt-4">
+                        <div class="form-group mt-4 d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Grabar
+                                <i class="fas fa-save me-2"></i> Guardar
                             </button>
-                            <a href="{{ route('ciudadano.solicitud.cancelar') }}" class="btn btn-danger">
-                                <i class="fas fa-ban"></i> Cancelar
+                            <a href="{{ route('ciudadano.solicitud.cancelar') }}" class="btn btn-danger ms-3">
+                                <i class="fas fa-ban me-2"></i> Cancelar
                             </a>
                         </div>
 

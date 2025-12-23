@@ -15,12 +15,12 @@
                         @csrf
 
                         <div class="form-group">
-                            <label for="id_servicio">Tipo de Servicio</label>
+                            <label for="id_servicio">Indique un tipo de servicio:</label>
                             <select class="form-control select-wide @error('id_servicio') is-invalid @enderror" id="id_servicio" name="id_servicio">
                                 <option disabled selected value="">-- Seleccione un servicio --</option>
                                 @foreach($servicios as $servicio)
                                     <option value="{{ $servicio->id_servicio }}" {{ old('id_servicio') == $servicio->id_servicio ? 'selected' : '' }}>
-                                        {{ $servicio->descripcionServicio }} {{-- ✅ CORREGIDO --}}
+                                        {{ $servicio->descripcionServicio }} 
                                     </option>
                                 @endforeach
                             </select>
@@ -32,7 +32,7 @@
                         </div>
 
                         <div class="form-group mt-3">
-                            <label for="id_area">Zona (Área Verde)</label>
+                            <label for="id_area">Indique una zona (Área Verde):</label>
                             <select class="form-control select-wide @error('id_area') is-invalid @enderror" id="id_area" name="id_area">
                                 <option disabled selected value="">-- Seleccione una zona --</option>
                                 @foreach($areas as $area)
@@ -49,7 +49,7 @@
                         </div>
 
                         <div class="form-group mt-3">
-                            <label for="descripcion">Descripción</label>
+                            <label for="descripcion">Describa la situación presentada:</label>
                             <textarea class="form-control @error('descripcion') is-invalid @enderror" id="descripcion" name="descripcion" rows="3">{{ old('descripcion') }}</textarea>
                             @error('descripcion')
                                 <span class="invalid-feedback" role="alert">
@@ -59,7 +59,7 @@
                         </div>
 
                         <div class="form-group mt-4">
-                            <label for="prioridad">Prioridad</label>
+                            <label for="prioridad">Indique el nivel de prioridad:</label>
                             <select class="form-control select-wide @error('prioridad') is-invalid @enderror" id="prioridad" name="prioridad">
                                 <option disabled selected value="">-- Seleccione prioridad --</option>
                                 <option value="ALTA" {{ old('prioridad') == 'ALTA' ? 'selected' : '' }}>Alta</option>
@@ -74,7 +74,7 @@
                         </div>
 
                         <div class="form-group mt-3">
-                            <label for="fechaTentativaEjecucion">Fecha Tentativa de Ejecución</label>
+                            <label for="fechaTentativaEjecucion">Indique una fecha tentativa de ejecución:</label>
                             <input type="date" class="form-control @error('fechaTentativaEjecucion') is-invalid @enderror" id="fechaTentativaEjecucion" name="fechaTentativaEjecucion" value="{{ old('fechaTentativaEjecucion') }}">
                             @error('fechaTentativaEjecucion')
                                 <span class="invalid-feedback" role="alert">
@@ -85,10 +85,10 @@
 
                         <div class="form-group mt-4 d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Registrar
+                                <i class="fas fa-save me-2"></i> Registrar
                             </button>
-                            <a href="{{ route('ciudadano.solicitud.cancelar') }}" class="btn btn-danger ms-3"> {{-- ✅ ml-3 → ms-3 --}}
-                                <i class="fas fa-ban"></i> Cancelar
+                            <a href="{{ route('ciudadano.solicitud.cancelar') }}" class="btn btn-danger ms-3"> 
+                                <i class="fas fa-ban me-2"></i> Cancelar
                             </a>
                         </div>
 
