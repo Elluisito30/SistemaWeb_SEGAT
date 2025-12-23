@@ -7,6 +7,7 @@ use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\GerenteController;
 use App\Http\Controllers\TrabajadorController;
 use App\Http\Controllers\CiudadanoController;
+use App\Http\Controllers\SolicitudLimpiezaController;
 
 // -----------------------------------
 // RUTAS DE LOGIN
@@ -29,9 +30,15 @@ Route::post('/salir', [UserController::class, 'salir'])->name('logout')->middlew
 // ------------------------
 // RUTAS PARA GERENTE
 // ------------------------
-Route::middleware(['auth', 'role:gerente'])->prefix('gerente')->name('gerente.')->group(function () {
-    Route::get('/dashboard', [GerenteController::class, 'dashboard'])->name('dashboard');
-    // Aquí irán más rutas del gerente según tu proyecto
+Route::middleware(['auth', 'role:ciudadano'])->prefix('ciudadano')->name('ciudadano.')->group(function () {
+    Route::get('/dashboard', [CiudadanoController::class, 'dashboard'])->name('dashboard');
+    
+    // Rutas de solicitudes de limpieza
+    Route::resource('/solicitud', SolicitudLimpiezaController::class)->except(['show']);  
+    Route::get('solicitud/cancelar', function () {   
+        return redirect()->route('ciudadano.solicitud.index')->with('datos','Acción Cancelada..!');   
+    })->name('solicitud.cancelar');  
+    Route::get('solicitud/{id}/confirmar',[SolicitudLimpiezaController::class,'confirmar'])->name('solicitud.confirmar');
 });
 
 // ------------------------

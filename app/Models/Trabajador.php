@@ -10,5 +10,4 @@ class Trabajador extends Model
     protected $primaryKey = 'idtrabajador';
     protected $fillable = ['nombres', 'apellidos', 'edad', 'email', 'sexo', 'estado_civil'];
     public $timestamps = false;
-
 }
