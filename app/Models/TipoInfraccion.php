@@ -9,9 +9,17 @@ class TipoInfraccion extends Model
     protected $table = 'tipoinfraccion';
     protected $primaryKey = 'tipoInfraccion';
     public $timestamps = false;
-    protected $fillable = ['descripcion'];
+    public $incrementing = false; // Porque la PK no es autoincremental
+    
+    protected $fillable = [
+        'tipoInfraccion',
+        'descripcion'
+    ];
 
-    public function detalleInfracciones()
+    /**
+     * Relación con DetalleInfraccion
+     */
+    public function detallesInfraccion()
     {
         return $this->hasMany(DetalleInfraccion::class, 'tipoInfraccion', 'tipoInfraccion');
     }

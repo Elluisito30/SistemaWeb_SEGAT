@@ -1,7 +1,33 @@
-
 @extends('layout.plantillaTrabajador')
 @section('titulo', 'Home Trabajador')
 @section('contenido')
+
+@php
+use App\Models\SolicitudLimpieza;
+use App\Models\Infraccion;
+use App\Models\RegistroInfraccion;
+use App\Models\Trabajador;
+use Illuminate\Support\Facades\Auth;
+
+// Obtener trabajador del usuario logueado
+$user = Auth::user();
+$trabajador = Trabajador::where('email', $user->email)->first();
+
+// Estadísticas de solicitudes
+$totalSolicitudes = SolicitudLimpieza::count();
+$solicitudesRegistradas = SolicitudLimpieza::where('estado', 'registrada')->count();
+$solicitudesEnAtencion = SolicitudLimpieza::where('estado', 'en atención')->count();
+$solicitudesAtendidas = SolicitudLimpieza::where('estado', 'atendida')->count();
+
+// Estadísticas de infracciones
+$infraccionesPendientes = Infraccion::whereDoesntHave('detalleInfraccion.registroInfraccion')->count();
+
+// Infracciones validadas por este trabajador (si existe)
+$misInfraccionesValidadas = 0;
+if ($trabajador) {
+    $misInfraccionesValidadas = RegistroInfraccion::where('idtrabajador', $trabajador->idtrabajador)->count();
+}
+@endphp
 
 <section class="content pt-4">
   <div class="container-fluid">
@@ -18,7 +44,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div class="text-white">
                     <h4 class="font-weight-bold mb-1">
-                      <i class="fas fa-hard-hat mr-2"></i>Portal de Trabajador
+                      <i class="fas fa-hard-hat mr-2"></i>Portal de Trabajador - Oficina
                     </h4>
                     <p class="mb-0" style="font-size: 0.9rem; opacity: 0.9;">
                       Bienvenido, <strong>{{ Auth::user()->name }}</strong> | 
@@ -27,7 +53,7 @@
                     </p>
                   </div>
                   <div class="text-white d-none d-md-block">
-                    <i class="fas fa-tools" style="font-size: 50px; opacity: 0.2;"></i>
+                    <i class="fas fa-user-tie" style="font-size: 50px; opacity: 0.2;"></i>
                   </div>
                 </div>
               </div>
@@ -47,12 +73,12 @@
                   <div>
                     <h5 class="font-weight-bold mb-2" style="color: #16a34a;">Panel de Trabajador - Sistema SEGAT</h5>
                     <p class="text-muted mb-2">
-                      Desde este panel podrás realizar tus labores diarias como trabajador municipal. 
-                      Registra infracciones, atiende solicitudes asignadas, reporta actividades realizadas y gestiona servicios en áreas verdes.
+                      Desde este panel podrás gestionar las solicitudes de limpieza de áreas verdes y validar las infracciones 
+                      reportadas por los ciudadanos. Mantén actualizado el estado de cada solicitud y asigna multas a las infracciones.
                     </p>
                     <p class="text-muted mb-0 small">
                       <i class="fas fa-lightbulb mr-2" style="color: #84cc16;"></i>
-                      <strong>Tip:</strong> Mantén actualizado el estado de tus tareas para una mejor coordinación con el equipo.
+                      <strong>Tip:</strong> Prioriza las solicitudes con estado "ALTA" y valida las infracciones con evidencia fotográfica.
                     </p>
                   </div>
                 </div>
@@ -61,82 +87,85 @@
           </div>
         </div>
 
-        <!-- Tarjetas de estadísticas -->
+        <!-- Tarjetas de estadísticas REALES -->
         <div class="row mb-4">
-          <!-- Tareas Asignadas -->
+          
+          <!-- Solicitudes Registradas -->
           <div class="col-lg-3 col-md-6 mb-3">
             <div class="card border-0 shadow-sm h-100 card-hover" style="border-radius: 15px; transition: transform 0.3s;">
               <div class="card-body text-center p-4">
                 <div class="icon-circle mx-auto mb-3" 
                      style="width: 70px; height: 70px; background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                  <i class="fas fa-tasks fa-2x text-white"></i>
+                  <i class="fas fa-inbox fa-2x text-white"></i>
                 </div>
-                <h3 class="font-weight-bold mb-1" style="color: #16a34a;">12</h3>
-                <h6 class="font-weight-bold text-muted mb-2">Tareas Asignadas</h6>
-                <small class="text-muted">Pendientes de realizar</small>
+                <h3 class="font-weight-bold mb-1" style="color: #16a34a;">{{ $solicitudesRegistradas }}</h3>
+                <h6 class="font-weight-bold text-muted mb-2">Solicitudes Nuevas</h6>
+                <small class="text-muted">Pendientes de revisar</small>
               </div>
               <div class="card-footer bg-transparent border-0 text-center pb-3">
-                <a href="#" class="btn btn-sm btn-outline-success rounded-pill px-4">
-                  <i class="fas fa-eye mr-2"></i>Ver Tareas
+                <a href="{{ route('trabajador.solicitudes.index') }}" class="btn btn-sm btn-outline-success rounded-pill px-4">
+                  <i class="fas fa-eye mr-2"></i>Ver Todas
                 </a>
               </div>
             </div>
           </div>
 
-          <!-- Infracciones Registradas -->
+          <!-- Infracciones Pendientes -->
+          <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card border-0 shadow-sm h-100 card-hover" style="border-radius: 15px; transition: transform 0.3s;">
+              <div class="card-body text-center p-4">
+                <div class="icon-circle mx-auto mb-3" 
+                     style="width: 70px; height: 70px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                  <i class="fas fa-exclamation-triangle fa-2x text-white"></i>
+                </div>
+                <h3 class="font-weight-bold mb-1" style="color: #f59e0b;">{{ $infraccionesPendientes }}</h3>
+                <h6 class="font-weight-bold text-muted mb-2">Infracciones Pendientes</h6>
+                <small class="text-muted">Por validar</small>
+              </div>
+              <div class="card-footer bg-transparent border-0 text-center pb-3">
+                <a href="{{ route('trabajador.infracciones.index') }}" class="btn btn-sm btn-outline-warning rounded-pill px-4">
+                  <i class="fas fa-check mr-2"></i>Validar
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Solicitudes en Atención -->
+          <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card border-0 shadow-sm h-100 card-hover" style="border-radius: 15px; transition: transform 0.3s;">
+              <div class="card-body text-center p-4">
+                <div class="icon-circle mx-auto mb-3" 
+                     style="width: 70px; height: 70px; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                  <i class="fas fa-spinner fa-2x text-white"></i>
+                </div>
+                <h3 class="font-weight-bold mb-1" style="color: #3b82f6;">{{ $solicitudesEnAtencion }}</h3>
+                <h6 class="font-weight-bold text-muted mb-2">En Atención</h6>
+                <small class="text-muted">Programadas</small>
+              </div>
+              <div class="card-footer bg-transparent border-0 text-center pb-3">
+                <a href="{{ route('trabajador.solicitudes.index', ['estado' => 'en atención']) }}" 
+                   class="btn btn-sm btn-outline-primary rounded-pill px-4">
+                  <i class="fas fa-tasks mr-2"></i>Ver
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mis Infracciones Validadas -->
           <div class="col-lg-3 col-md-6 mb-3">
             <div class="card border-0 shadow-sm h-100 card-hover" style="border-radius: 15px; transition: transform 0.3s;">
               <div class="card-body text-center p-4">
                 <div class="icon-circle mx-auto mb-3" 
                      style="width: 70px; height: 70px; background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                  <i class="fas fa-exclamation-triangle fa-2x text-white"></i>
-                </div>
-                <h3 class="font-weight-bold mb-1" style="color: #22c55e;">8</h3>
-                <h6 class="font-weight-bold text-muted mb-2">Infracciones Hoy</h6>
-                <small class="text-muted">Registradas en campo</small>
-              </div>
-              <div class="card-footer bg-transparent border-0 text-center pb-3">
-                <a href="#" class="btn btn-sm btn-outline-success rounded-pill px-4">
-                  <i class="fas fa-list mr-2"></i>Ver Registro
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Áreas Atendidas -->
-          <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card border-0 shadow-sm h-100 card-hover" style="border-radius: 15px; transition: transform 0.3s;">
-              <div class="card-body text-center p-4">
-                <div class="icon-circle mx-auto mb-3" 
-                     style="width: 70px; height: 70px; background: linear-gradient(135deg, #84cc16 0%, #65a30d 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                  <i class="fas fa-map-marked-alt fa-2x text-white"></i>
-                </div>
-                <h3 class="font-weight-bold mb-1" style="color: #84cc16;">15</h3>
-                <h6 class="font-weight-bold text-muted mb-2">Áreas Atendidas</h6>
-                <small class="text-muted">Esta semana</small>
-              </div>
-              <div class="card-footer bg-transparent border-0 text-center pb-3">
-                <a href="#" class="btn btn-sm btn-outline-success rounded-pill px-4">
-                  <i class="fas fa-map mr-2"></i>Ver Mapa
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Actividades Completadas -->
-          <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card border-0 shadow-sm h-100 card-hover" style="border-radius: 15px; transition: transform 0.3s;">
-              <div class="card-body text-center p-4">
-                <div class="icon-circle mx-auto mb-3" 
-                     style="width: 70px; height: 70px; background: linear-gradient(135deg, #15803d 0%, #14532d 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                   <i class="fas fa-check-circle fa-2x text-white"></i>
                 </div>
-                <h3 class="font-weight-bold mb-1" style="color: #15803d;">28</h3>
-                <h6 class="font-weight-bold text-muted mb-2">Actividades Completadas</h6>
-                <small class="text-muted">Este mes</small>
+                <h3 class="font-weight-bold mb-1" style="color: #22c55e;">{{ $misInfraccionesValidadas }}</h3>
+                <h6 class="font-weight-bold text-muted mb-2">Infracciones Validadas</h6>
+                <small class="text-muted">Por mí</small>
               </div>
               <div class="card-footer bg-transparent border-0 text-center pb-3">
-                <a href="#" class="btn btn-sm btn-outline-success rounded-pill px-4">
+                <a href="{{ route('trabajador.infracciones.historial') }}" 
+                   class="btn btn-sm btn-outline-success rounded-pill px-4">
                   <i class="fas fa-history mr-2"></i>Historial
                 </a>
               </div>
@@ -155,50 +184,122 @@
               </div>
               <div class="card-body p-4">
                 <div class="row">
+                  
                   <div class="col-md-4 mb-3">
-                    <a href="#" class="text-decoration-none">
+                    <a href="{{ route('trabajador.solicitudes.index') }}" class="text-decoration-none">
                       <div class="d-flex align-items-start action-card p-3 rounded" style="background: #dcfce7; transition: all 0.3s;">
                         <div class="icon-box mr-3" 
                              style="width: 50px; height: 50px; background: #16a34a; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                          <i class="fas fa-file-medical fa-lg text-white"></i>
+                          <i class="fas fa-clipboard-list fa-lg text-white"></i>
                         </div>
                         <div>
-                          <h6 class="font-weight-bold mb-1" style="color: #16a34a;">Registrar Infracción</h6>
-                          <p class="text-muted small mb-0">Documenta una nueva infracción</p>
+                          <h6 class="font-weight-bold mb-1" style="color: #16a34a;">Gestionar Solicitudes</h6>
+                          <p class="text-muted small mb-0">Ver y programar solicitudes de limpieza</p>
                         </div>
                       </div>
                     </a>
                   </div>
 
                   <div class="col-md-4 mb-3">
-                    <a href="#" class="text-decoration-none">
+                    <a href="{{ route('trabajador.infracciones.index') }}" class="text-decoration-none">
+                      <div class="d-flex align-items-start action-card p-3 rounded" style="background: #fef3c7; transition: all 0.3s;">
+                        <div class="icon-box mr-3" 
+                             style="width: 50px; height: 50px; background: #f59e0b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                          <i class="fas fa-gavel fa-lg text-white"></i>
+                        </div>
+                        <div>
+                          <h6 class="font-weight-bold mb-1" style="color: #f59e0b;">Validar Infracciones</h6>
+                          <p class="text-muted small mb-0">Revisar y asignar multas</p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <a href="{{ route('trabajador.infracciones.historial') }}" class="text-decoration-none">
                       <div class="d-flex align-items-start action-card p-3 rounded" style="background: #d1fae5; transition: all 0.3s;">
                         <div class="icon-box mr-3" 
                              style="width: 50px; height: 50px; background: #22c55e; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                          <i class="fas fa-clipboard-check fa-lg text-white"></i>
+                          <i class="fas fa-history fa-lg text-white"></i>
                         </div>
                         <div>
-                          <h6 class="font-weight-bold mb-1" style="color: #22c55e;">Reportar Actividad</h6>
-                          <p class="text-muted small mb-0">Registra el trabajo realizado</p>
+                          <h6 class="font-weight-bold mb-1" style="color: #22c55e;">Ver Historial</h6>
+                          <p class="text-muted small mb-0">Infracciones validadas por mí</p>
                         </div>
                       </div>
                     </a>
                   </div>
 
-                  <div class="col-md-4 mb-3">
-                    <a href="#" class="text-decoration-none">
-                      <div class="d-flex align-items-start action-card p-3 rounded" style="background: #ecfccb; transition: all 0.3s;">
-                        <div class="icon-box mr-3" 
-                             style="width: 50px; height: 50px; background: #84cc16; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                          <i class="fas fa-sync-alt fa-lg text-white"></i>
-                        </div>
-                        <div>
-                          <h6 class="font-weight-bold mb-1" style="color: #84cc16;">Actualizar Estado</h6>
-                          <p class="text-muted small mb-0">Modifica el estado de servicios</p>
-                        </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resumen de Solicitudes por Estado -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="card border-0 shadow-sm" style="border-radius: 15px;">
+              <div class="card-header bg-white border-0 pt-4 pb-3">
+                <h5 class="font-weight-bold mb-0">
+                  <i class="fas fa-chart-pie mr-2" style="color: #16a34a;"></i>Resumen de Solicitudes
+                </h5>
+              </div>
+              <div class="card-body p-4">
+                <div class="row">
+                  
+                  <div class="col-md-3 mb-3">
+                    <div class="d-flex align-items-center">
+                      <div class="icon-box mr-3" 
+                           style="width: 50px; height: 50px; background: #e5e7eb; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-inbox fa-lg" style="color: #6b7280;"></i>
                       </div>
-                    </a>
+                      <div>
+                        <h4 class="font-weight-bold mb-0" style="color: #6b7280;">{{ $solicitudesRegistradas }}</h4>
+                        <p class="text-muted small mb-0">Registradas</p>
+                      </div>
+                    </div>
                   </div>
+
+                  <div class="col-md-3 mb-3">
+                    <div class="d-flex align-items-center">
+                      <div class="icon-box mr-3" 
+                           style="width: 50px; height: 50px; background: #dbeafe; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-spinner fa-lg" style="color: #3b82f6;"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-weight-bold mb-0" style="color: #3b82f6;">{{ $solicitudesEnAtencion }}</h4>
+                        <p class="text-muted small mb-0">En Atención</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <div class="d-flex align-items-center">
+                      <div class="icon-box mr-3" 
+                           style="width: 50px; height: 50px; background: #d1fae5; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-check-circle fa-lg" style="color: #22c55e;"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-weight-bold mb-0" style="color: #22c55e;">{{ $solicitudesAtendidas }}</h4>
+                        <p class="text-muted small mb-0">Atendidas</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <div class="d-flex align-items-center">
+                      <div class="icon-box mr-3" 
+                           style="width: 50px; height: 50px; background: #dcfce7; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-list fa-lg" style="color: #16a34a;"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-weight-bold mb-0" style="color: #16a34a;">{{ $totalSolicitudes }}</h4>
+                        <p class="text-muted small mb-0">Total</p>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -211,88 +312,72 @@
             <div class="card border-0 shadow-sm" style="border-radius: 15px;">
               <div class="card-header bg-white border-0 pt-4 pb-3">
                 <h5 class="font-weight-bold mb-0">
-                  <i class="fas fa-toolbox mr-2" style="color: #16a34a;"></i>Funciones de Trabajo
+                  <i class="fas fa-briefcase mr-2" style="color: #16a34a;"></i>Mis Funciones
                 </h5>
               </div>
               <div class="card-body p-4">
                 <div class="row">
-                  <div class="col-md-4 mb-3">
+                  
+                  <div class="col-md-6 mb-3">
                     <div class="d-flex align-items-start">
                       <div class="icon-box mr-3" 
                            style="width: 50px; height: 50px; background: #dcfce7; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-ban fa-lg" style="color: #16a34a;"></i>
+                        <i class="fas fa-clipboard-list fa-lg" style="color: #16a34a;"></i>
                       </div>
                       <div>
-                        <h6 class="font-weight-bold mb-1">Registrar Infracciones</h6>
-                        <p class="text-muted small mb-0">Documenta infracciones en campo</p>
+                        <h6 class="font-weight-bold mb-1">Gestión de Solicitudes</h6>
+                        <p class="text-muted small mb-0">
+                          Visualiza, programa y cambia el estado de las solicitudes de limpieza de áreas verdes.
+                        </p>
                       </div>
                     </div>
                   </div>
 
-                  <div class="col-md-4 mb-3">
+                  <div class="col-md-6 mb-3">
                     <div class="d-flex align-items-start">
                       <div class="icon-box mr-3" 
-                           style="width: 50px; height: 50px; background: #d1fae5; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-clipboard-list fa-lg" style="color: #22c55e;"></i>
+                           style="width: 50px; height: 50px; background: #fef3c7; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-gavel fa-lg" style="color: #f59e0b;"></i>
                       </div>
                       <div>
-                        <h6 class="font-weight-bold mb-1">Ver Solicitudes</h6>
-                        <p class="text-muted small mb-0">Consulta solicitudes asignadas</p>
+                        <h6 class="font-weight-bold mb-1">Validación de Infracciones</h6>
+                        <p class="text-muted small mb-0">
+                          Revisa infracciones reportadas por ciudadanos y asigna el monto de las multas correspondientes.
+                        </p>
                       </div>
                     </div>
                   </div>
 
-                  <div class="col-md-4 mb-3">
+                  <div class="col-md-6 mb-3">
                     <div class="d-flex align-items-start">
                       <div class="icon-box mr-3" 
-                           style="width: 50px; height: 50px; background: #ecfccb; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-tree fa-lg" style="color: #84cc16;"></i>
+                           style="width: 50px; height: 50px; background: #dbeafe; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-calendar-check fa-lg" style="color: #3b82f6;"></i>
                       </div>
                       <div>
-                        <h6 class="font-weight-bold mb-1">Áreas Verdes</h6>
-                        <p class="text-muted small mb-0">Gestiona mantenimiento de áreas</p>
+                        <h6 class="font-weight-bold mb-1">Programación de Servicios</h6>
+                        <p class="text-muted small mb-0">
+                          Asigna monto y fecha programada a las solicitudes aprobadas.
+                        </p>
                       </div>
                     </div>
                   </div>
 
-                  <div class="col-md-4 mb-3">
-                    <div class="d-flex align-items-start">
-                      <div class="icon-box mr-3" 
-                           style="width: 50px; height: 50px; background: #f0fdf4; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-tasks fa-lg" style="color: #15803d;"></i>
-                      </div>
-                      <div>
-                        <h6 class="font-weight-bold mb-1">Registrar Actividades</h6>
-                        <p class="text-muted small mb-0">Reporta tareas realizadas</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4 mb-3">
-                    <div class="d-flex align-items-start">
-                      <div class="icon-box mr-3" 
-                           style="width: 50px; height: 50px; background: #dcfce7; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-wrench fa-lg" style="color: #16a34a;"></i>
-                      </div>
-                      <div>
-                        <h6 class="font-weight-bold mb-1">Gestionar Servicios</h6>
-                        <p class="text-muted small mb-0">Actualiza estado de servicios</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4 mb-3">
+                  <div class="col-md-6 mb-3">
                     <div class="d-flex align-items-start">
                       <div class="icon-box mr-3" 
                            style="width: 50px; height: 50px; background: #d1fae5; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
                         <i class="fas fa-history fa-lg" style="color: #22c55e;"></i>
                       </div>
                       <div>
-                        <h6 class="font-weight-bold mb-1">Historial de Trabajo</h6>
-                        <p class="text-muted small mb-0">Revisa tus actividades anteriores</p>
+                        <h6 class="font-weight-bold mb-1">Historial de Validaciones</h6>
+                        <p class="text-muted small mb-0">
+                          Consulta el registro de todas las infracciones que has validado.
+                        </p>
                       </div>
                     </div>
                   </div>
+
                 </div>
               </div>
             </div>

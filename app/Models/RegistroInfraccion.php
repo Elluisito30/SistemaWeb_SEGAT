@@ -9,14 +9,22 @@ class RegistroInfraccion extends Model
     protected $table = 'registroinfraccion';
     protected $primaryKey = 'id_detalleInfraccion';
     public $timestamps = false;
-    protected $fillable = ['id_detalleInfraccion', 'idtrabajador', 'fechaHoraEmision', 'estado'];
+    public $incrementing = false; 
+    
+    protected $fillable = [
+        'id_detalleInfraccion',
+        'idtrabajador',
+        'fechaHoraEmision',
+        'estado'
+    ];
+
     protected $casts = [
         'fechaHoraEmision' => 'datetime',
     ];
 
-    
-    // Relación con DetalleInfraccion
-
+    /**
+     * Relación con DetalleInfraccion
+     */
     public function detalleInfraccion()
     {
         return $this->belongsTo(DetalleInfraccion::class, 'id_detalleInfraccion', 'id_detalleInfraccion');
@@ -24,7 +32,6 @@ class RegistroInfraccion extends Model
 
     /**
      * Relación con Trabajador
-     * El trabajador que registró/validó la infracción
      */
     public function trabajador()
     {

@@ -40,28 +40,25 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
           <li class="nav-item">
-            <a href="" class="nav-link">
-              <i class="nav-icon fas fa-recycle"></i>
-              <p>Solicitudes de limpieza
-              </p>
+            <a href="{{ route('trabajador.dashboard') }}" class="nav-link {{ request()->routeIs('trabajador.dashboard') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-home"></i>
+              <p>Inicio</p>
             </a>
-          </li>  
-          
-          <li class="nav-item">
-            <a href="" class="nav-link">
-              <i class="nav-icon fas fa-calendar-alt"></i>
-              <p>Programación <br>de solicitudes
-              </p>
-            </a>
-          </li>  
+          </li>
 
           <li class="nav-item">
-            <a href="" class="nav-link">
-              <i class="nav-icon fas fa-file-invoice-dollar"></i>
-              <p>Multas
-              </p>
+            <a href="{{ route('trabajador.solicitudes.index') }}" class="nav-link {{ request()->routeIs('trabajador.solicitudes.*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-clipboard-list"></i>
+              <p>Solicitudes de Limpieza</p>
             </a>
-          </li>  
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('trabajador.infracciones.index') }}" class="nav-link {{ request()->routeIs('trabajador.infracciones.*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-exclamation-triangle"></i>
+              <p>Validar Infracciones</p>
+            </a>
+          </li>
 
           <li class="nav-item">
             <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">

@@ -9,6 +9,7 @@ class SolicitudLimpieza extends Model
     protected $table = 'solicitud';  
     protected $primaryKey = 'id_solicitud';  
     public $timestamps = false;  
+    
     protected $fillable = [  
         'id_detalleSolicitud',
         'id_servicio',
@@ -16,7 +17,9 @@ class SolicitudLimpieza extends Model
         'descripcion',
         'fechaTentativaEjecucion',
         'documentoAdjunto',
-        'estado'
+        'estado',           // 
+        'monto',            // 
+        'fechaProgramada'   // 
     ];  
 
     public function detalleSolicitud() 

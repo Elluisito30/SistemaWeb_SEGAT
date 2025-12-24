@@ -48,7 +48,23 @@ Route::middleware(['auth', 'role:ciudadano'])->prefix('ciudadano')->name('ciudad
 // ------------------------
 Route::middleware(['auth', 'role:trabajador'])->prefix('trabajador')->name('trabajador.')->group(function () {
     Route::get('/dashboard', [TrabajadorController::class, 'dashboard'])->name('dashboard');
-    // Aquí irán más rutas del trabajador según tu proyecto
+    // GESTIÓN DE SOLICITUDES DE LIMPIEZA
+    Route::get('/solicitudes', [TrabajadorController::class, 'indexSolicitudes'])->name('solicitudes.index');
+    Route::get('/solicitudes/{id}/editar', [TrabajadorController::class, 'editSolicitud'])->name('solicitudes.edit');
+    Route::put('/solicitudes/{id}', [TrabajadorController::class, 'updateSolicitud'])->name('solicitudes.update');
+    Route::get('/solicitudes/{id}/confirmar', [TrabajadorController::class, 'confirmarSolicitud'])->name('solicitudes.confirmar');
+    Route::get('/solicitudes/cancelar', function () {
+        return redirect()->route('trabajador.solicitudes.index')->with('datos', 'Acción Cancelada.');
+    })->name('solicitudes.cancelar');
+    
+    // GESTIÓN DE INFRACCIONES
+    Route::get('/infracciones', [TrabajadorController::class, 'indexInfracciones'])->name('infracciones.index');
+    Route::get('/infracciones/{id}/validar', [TrabajadorController::class, 'validarInfraccion'])->name('infracciones.validar');
+    Route::post('/infracciones/{id}/validar', [TrabajadorController::class, 'storeValidacion'])->name('infracciones.storeValidacion');
+    Route::get('/infracciones/historial', [TrabajadorController::class, 'historialInfracciones'])->name('infracciones.historial');
+    Route::get('/infracciones/cancelar', function () {
+        return redirect()->route('trabajador.infracciones.index')->with('datos', 'Acción Cancelada.');
+    })->name('infracciones.cancelar');
 });
 
 // ------------------------
