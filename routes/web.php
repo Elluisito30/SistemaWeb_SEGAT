@@ -9,6 +9,7 @@ use App\Http\Controllers\TrabajadorController;
 use App\Http\Controllers\CiudadanoController;
 use App\Http\Controllers\SolicitudLimpiezaController;
 use App\Http\Controllers\PagoController;
+use App\Http\Controllers\InfraccionController;
 
 // -----------------------------------
 // RUTAS DE LOGIN
@@ -57,6 +58,10 @@ Route::middleware(['auth', 'role:ciudadano'])->prefix('ciudadano')->name('ciudad
     Route::get('/dashboard', [CiudadanoController::class, 'dashboard'])->name('dashboard');
     // Aquí irán más rutas del ciudadano según tu proyecto
     Route::get('/pagos', [PagoController::class, 'index'])->name('pagos.index');
+    
+    // Registrar infracción
+    Route::get('/infracciones/crear', [InfraccionController::class, 'create'])->name('infracciones.create');
+    Route::post('/infracciones', [InfraccionController::class, 'store'])->name('infracciones.store');
 
 });
 

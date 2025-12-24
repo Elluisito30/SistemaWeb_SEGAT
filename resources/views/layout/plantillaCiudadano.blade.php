@@ -64,7 +64,7 @@
               </li>
               
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{ route('ciudadano.infracciones.create') }}" class="nav-link">
                   <i class="fas fa-exclamation-circle nav-icon"></i>
                   <p>Infracción</p>
                 </a>
