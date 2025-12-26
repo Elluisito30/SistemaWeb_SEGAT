@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\RegistroController; 
+use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\GerenteController;
 use App\Http\Controllers\TrabajadorController;
 use App\Http\Controllers\CiudadanoController;
@@ -29,17 +29,36 @@ Route::post('/registrarse', [RegistroController::class, 'verificarRegistro'])->n
 Route::get('/salir', [UserController::class, 'salir'])->name('logout.get')->middleware('auth');
 Route::post('/salir', [UserController::class, 'salir'])->name('logout')->middleware('auth');
 
+// ==========================================
+// 2. RUTAS PARA GERENTE (RENATO)
+// ==========================================
+Route::middleware(['auth', 'role:gerente'])->prefix('gerente')->name('gerente.')->group(function () {
+
+    Route::get('/home', [GerenteController::class, 'dashboard'])->name('dashboard');
+
+    Route::resource('/trabajador', GerenteController::class);
+
+    Route::get('/trabajador/{id}/confirmar', [GerenteController::class, 'confirmar'])->name('trabajador.confirmar');
+    Route::get('/trabajador/cancelar', function () {
+        return redirect()->route('gerente.trabajador.index')->with('datos','Acción Cancelada..!');
+    })->name('trabajador.cancelar');
+
+    Route::get('/reportes/solicitudes', [App\Http\Controllers\GerenteController::class, 'reporteSolicitudes'])->name('reportes.solicitudes');
+    Route::get('/reportes/infracciones', [App\Http\Controllers\GerenteController::class, 'reporteInfracciones'])->name('reportes.infracciones');
+
+});
+
 // ------------------------
-// RUTAS PARA GERENTE
+// RUTAS PARA CIUDADANO
 // ------------------------
 Route::middleware(['auth', 'role:ciudadano'])->prefix('ciudadano')->name('ciudadano.')->group(function () {
     Route::get('/dashboard', [CiudadanoController::class, 'dashboard'])->name('dashboard');
-    
+
     // Rutas de solicitudes de limpieza
-    Route::resource('/solicitud', SolicitudLimpiezaController::class)->except(['show']);  
-    Route::get('solicitud/cancelar', function () {   
-        return redirect()->route('ciudadano.solicitud.index')->with('datos','Acción Cancelada..!');   
-    })->name('solicitud.cancelar');  
+    Route::resource('/solicitud', SolicitudLimpiezaController::class)->except(['show']);
+    Route::get('solicitud/cancelar', function () {
+        return redirect()->route('ciudadano.solicitud.index')->with('datos','Acción Cancelada..!');
+    })->name('solicitud.cancelar');
     Route::get('solicitud/{id}/confirmar',[SolicitudLimpiezaController::class,'confirmar'])->name('solicitud.confirmar');
 });
 
@@ -56,7 +75,7 @@ Route::middleware(['auth', 'role:trabajador'])->prefix('trabajador')->name('trab
     Route::get('/solicitudes/cancelar', function () {
         return redirect()->route('trabajador.solicitudes.index')->with('datos', 'Acción Cancelada.');
     })->name('solicitudes.cancelar');
-    
+
     // GESTIÓN DE INFRACCIONES
     Route::get('/infracciones', [TrabajadorController::class, 'indexInfracciones'])->name('infracciones.index');
     Route::get('/infracciones/{id}/validar', [TrabajadorController::class, 'validarInfraccion'])->name('infracciones.validar');
@@ -74,7 +93,7 @@ Route::middleware(['auth', 'role:ciudadano'])->prefix('ciudadano')->name('ciudad
     Route::get('/dashboard', [CiudadanoController::class, 'dashboard'])->name('dashboard');
     // Aquí irán más rutas del ciudadano según tu proyecto
     Route::get('/pagos', [PagoController::class, 'index'])->name('pagos.index');
-    
+
     // Registrar infracción
     Route::get('/infracciones/crear', [InfraccionController::class, 'create'])->name('infracciones.create');
     Route::post('/infracciones', [InfraccionController::class, 'store'])->name('infracciones.store');

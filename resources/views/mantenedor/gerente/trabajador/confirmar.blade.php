@@ -6,9 +6,9 @@
     <div class="container">
 
         <h1>¿Desea eliminar el siguiente trabajador?</h1>
-        
+
         <div class="alert alert-warning" role="alert">
-            <i class="fas fa-exclamation-triangle"></i> 
+            <i class="fas fa-exclamation-triangle"></i>
             <strong>ADVERTENCIA:</strong> Esta acción no se puede deshacer.
         </div>
 
@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-md-6">
                         <p><strong>Email:</strong> {{ $trabajador->email }}</p>
-                        <p><strong>Sexo:</strong> 
+                        <p><strong>Sexo:</strong>
                             @if($trabajador->sexo == 'Masculino')
                                 <span class="badge badge-primary">
                                     <i class="fas fa-mars"></i> {{ $trabajador->sexo }}
@@ -37,7 +37,7 @@
                                 </span>
                             @endif
                         </p>
-                        <p><strong>Estado Civil:</strong> 
+                        <p><strong>Estado Civil:</strong>
                             <span class="badge badge-secondary">{{ $trabajador->estado_civil }}</span>
                         </p>
                     </div>
@@ -45,13 +45,13 @@
             </div>
         </div>
 
-        <form method="POST" action="{{ route('trabajador.destroy', $trabajador->idtrabajador)}}" class="mt-3">
+        <form method="POST" action="{{ route('gerente.trabajador.destroy', $trabajador->idtrabajador)}}" class="mt-3">
             @method('delete')
-            @csrf 
+            @csrf
             <button type="submit" class="btn btn-danger">
                 <i class="fas fa-check-square"></i> SÍ, ELIMINAR
             </button>
-            <a href="{{ route('trabajador.cancelar')}}" class="btn btn-primary">
+            <a href="{{ route('gerente.trabajador.index')}}" class="btn btn-primary">
                 <i class="fas fa-times-circle"></i> NO, CANCELAR
             </a>
         </form>

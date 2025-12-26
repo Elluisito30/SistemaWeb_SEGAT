@@ -14,15 +14,15 @@
         </div>
 
         <div class="card-body">
-          <a href="{{ route('trabajador.create')}}" class="btn btn-primary mt-2">
+          <a href="{{ route('gerente.trabajador.create')}}" class="btn btn-primary mt-2">
             <i class="fas fa-plus"></i> Nuevo Trabajador
           </a>
-          
+
           <nav class="navbar navbar-light float-right">
             <form class="form-inline my-2 my-lg-0" method="GET">
-              <input name="buscarpor" class="form-control" type="search" 
-                     placeholder="Buscar trabajador..." 
-                     aria-label="search" 
+              <input name="buscarpor" class="form-control" type="search"
+                     placeholder="Buscar trabajador..."
+                     aria-label="search"
                      value="{{ $buscarpor}}"
                      style="width: 280px;">
               <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
@@ -53,7 +53,7 @@
                 <th scope="col">Opciones</th>
               </tr>
             </thead>
-            
+
             <tbody>
               @if (count($trabajadores)<=0)
               <tr>
@@ -81,14 +81,14 @@
                 <td>{{ $itemtrabajador->estado_civil }}</td>
                 <td>
                   <!-- Botón Editar -->
-                  <a href="{{ route('trabajador.edit', $itemtrabajador->idtrabajador) }}" 
+                  <a href="{{ route('gerente.trabajador.edit', $itemtrabajador->idtrabajador) }}"
                      class="btn btn-info btn-sm"
                      title="Editar">
                     <i class="fas fa-edit"></i>
                   </a>
-                  
+
                   <!-- Botón Eliminar -->
-                  <a href="{{ route('trabajador.confirmar', $itemtrabajador->idtrabajador) }}" 
+                  <a href="{{ route('gerente.trabajador.confirmar', $itemtrabajador->idtrabajador) }}"
                      class="btn btn-danger btn-sm"
                      title="Eliminar">
                     <i class="fas fa-trash"></i>
@@ -97,9 +97,9 @@
               </tr>
               @endforeach
               @endif
-            </tbody>            
+            </tbody>
           </table>
-          
+
           {{ $trabajadores->links() }}
         </div>
       </div>

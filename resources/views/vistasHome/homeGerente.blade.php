@@ -1,250 +1,157 @@
-
 @extends('layout.plantillaGerente')
-@section('titulo', 'Home Gerencia')
+
+@section('titulo', 'Dashboard Gerencia')
+
 @section('contenido')
-
-<section class="content pt-4">
-  <div class="container-fluid">
-    
-    <!-- Card contenedor general -->
-    <div class="card border-0 shadow-sm" style="border-radius: 20px;">
-      <div class="card-body p-4">
-        
-        <!-- Hero Section compacto -->
-        <div class="row mb-4">
-          <div class="col-12">
-            <div class="card border-0 shadow-sm" style="border-radius: 15px; background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);">
-              <div class="card-body py-3 px-4">
-                <div class="d-flex align-items-center justify-content-between">
-                  <div class="text-white">
-                    <h4 class="font-weight-bold mb-1">
-                      <i class="fas fa-user-shield mr-2"></i>Portal Gerencial
-                    </h4>
-                    <p class="mb-0" style="font-size: 0.9rem; opacity: 0.9;">
-                      Bienvenido, <strong>{{ Auth::user()->name }}</strong> | 
-                      <i class="fas fa-calendar-alt ml-2 mr-1"></i>{{ date('d/m/Y') }} 
-                    </p>
-                  </div>
-                </div>
-              </div>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Panel de Supervisión</h1>
             </div>
-          </div>
         </div>
-
-        <!-- Información del Sistema -->
-        <div class="row mb-4">
-          <div class="col-12">
-            <div class="card border-0 shadow-sm" style="border-radius: 15px; background: linear-gradient(135deg, #dcfce715 0%, #16a34a15 100%);">
-              <div class="card-body p-4">
-                <div class="d-flex align-items-center">
-                  <div class="mr-4">
-                    <i class="fas fa-info-circle fa-3x" style="color: #16a34a;"></i>
-                  </div>
-                  <div>
-                    <h5 class="font-weight-bold mb-2" style="color: #16a34a;">Sistema de Gestión Ambiental de Trujillo</h5>
-                    <p class="text-muted mb-2">
-                      Este módulo de gerencia te permite supervisar de manera eficiente todas las operaciones municipales del sistema SEGAT, 
-                      asegurando un control organizado de solicitudes ciudadanas, personal municipal, áreas verdes e infracciones registradas.
-                    </p>
-                    <p class="text-muted mb-0 small">
-                      <i class="fas fa-lightbulb mr-2" style="color: #84cc16;"></i>
-                      <strong>Tip:</strong> Utiliza el menú lateral para acceder rápidamente a todas las funciones disponibles.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tarjetas de estadísticas -->
-        <div class="row mb-4">
-          <!-- Solicitudes Pendientes -->
-          <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card border-0 shadow-sm h-100 card-hover" style="border-radius: 15px; transition: transform 0.3s;">
-              <div class="card-body text-center p-4">
-                <div class="icon-circle mx-auto mb-3" 
-                     style="width: 70px; height: 70px; background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                  <i class="fas fa-file-signature fa-2x text-white"></i>
-                </div>
-                <h3 class="font-weight-bold mb-1" style="color: #16a34a;">24</h3>
-                <h6 class="font-weight-bold text-muted mb-2">Solicitudes Pendientes</h6>
-                <small class="text-muted">Requieren aprobación</small>
-              </div>
-              <div class="card-footer bg-transparent border-0 text-center pb-3">
-                <a href="#" class="btn btn-sm btn-outline-success rounded-pill px-4">
-                  <i class="fas fa-eye mr-2"></i>Ver Detalles
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Áreas Verdes -->
-          <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card border-0 shadow-sm h-100 card-hover" style="border-radius: 15px; transition: transform 0.3s;">
-              <div class="card-body text-center p-4">
-                <div class="icon-circle mx-auto mb-3" 
-                     style="width: 70px; height: 70px; background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                  <i class="fas fa-tree fa-2x text-white"></i>
-                </div>
-                <h3 class="font-weight-bold mb-1" style="color: #22c55e;">48</h3>
-                <h6 class="font-weight-bold text-muted mb-2">Áreas Verdes</h6>
-                <small class="text-muted">Bajo gestión municipal</small>
-              </div>
-              <div class="card-footer bg-transparent border-0 text-center pb-3">
-                <a href="#" class="btn btn-sm btn-outline-success rounded-pill px-4">
-                  <i class="fas fa-map-marked-alt mr-2"></i>Ver Áreas
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Trabajadores Activos -->
-          <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card border-0 shadow-sm h-100 card-hover" style="border-radius: 15px; transition: transform 0.3s;">
-              <div class="card-body text-center p-4">
-                <div class="icon-circle mx-auto mb-3" 
-                     style="width: 70px; height: 70px; background: linear-gradient(135deg, #84cc16 0%, #65a30d 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                  <i class="fas fa-users fa-2x text-white"></i>
-                </div>
-                <h3 class="font-weight-bold mb-1" style="color: #84cc16;">32</h3>
-                <h6 class="font-weight-bold text-muted mb-2">Trabajadores Activos</h6>
-                <small class="text-muted">Personal municipal</small>
-              </div>
-              <div class="card-footer bg-transparent border-0 text-center pb-3">
-                <a href="#" class="btn btn-sm btn-outline-success rounded-pill px-4">
-                  <i class="fas fa-users-cog mr-2"></i>Gestionar
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Infracciones -->
-          <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card border-0 shadow-sm h-100 card-hover" style="border-radius: 15px; transition: transform 0.3s;">
-              <div class="card-body text-center p-4">
-                <div class="icon-circle mx-auto mb-3" 
-                     style="width: 70px; height: 70px; background: linear-gradient(135deg, #15803d 0%, #14532d 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                  <i class="fas fa-exclamation-triangle fa-2x text-white"></i>
-                </div>
-                <h3 class="font-weight-bold mb-1" style="color: #15803d;">12</h3>
-                <h6 class="font-weight-bold text-muted mb-2">Infracciones Activas</h6>
-                <small class="text-muted">Pendientes de resolución</small>
-              </div>
-              <div class="card-footer bg-transparent border-0 text-center pb-3">
-                <a href="#" class="btn btn-sm btn-outline-success rounded-pill px-4">
-                  <i class="fas fa-clipboard-list mr-2"></i>Revisar
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Funciones Principales -->
-        <div class="row mb-4">
-          <div class="col-12">
-            <div class="card border-0 shadow-sm" style="border-radius: 15px;">
-              <div class="card-header bg-white border-0 pt-4 pb-3">
-                <h5 class="font-weight-bold mb-0">
-                  <i class="fas fa-tasks mr-2" style="color: #16a34a;"></i>Funciones Principales
-                </h5>
-              </div>
-              <div class="card-body p-4">
-                <div class="row">
-                  <div class="col-md-4 mb-3">
-                    <div class="d-flex align-items-start">
-                      <div class="icon-box mr-3" 
-                           style="width: 50px; height: 50px; background: #dcfce7; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-check-circle fa-lg" style="color: #16a34a;"></i>
-                      </div>
-                      <div>
-                        <h6 class="font-weight-bold mb-1">Aprobar Solicitudes</h6>
-                        <p class="text-muted small mb-0">Revisa y aprueba las solicitudes ciudadanas</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4 mb-3">
-                    <div class="d-flex align-items-start">
-                      <div class="icon-box mr-3" 
-                           style="width: 50px; height: 50px; background: #d1fae5; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-leaf fa-lg" style="color: #22c55e;"></i>
-                      </div>
-                      <div>
-                        <h6 class="font-weight-bold mb-1">Gestionar Áreas Verdes</h6>
-                        <p class="text-muted small mb-0">Administra los espacios verdes del municipio</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4 mb-3">
-                    <div class="d-flex align-items-start">
-                      <div class="icon-box mr-3" 
-                           style="width: 50px; height: 50px; background: #ecfccb; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-user-check fa-lg" style="color: #84cc16;"></i>
-                      </div>
-                      <div>
-                        <h6 class="font-weight-bold mb-1">Supervisar Trabajadores</h6>
-                        <p class="text-muted small mb-0">Monitorea el desempeño del personal</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4 mb-3">
-                    <div class="d-flex align-items-start">
-                      <div class="icon-box mr-3" 
-                           style="width: 50px; height: 50px; background: #f0fdf4; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-ban fa-lg" style="color: #15803d;"></i>
-                      </div>
-                      <div>
-                        <h6 class="font-weight-bold mb-1">Control de Infracciones</h6>
-                        <p class="text-muted small mb-0">Visualiza y gestiona las infracciones</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4 mb-3">
-                    <div class="d-flex align-items-start">
-                      <div class="icon-box mr-3" 
-                           style="width: 50px; height: 50px; background: #dcfce7; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-chart-bar fa-lg" style="color: #16a34a;"></i>
-                      </div>
-                      <div>
-                        <h6 class="font-weight-bold mb-1">Reportes Generales</h6>
-                        <p class="text-muted small mb-0">Accede a estadísticas y reportes del sistema</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4 mb-3">
-                    <div class="d-flex align-items-start">
-                      <div class="icon-box mr-3" 
-                           style="width: 50px; height: 50px; background: #d1fae5; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-cogs fa-lg" style="color: #22c55e;"></i>
-                      </div>
-                      <div>
-                        <h6 class="font-weight-bold mb-1">Configuración</h6>
-                        <p class="text-muted small mb-0">Gestiona parámetros del sistema</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
     </div>
-    <!-- Fin card contenedor -->
+</div>
 
-  </div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{ $totalSolicitudes }}</h3>
+                        <p>Solicitudes</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-broom"></i></div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-6">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>{{ $totalInfracciones }}</h3>
+                        <p>Infracciones</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ $totalTrabajadores }}</h3>
+                        <p>Trabajadores</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-users"></i></div>
+                    <a href="{{ route('gerente.trabajador.index') }}" class="small-box-footer">Gestionar <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Estado de Solicitudes</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                </div>
+
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h3 class="card-title">Últimas Infracciones</h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Monto</th>
+                                    <th>Estado Pago</th>
+                                    <th>Vence</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($ultimasInfracciones as $infraccion)
+                                <tr>
+                                    <td>{{ $infraccion->id_infraccion }}</td>
+                                    <td>S/. {{ $infraccion->montoMulta }}</td> <td>
+                                        <span class="badge badge-{{ $infraccion->estadoPago == 'pagado' ? 'success' : 'danger' }}">
+                                            {{ ucfirst($infraccion->estadoPago) }} </span>
+                                    </td>
+                                    <td>{{ substr($infraccion->fechaLimitePago, 0, 10) }}</td>
+                                </tr>
+                                @empty
+                                <tr><td colspan="4" class="text-center">Sin registros</td></tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header border-transparent">
+                        <h3 class="card-title">Solicitudes Recientes</h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                <tr>
+                                    <th>Descripción</th> <th>Fecha Tentativa</th>
+                                    <th>Prioridad</th>
+                                    <th>Estado</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @forelse($ultimasSolicitudes as $solicitud)
+                                <tr>
+                                    <td>{{ Str::limit($solicitud->descripcion, 20) }}</td>
+
+                                    <td>{{ substr($solicitud->fechaTentativaEjecucion, 0, 10) }}</td>
+
+                                    <td>
+                                        <span class="badge badge-{{ $solicitud->prioridad == 'ALTA' ? 'danger' : 'info' }}">
+                                            {{ $solicitud->prioridad }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @php $est = strtolower($solicitud->estado); @endphp
+                                        @if($est == 'registrada') <span class="badge badge-secondary">Registrada</span>
+                                        @elseif($est == 'en atención') <span class="badge badge-warning">En Proceso</span>
+                                        @elseif($est == 'atendida') <span class="badge badge-success">Atendida</span>
+                                        @else <span class="badge badge-danger">{{ $solicitud->estado }}</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr><td colspan="4" class="text-center">No hay datos</td></tr>
+                                @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
-<style>
-.card-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(22, 163, 74, 0.2) !important;
-}
-</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+        var donutData = {
+            labels: @json($labelsGrafico),
+            datasets: [{
+                data: @json($dataSolicitudes),
+                backgroundColor : ['#6c757d', '#ffc107', '#28a745', '#dc3545'],
+            }]
+        }
+        var donutOptions = { maintainAspectRatio : false, responsive : true }
+        new Chart(donutChartCanvas, { type: 'doughnut', data: donutData, options: donutOptions })
+    });
+</script>
 @endsection
