@@ -19,7 +19,7 @@ class Infraccion extends Model
     ];
 
     protected $casts = [
-        'fechaLimitePago' => 'datetime',
+        'fechaLimitePago' => 'date',
         'montoMulta' => 'decimal:2'
     ];
     

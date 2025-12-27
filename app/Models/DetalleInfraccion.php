@@ -30,9 +30,9 @@ class DetalleInfraccion extends Model
     }
 
     /**
-     * Relación con TipoInfraccion
+     * Relación con TipoInfraccion (renombrado a 'tipo' para evitar conflicto con el campo)
      */
-    public function tipoInfraccion()
+    public function tipo()
     {
         return $this->belongsTo(TipoInfraccion::class, 'tipoInfraccion', 'tipoInfraccion');
     }

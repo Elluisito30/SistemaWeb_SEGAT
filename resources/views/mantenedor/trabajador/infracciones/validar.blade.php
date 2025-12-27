@@ -26,7 +26,7 @@
                 </h6>
                 <p class="mb-2">
                   <strong>Tipo:</strong> 
-                  {{ $infraccion->detalleInfraccion->tipoInfraccion->descripcion ?? 'N/A' }}
+                  {{ $infraccion->detalleInfraccion->tipo->descripcion ?? 'N/A' }}
                 </p>
                 <p class="mb-2">
                   <strong>Lugar de Ocurrencia:</strong><br>

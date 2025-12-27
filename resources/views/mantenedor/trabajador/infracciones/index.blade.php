@@ -95,7 +95,7 @@
                   </td>
                   <td>
                     <span class="badge badge-warning">
-                      {{ $item->detalleInfraccion->tipoInfraccion->descripcion ?? 'N/A' }}
+                      {{ $item->detalleInfraccion->tipo->descripcion ?? 'N/A' }}
                     </span>
                   </td>
                   <td>{{ $item->detalleInfraccion->lugarOcurrencia ?? 'N/A' }}</td>

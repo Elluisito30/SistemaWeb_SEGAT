@@ -14,7 +14,6 @@ $user = Auth::user();
 $trabajador = Trabajador::where('email', $user->email)->first();
 
 // Estadísticas de solicitudes
-$totalSolicitudes = SolicitudLimpieza::count();
 $solicitudesRegistradas = SolicitudLimpieza::where('estado', 'registrada')->count();
 $solicitudesEnAtencion = SolicitudLimpieza::where('estado', 'en atención')->count();
 $solicitudesAtendidas = SolicitudLimpieza::where('estado', 'atendida')->count();
@@ -73,12 +72,11 @@ if ($trabajador) {
                   <div>
                     <h5 class="font-weight-bold mb-2" style="color: #16a34a;">Panel de Trabajador - Sistema SEGAT</h5>
                     <p class="text-muted mb-2">
-                      Desde este panel podrás gestionar las solicitudes de limpieza de áreas verdes y validar las infracciones 
-                      reportadas por los ciudadanos. Mantén actualizado el estado de cada solicitud y asigna multas a las infracciones.
+                      Desde este panel podrás gestionar solicitudes de limpieza y validar infracciones reportadas por ciudadanos.
                     </p>
                     <p class="text-muted mb-0 small">
                       <i class="fas fa-lightbulb mr-2" style="color: #84cc16;"></i>
-                      <strong>Tip:</strong> Prioriza las solicitudes con estado "ALTA" y valida las infracciones con evidencia fotográfica.
+                      <strong>Tip:</strong> Prioriza solicitudes con estado "ALTA" y valida infracciones con evidencia fotográfica.
                     </p>
                   </div>
                 </div>
@@ -100,7 +98,7 @@ if ($trabajador) {
                 </div>
                 <h3 class="font-weight-bold mb-1" style="color: #16a34a;">{{ $solicitudesRegistradas }}</h3>
                 <h6 class="font-weight-bold text-muted mb-2">Solicitudes Nuevas</h6>
-                <small class="text-muted">Pendientes de revisar</small>
+                <small class="text-muted">Por revisar</small>
               </div>
               <div class="card-footer bg-transparent border-0 text-center pb-3">
                 <a href="{{ route('trabajador.solicitudes.index') }}" class="btn btn-sm btn-outline-success rounded-pill px-4">
@@ -130,7 +128,7 @@ if ($trabajador) {
             </div>
           </div>
 
-          <!-- Solicitudes en Atención -->
+          <!-- Solicitudes En Atención -->
           <div class="col-lg-3 col-md-6 mb-3">
             <div class="card border-0 shadow-sm h-100 card-hover" style="border-radius: 15px; transition: transform 0.3s;">
               <div class="card-body text-center p-4">
@@ -157,20 +155,21 @@ if ($trabajador) {
               <div class="card-body text-center p-4">
                 <div class="icon-circle mx-auto mb-3" 
                      style="width: 70px; height: 70px; background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                  <i class="fas fa-check-circle fa-2x text-white"></i>
+                  <i class="fas fa-user-check fa-2x text-white"></i>
                 </div>
                 <h3 class="font-weight-bold mb-1" style="color: #22c55e;">{{ $misInfraccionesValidadas }}</h3>
-                <h6 class="font-weight-bold text-muted mb-2">Infracciones Validadas</h6>
-                <small class="text-muted">Por mí</small>
+                <h6 class="font-weight-bold text-muted mb-2">Mis Validaciones</h6>
+                <small class="text-muted">Procesadas por mí</small>
               </div>
               <div class="card-footer bg-transparent border-0 text-center pb-3">
                 <a href="{{ route('trabajador.infracciones.historial') }}" 
                    class="btn btn-sm btn-outline-success rounded-pill px-4">
-                  <i class="fas fa-history mr-2"></i>Historial
+                  <i class="fas fa-history mr-2"></i>Ver Historial
                 </a>
               </div>
             </div>
           </div>
+
         </div>
 
         <!-- Acciones Rápidas -->
@@ -236,76 +235,6 @@ if ($trabajador) {
           </div>
         </div>
 
-        <!-- Resumen de Solicitudes por Estado -->
-        <div class="row mb-4">
-          <div class="col-12">
-            <div class="card border-0 shadow-sm" style="border-radius: 15px;">
-              <div class="card-header bg-white border-0 pt-4 pb-3">
-                <h5 class="font-weight-bold mb-0">
-                  <i class="fas fa-chart-pie mr-2" style="color: #16a34a;"></i>Resumen de Solicitudes
-                </h5>
-              </div>
-              <div class="card-body p-4">
-                <div class="row">
-                  
-                  <div class="col-md-3 mb-3">
-                    <div class="d-flex align-items-center">
-                      <div class="icon-box mr-3" 
-                           style="width: 50px; height: 50px; background: #e5e7eb; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-inbox fa-lg" style="color: #6b7280;"></i>
-                      </div>
-                      <div>
-                        <h4 class="font-weight-bold mb-0" style="color: #6b7280;">{{ $solicitudesRegistradas }}</h4>
-                        <p class="text-muted small mb-0">Registradas</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3 mb-3">
-                    <div class="d-flex align-items-center">
-                      <div class="icon-box mr-3" 
-                           style="width: 50px; height: 50px; background: #dbeafe; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-spinner fa-lg" style="color: #3b82f6;"></i>
-                      </div>
-                      <div>
-                        <h4 class="font-weight-bold mb-0" style="color: #3b82f6;">{{ $solicitudesEnAtencion }}</h4>
-                        <p class="text-muted small mb-0">En Atención</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3 mb-3">
-                    <div class="d-flex align-items-center">
-                      <div class="icon-box mr-3" 
-                           style="width: 50px; height: 50px; background: #d1fae5; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-check-circle fa-lg" style="color: #22c55e;"></i>
-                      </div>
-                      <div>
-                        <h4 class="font-weight-bold mb-0" style="color: #22c55e;">{{ $solicitudesAtendidas }}</h4>
-                        <p class="text-muted small mb-0">Atendidas</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3 mb-3">
-                    <div class="d-flex align-items-center">
-                      <div class="icon-box mr-3" 
-                           style="width: 50px; height: 50px; background: #dcfce7; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-list fa-lg" style="color: #16a34a;"></i>
-                      </div>
-                      <div>
-                        <h4 class="font-weight-bold mb-0" style="color: #16a34a;">{{ $totalSolicitudes }}</h4>
-                        <p class="text-muted small mb-0">Total</p>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <!-- Funciones de Trabajo -->
         <div class="row mb-4">
           <div class="col-12">
@@ -318,7 +247,7 @@ if ($trabajador) {
               <div class="card-body p-4">
                 <div class="row">
                   
-                  <div class="col-md-6 mb-3">
+                  <div class="col-md-4 mb-3">
                     <div class="d-flex align-items-start">
                       <div class="icon-box mr-3" 
                            style="width: 50px; height: 50px; background: #dcfce7; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -327,13 +256,13 @@ if ($trabajador) {
                       <div>
                         <h6 class="font-weight-bold mb-1">Gestión de Solicitudes</h6>
                         <p class="text-muted small mb-0">
-                          Visualiza, programa y cambia el estado de las solicitudes de limpieza de áreas verdes.
+                          Visualiza, programa y cambia el estado de las solicitudes de limpieza.
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  <div class="col-md-6 mb-3">
+                  <div class="col-md-4 mb-3">
                     <div class="d-flex align-items-start">
                       <div class="icon-box mr-3" 
                            style="width: 50px; height: 50px; background: #fef3c7; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -342,13 +271,13 @@ if ($trabajador) {
                       <div>
                         <h6 class="font-weight-bold mb-1">Validación de Infracciones</h6>
                         <p class="text-muted small mb-0">
-                          Revisa infracciones reportadas por ciudadanos y asigna el monto de las multas correspondientes.
+                          Revisa infracciones reportadas y asigna el monto de las multas.
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  <div class="col-md-6 mb-3">
+                  <div class="col-md-4 mb-3">
                     <div class="d-flex align-items-start">
                       <div class="icon-box mr-3" 
                            style="width: 50px; height: 50px; background: #dbeafe; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -357,22 +286,7 @@ if ($trabajador) {
                       <div>
                         <h6 class="font-weight-bold mb-1">Programación de Servicios</h6>
                         <p class="text-muted small mb-0">
-                          Asigna monto y fecha programada a las solicitudes aprobadas.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6 mb-3">
-                    <div class="d-flex align-items-start">
-                      <div class="icon-box mr-3" 
-                           style="width: 50px; height: 50px; background: #d1fae5; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-history fa-lg" style="color: #22c55e;"></i>
-                      </div>
-                      <div>
-                        <h6 class="font-weight-bold mb-1">Historial de Validaciones</h6>
-                        <p class="text-muted small mb-0">
-                          Consulta el registro de todas las infracciones que has validado.
+                          Asigna monto y fecha programada a solicitudes (cambia a "En Atención").
                         </p>
                       </div>
                     </div>

@@ -27,9 +27,6 @@ class TrabajadorController extends Controller
     // GESTIÓN DE SOLICITUDES DE LIMPIEZA
     // ========================================
     
-    /**
-     * Listar todas las solicitudes de limpieza
-     */
     public function indexSolicitudes(Request $request)
     {
         $buscarpor = $request->get('buscarpor');
@@ -54,9 +51,6 @@ class TrabajadorController extends Controller
         return view('mantenedor.trabajador.solicitudes.index', compact('solicitudes', 'buscarpor', 'estado'));
     }
 
-    /**
-     * Mostrar formulario para programar/editar solicitud
-     */
     public function editSolicitud($id)
     {
         $solicitud = SolicitudLimpieza::with([
@@ -68,15 +62,12 @@ class TrabajadorController extends Controller
         return view('mantenedor.trabajador.solicitudes.edit', compact('solicitud'));
     }
 
-    /**
-     * Actualizar estado y programación de solicitud
-     */
     public function updateSolicitud(Request $request, $id)
     {
         $solicitud = SolicitudLimpieza::findOrFail($id);
 
         $request->validate([
-            'estado' => 'required|in:registrada,en atención,atendida,rechazado',
+            'estado' => 'required|in:registrada,en atención,atendida,rechazada',
             'monto' => 'nullable|numeric|min:0|max:99999.99',
             'fechaProgramada' => 'nullable|date'
         ], [
@@ -88,34 +79,22 @@ class TrabajadorController extends Controller
             'fechaProgramada.date' => 'Formato de fecha no válido.'
         ]);
 
-        // Si se programa (asigna monto y fecha), cambiar automáticamente a "en atención"
+        // Si se asigna monto y fecha, cambiar automáticamente a "en atención"
         if ($request->monto && $request->fechaProgramada) {
             $solicitud->estado = 'en atención';
             $solicitud->monto = $request->monto;
             $solicitud->fechaProgramada = $request->fechaProgramada;
         } else {
-            // Solo cambiar estado si no se está programando
+            // Solo cambiar estado manualmente
             $solicitud->estado = $request->estado;
+            if ($request->monto) $solicitud->monto = $request->monto;
+            if ($request->fechaProgramada) $solicitud->fechaProgramada = $request->fechaProgramada;
         }
 
         $solicitud->save();
 
         return redirect()->route('trabajador.solicitudes.index')
             ->with('datos', 'Solicitud actualizada exitosamente.');
-    }
-
-    /**
-     * Confirmar cambio de estado de solicitud
-     */
-    public function confirmarSolicitud($id)
-    {
-        $solicitud = SolicitudLimpieza::with([
-            'detalleSolicitud.areaVerde',
-            'detalleSolicitud.contribuyente',
-            'servicio'
-        ])->findOrFail($id);
-        
-        return view('mantenedor.trabajador.solicitudes.confirmar', compact('solicitud'));
     }
 
     // ========================================
@@ -131,7 +110,7 @@ class TrabajadorController extends Controller
         
         $infracciones = Infraccion::with([
                 'detalleInfraccion.contribuyente',
-                'detalleInfraccion.tipoInfraccion'
+                'detalleInfraccion.tipo'
             ])
             ->whereDoesntHave('detalleInfraccion.registroInfraccion') // Solo infracciones sin validar
             ->when($buscarpor, function ($query) use ($buscarpor) {
@@ -153,7 +132,7 @@ class TrabajadorController extends Controller
     {
         $infraccion = Infraccion::with([
             'detalleInfraccion.contribuyente',
-            'detalleInfraccion.tipoInfraccion'
+            'detalleInfraccion.tipo'
         ])->findOrFail($id);
         
         // Verificar que no esté ya validada
@@ -251,7 +230,7 @@ class TrabajadorController extends Controller
         $infracciones = RegistroInfraccion::with([
                 'detalleInfraccion.infraccion',
                 'detalleInfraccion.contribuyente',
-                'detalleInfraccion.tipoInfraccion'
+                'detalleInfraccion.tipo'
             ])
             ->where('idtrabajador', $trabajador->idtrabajador)
             ->when($buscarpor, function ($query) use ($buscarpor) {

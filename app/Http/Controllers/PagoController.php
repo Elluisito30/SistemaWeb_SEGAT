@@ -33,17 +33,14 @@ class PagoController extends Controller
         }
         
         // Obtener todas las infracciones del contribuyente
-        // Solo mostramos las que tienen monto (ya validadas por trabajador)
+        // Mostramos todas: pendientes (monto=0) y validadas (monto>0)
         $infracciones = DetalleInfraccion::with([
             'infraccion',
             'tipo',
             'registroInfraccion.trabajador'
         ])
         ->where('id_contribuyente', $contribuyente->id_contribuyente)
-        ->whereHas('infraccion', function($query) {
-            // Solo infracciones con monto asignado (validadas)
-            $query->whereNotNull('montoMulta');
-        })
+        ->whereHas('infraccion')
         ->orderBy('fechaHora', 'desc')
         ->get();
         

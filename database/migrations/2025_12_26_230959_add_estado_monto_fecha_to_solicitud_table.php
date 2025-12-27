@@ -12,15 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('solicitud', function (Blueprint $table) {
+            $table->enum('estado', ['registrada', 'en atención', 'atendida', 'rechazada'])
+                  ->default('registrada')
+                  ->after('documentoAdjunto');
             $table->decimal('monto', 8, 2)->nullable()->after('estado');
             $table->date('fechaProgramada')->nullable()->after('monto');
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::table('solicitud', function (Blueprint $table) {
-            $table->dropColumn(['monto', 'fechaProgramada']);
+            $table->dropColumn(['estado', 'monto', 'fechaProgramada']);
         });
     }
 };

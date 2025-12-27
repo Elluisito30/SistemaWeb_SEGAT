@@ -30,17 +30,24 @@ Route::get('/salir', [UserController::class, 'salir'])->name('logout.get')->midd
 Route::post('/salir', [UserController::class, 'salir'])->name('logout')->middleware('auth');
 
 // ------------------------
-// RUTAS PARA GERENTE
+// RUTAS PARA CIUDADANO
 // ------------------------
 Route::middleware(['auth', 'role:ciudadano'])->prefix('ciudadano')->name('ciudadano.')->group(function () {
     Route::get('/dashboard', [CiudadanoController::class, 'dashboard'])->name('dashboard');
     
-    // Rutas de solicitudes de limpieza
+    // PUNTO 1: Registrar solicitudes de limpieza
     Route::resource('/solicitud', SolicitudLimpiezaController::class)->except(['show']);  
     Route::get('solicitud/cancelar', function () {   
         return redirect()->route('ciudadano.solicitud.index')->with('datos','Acción Cancelada..!');   
     })->name('solicitud.cancelar');  
     Route::get('solicitud/{id}/confirmar',[SolicitudLimpiezaController::class,'confirmar'])->name('solicitud.confirmar');
+    
+    // PUNTO 2: Registrar infracciones
+    Route::get('/infracciones/crear', [InfraccionController::class, 'create'])->name('infracciones.create');
+    Route::post('/infracciones', [InfraccionController::class, 'store'])->name('infracciones.store');
+    
+    // PUNTO 3: Consultar pagos y multas (solo lectura)
+    Route::get('/pagos', [PagoController::class, 'index'])->name('pagos.index');
 });
 
 // ------------------------
@@ -48,11 +55,11 @@ Route::middleware(['auth', 'role:ciudadano'])->prefix('ciudadano')->name('ciudad
 // ------------------------
 Route::middleware(['auth', 'role:trabajador'])->prefix('trabajador')->name('trabajador.')->group(function () {
     Route::get('/dashboard', [TrabajadorController::class, 'dashboard'])->name('dashboard');
+    
     // GESTIÓN DE SOLICITUDES DE LIMPIEZA
     Route::get('/solicitudes', [TrabajadorController::class, 'indexSolicitudes'])->name('solicitudes.index');
     Route::get('/solicitudes/{id}/editar', [TrabajadorController::class, 'editSolicitud'])->name('solicitudes.edit');
     Route::put('/solicitudes/{id}', [TrabajadorController::class, 'updateSolicitud'])->name('solicitudes.update');
-    Route::get('/solicitudes/{id}/confirmar', [TrabajadorController::class, 'confirmarSolicitud'])->name('solicitudes.confirmar');
     Route::get('/solicitudes/cancelar', function () {
         return redirect()->route('trabajador.solicitudes.index')->with('datos', 'Acción Cancelada.');
     })->name('solicitudes.cancelar');
@@ -68,17 +75,10 @@ Route::middleware(['auth', 'role:trabajador'])->prefix('trabajador')->name('trab
 });
 
 // ------------------------
-// RUTAS PARA CIUDADANO
+// RUTAS PARA GERENTE
 // ------------------------
-Route::middleware(['auth', 'role:ciudadano'])->prefix('ciudadano')->name('ciudadano.')->group(function () {
-    Route::get('/dashboard', [CiudadanoController::class, 'dashboard'])->name('dashboard');
-    // Aquí irán más rutas del ciudadano según tu proyecto
-    Route::get('/pagos', [PagoController::class, 'index'])->name('pagos.index');
-    
-    // Registrar infracción
-    Route::get('/infracciones/crear', [InfraccionController::class, 'create'])->name('infracciones.create');
-    Route::post('/infracciones', [InfraccionController::class, 'store'])->name('infracciones.store');
-
+Route::middleware(['auth', 'role:gerente'])->prefix('gerente')->name('gerente.')->group(function () {
+    Route::get('/dashboard', [GerenteController::class, 'dashboard'])->name('dashboard');
 });
 
 // -----------------------------

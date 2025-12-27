@@ -17,15 +17,31 @@ class SolicitudLimpiezaController extends Controller
     {
         $buscarpor = $request->get('buscarpor');
         
+        // Obtener contribuyente del usuario logueado
+        $contribuyente = Auth::user()->contribuyente;
+        
+        if (!$contribuyente) {
+            return view('mantenedor.ciudadano.solicitud_limpieza.index', [
+                'solicitud' => collect(),
+                'buscarpor' => $buscarpor,
+                'mensaje' => 'No se encontró información de contribuyente asociada.'
+            ]);
+        }
+        
         $solicitud = SolicitudLimpieza::with([
                 'detalleSolicitud.areaVerde',
                 'servicio'
             ])
-            ->whereHas('detalleSolicitud.areaVerde', function ($query) use ($buscarpor) {
-                if ($buscarpor) {
-                    $query->where('nombre', 'like', '%' . $buscarpor . '%');
-                }
+            ->whereHas('detalleSolicitud', function ($query) use ($contribuyente) {
+                // Filtrar por contribuyente del usuario logueado
+                $query->where('id_contribuyente', $contribuyente->id_contribuyente);
             })
+            ->when($buscarpor, function ($query) use ($buscarpor) {
+                $query->whereHas('detalleSolicitud.areaVerde', function ($q) use ($buscarpor) {
+                    $q->where('nombre', 'like', '%' . $buscarpor . '%');
+                });
+            })
+            ->orderBy('id_solicitud', 'desc')
             ->paginate(self::PAGINATION);
 
         return view('mantenedor.ciudadano.solicitud_limpieza.index', compact('solicitud', 'buscarpor'));

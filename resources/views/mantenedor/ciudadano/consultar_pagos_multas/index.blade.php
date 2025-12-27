@@ -48,16 +48,25 @@
 
         <!-- Resumen de multas -->
         <div class="row mb-3">
-          <div class="col-md-6">
-            <div class="info-box bg-warning">
-              <span class="info-box-icon"><i class="fas fa-exclamation-triangle"></i></span>
+          <div class="col-md-4">
+            <div class="info-box bg-info">
+              <span class="info-box-icon"><i class="fas fa-clipboard-list"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">Total Infracciones</span>
                 <span class="info-box-number">{{ count($infracciones) }}</span>
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-4">
+            <div class="info-box bg-warning">
+              <span class="info-box-icon"><i class="fas fa-clock"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Pendientes Validación</span>
+                <span class="info-box-number">{{ $infracciones->filter(fn($i) => !$i->registroInfraccion)->count() }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
             <div class="info-box bg-danger">
               <span class="info-box-icon"><i class="fas fa-dollar-sign"></i></span>
               <div class="info-box-content">
@@ -100,9 +109,15 @@
                 <td>{{ \Carbon\Carbon::parse($detalleInfraccion->fechaHora)->format('d/m/Y H:i') }}</td>
                 <td>{{ $detalleInfraccion->lugarOcurrencia }}</td>
                 <td>
-                  <span class="badge badge-danger" style="font-size: 1rem;">
-                    S/ {{ number_format($detalleInfraccion->infraccion->montoMulta, 2) }}
-                  </span>
+                  @if($detalleInfraccion->infraccion->montoMulta > 0)
+                    <span class="badge badge-danger" style="font-size: 1rem;">
+                      S/ {{ number_format($detalleInfraccion->infraccion->montoMulta, 2) }}
+                    </span>
+                  @else
+                    <span class="badge badge-secondary">
+                      <i class="fas fa-clock"></i> En revisión
+                    </span>
+                  @endif
                 </td>
                 <td>
                   @if($detalleInfraccion->infraccion->fechaLimitePago)
@@ -118,17 +133,27 @@
                       </small>
                     @endif
                   @else
-                    <span class="text-muted">No definido</span>
+                    <span class="text-muted">Pendiente asignación</span>
                   @endif
                 </td>
                 <td>
-                  @if($detalleInfraccion->infraccion->estadoPago == 'Pagado')
-                    <span class="badge badge-success">
-                      <i class="fas fa-check-circle"></i> Pagado
-                    </span>
+                  @if($detalleInfraccion->registroInfraccion)
+                    @if($detalleInfraccion->infraccion->estadoPago == 'Pagada')
+                      <span class="badge badge-success">
+                        <i class="fas fa-check-circle"></i> Pagada
+                      </span>
+                    @elseif($detalleInfraccion->infraccion->estadoPago == 'Vencida')
+                      <span class="badge badge-danger">
+                        <i class="fas fa-times-circle"></i> Vencida
+                      </span>
+                    @else
+                      <span class="badge badge-warning">
+                        <i class="fas fa-hourglass-half"></i> Pendiente
+                      </span>
+                    @endif
                   @else
-                    <span class="badge badge-warning">
-                      <i class="fas fa-hourglass-half"></i> Pendiente
+                    <span class="badge badge-secondary">
+                      <i class="fas fa-clock"></i> Sin validar
                     </span>
                   @endif
                 </td>

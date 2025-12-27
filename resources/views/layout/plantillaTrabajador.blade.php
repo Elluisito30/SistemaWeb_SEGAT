@@ -49,7 +49,7 @@
           <li class="nav-item">
             <a href="{{ route('trabajador.solicitudes.index') }}" class="nav-link {{ request()->routeIs('trabajador.solicitudes.*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-clipboard-list"></i>
-              <p>Solicitudes de Limpieza</p>
+              <p>Gestionar Solicitudes</p>
             </a>
           </li>
 

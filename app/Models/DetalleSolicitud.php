@@ -29,4 +29,9 @@ class DetalleSolicitud extends Model
     {
         return $this->hasMany(SolicitudLimpieza::class, 'id_detalleSolicitud', 'id_detalleSolicitud');
     }
+
+    public function registroSolicitud() 
+    {
+        return $this->hasOne(RegistroSolicitud::class, 'id_detalleSolicitud', 'id_detalleSolicitud');
+    }
 }

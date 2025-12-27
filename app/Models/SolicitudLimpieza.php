@@ -17,9 +17,9 @@ class SolicitudLimpieza extends Model
         'descripcion',
         'fechaTentativaEjecucion',
         'documentoAdjunto',
-        'estado',           // 
-        'monto',            // 
-        'fechaProgramada'   // 
+        'estado',
+        'monto',
+        'fechaProgramada'
     ];  
 
     public function detalleSolicitud() 
