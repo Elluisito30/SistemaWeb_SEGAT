@@ -114,7 +114,7 @@
                                     </div>
 
                                     <!-- Fecha límite de pago -->
-                                    <div class "col-md-4">
+                                    <div class = "col-md-4">
                                         <label class="form-label fw-bold">Fecha límite de pago <span class="text-danger">*</span></label>
                                         <input type="date" 
                                                name="fechaLimitePago" 
