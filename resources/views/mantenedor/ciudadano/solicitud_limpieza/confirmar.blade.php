@@ -8,11 +8,11 @@
         <div class="col-md-8">
             <div class="card border-danger shadow">
                 <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
-                    <h5 class="m-0"><i class="fas fa-exclamation-triangle"></i> CONFIRMAR ELIMINACIÓN</h5>
+                    <h5 class="font-weight-bold m-0"><i></i> CONFIRMAR ELIMINACIÓN DE SOLICITUD</h5>
                 </div>
                 <div class="card-body">
                     <h5 class="text-center mb-4">
-                        ¿Está seguro que desea eliminar el siguiente registro?
+                        ¿Está seguro/a que desea eliminar la solicitud que ha realizado?
                     </h5>
                     <div class="text-center mb-4">
                         <strong>Código:</strong> {{ $solicitud->id_solicitud }} <br>

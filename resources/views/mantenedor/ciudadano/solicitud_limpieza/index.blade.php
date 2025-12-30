@@ -32,7 +32,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="mb-1">Total de Solicitudes</h6>
-                            <h2 class="mb-0 font-weight-bold">{{ $solicitud->total() }}</h2>
+                            <h2 class="mb-0 font-weight-bold">{{ $totalSolicitudes }}</h2>
                         </div>
                         <div>
                             <i class="fas fa-clipboard-list fa-3x opacity-50"></i>
@@ -47,7 +47,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="mb-1">Prioridad Alta</h6>
-                            <h2 class="mb-0 font-weight-bold">{{ $solicitud->where('prioridad', 'ALTA')->count() }}</h2>
+                            <h2 class="mb-0 font-weight-bold">{{ $totalAlta }}</h2>
                         </div>
                         <div>
                             <i class="fas fa-exclamation-triangle fa-3x opacity-50"></i>
@@ -62,7 +62,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="mb-1">Prioridad Media</h6>
-                            <h2 class="mb-0 font-weight-bold">{{ $solicitud->where('prioridad', 'MEDIA')->count() }}</h2>
+                            <h2 class="mb-0 font-weight-bold">{{ $totalMedia }}</h2>
                         </div>
                         <div>
                             <i class="fas fa-clock fa-3x opacity-50"></i>
@@ -77,7 +77,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="mb-1">Prioridad Baja</h6>
-                            <h2 class="mb-0 font-weight-bold">{{ $solicitud->where('prioridad', 'BAJA')->count() }}</h2>
+                            <h2 class="mb-0 font-weight-bold">{{ $totalBaja }}</h2>
                         </div>
                         <div>
                             <i class="fas fa-check-circle fa-3x opacity-50"></i>
@@ -134,7 +134,7 @@
                         <tr>
                             <th class="border-0">Código</th>
                             <th class="border-0">Zona</th>
-                            <th class="border-0">Tipo de Servicio</th> {{-- ✅ CAMBIADO --}}
+                            <th class="border-0">Tipo de Servicio</th>
                             <th class="border-0">Prioridad</th>
                             <th class="border-0">Fecha Tentativa</th>
                             <th class="border-0">Estado</th>
@@ -167,15 +167,15 @@
                                     <td class="align-middle">
                                         @if($itemsolicitud->prioridad == 'ALTA')
                                             <span class="badge badge-danger px-3 py-2">
-                                                <i class="fas fa-exclamation-circle"></i> ALTA
+                                                <i class="fas fa-exclamation-circle me-1"></i> ALTA
                                             </span>
                                         @elseif($itemsolicitud->prioridad == 'MEDIA')
                                             <span class="badge badge-warning px-3 py-2">
-                                                <i class="fas fa-exclamation-triangle"></i> MEDIA
+                                                <i class="fas fa-exclamation-triangle me-1"></i> MEDIA
                                             </span>
                                         @else
                                             <span class="badge badge-info px-3 py-2">
-                                                <i class="fas fa-info-circle"></i> BAJA
+                                                <i class="fas fa-info-circle me-1"></i> BAJA
                                             </span>
                                         @endif
                                     </td>
@@ -202,7 +202,7 @@
                                                 @break
                                             @case('rechazada')
                                                 <span class="badge bg-danger px-3 py-2">
-                                                    <i class="fas fa-times-circle me-1"></i> Ninguno
+                                                    <i class="fas fa-times-circle me-1"></i> Rechazada
                                                 </span>
                                                 @break
                                             @default

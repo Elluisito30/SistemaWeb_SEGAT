@@ -7,7 +7,7 @@
         <div class="col-md-8">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h5 class="m-0">REGISTRAR SOLICITUD DE LIMPIEZA</h5>
+                    <h5 class="font-weight-bold m-0">REGISTRAR SOLICITUD DE LIMPIEZA</h5>
                 </div>
 
                 <div class="card-body">

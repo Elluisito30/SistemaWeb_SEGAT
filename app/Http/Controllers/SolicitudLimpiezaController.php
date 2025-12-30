@@ -22,8 +22,12 @@ class SolicitudLimpiezaController extends Controller
         
         if (!$contribuyente) {
             return view('mantenedor.ciudadano.solicitud_limpieza.index', [
-                'solicitud' => collect(),
+                'solicitud' => new \Illuminate\Pagination\LengthAwarePaginator([], 0, self::PAGINATION),
                 'buscarpor' => $buscarpor,
+                'totalSolicitudes' => 0,
+                'totalAlta' => 0,
+                'totalMedia' => 0,
+                'totalBaja' => 0,
                 'mensaje' => 'No se encontró información de contribuyente asociada.'
             ]);
         }
@@ -41,10 +45,34 @@ class SolicitudLimpiezaController extends Controller
                     $q->where('nombre', 'like', '%' . $buscarpor . '%');
                 });
             })
-            ->orderBy('id_solicitud', 'desc')
+            ->orderBy('id_solicitud', 'asc')
             ->paginate(self::PAGINATION);
 
-        return view('mantenedor.ciudadano.solicitud_limpieza.index', compact('solicitud', 'buscarpor'));
+        // Contadores totales del contribuyente
+        $totalSolicitudes = SolicitudLimpieza::whereHas('detalleSolicitud', function ($query) use ($contribuyente) {
+            $query->where('id_contribuyente', $contribuyente->id_contribuyente);
+        })->count();
+
+        $totalAlta = SolicitudLimpieza::whereHas('detalleSolicitud', function ($query) use ($contribuyente) {
+            $query->where('id_contribuyente', $contribuyente->id_contribuyente);
+        })->where('prioridad', 'ALTA')->count();
+
+        $totalMedia = SolicitudLimpieza::whereHas('detalleSolicitud', function ($query) use ($contribuyente) {
+            $query->where('id_contribuyente', $contribuyente->id_contribuyente);
+        })->where('prioridad', 'MEDIA')->count();
+
+        $totalBaja = SolicitudLimpieza::whereHas('detalleSolicitud', function ($query) use ($contribuyente) {
+            $query->where('id_contribuyente', $contribuyente->id_contribuyente);
+        })->where('prioridad', 'BAJA')->count();
+
+        return view('mantenedor.ciudadano.solicitud_limpieza.index', compact(
+            'solicitud', 
+            'buscarpor',
+            'totalSolicitudes',
+            'totalAlta',
+            'totalMedia',
+            'totalBaja'
+        ));
     }
 
     public function create()
@@ -88,8 +116,20 @@ class SolicitudLimpiezaController extends Controller
         $detalleSolicitud->id_area = $request->id_area;
         $detalleSolicitud->save();
 
-        // Crear solicitud
+        // Buscar el primer ID disponible
+        $ultimoId = SolicitudLimpieza::max('id_solicitud') ?? 0;
+        $primerIdDisponible = 1;
+        
+        for ($i = 1; $i <= $ultimoId + 1; $i++) {
+            if (!SolicitudLimpieza::where('id_solicitud', $i)->exists()) {
+                $primerIdDisponible = $i;
+                break;
+            }
+        }
+
+        // Crear solicitud con ID manual
         $solicitud = new SolicitudLimpieza();
+        $solicitud->id_solicitud = $primerIdDisponible; 
         $solicitud->id_detalleSolicitud = $detalleSolicitud->id_detalleSolicitud;
         $solicitud->id_servicio = $request->id_servicio;
         $solicitud->prioridad = $request->prioridad;

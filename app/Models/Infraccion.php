@@ -23,9 +23,6 @@ class Infraccion extends Model
         'montoMulta' => 'decimal:2'
     ];
     
-    /**
-     * Relación con DetalleInfraccion
-     */
     public function detalleInfraccion()
     {
         return $this->belongsTo(DetalleInfraccion::class, 'id_detalleInfraccion', 'id_detalleInfraccion');
