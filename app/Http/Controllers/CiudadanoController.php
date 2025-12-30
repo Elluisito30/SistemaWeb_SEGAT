@@ -25,26 +25,26 @@ class CiudadanoController extends Controller
             ]);
         }
 
-        // 📌 1. Contar solicitudes del ciudadano
+        //  1. Contar solicitudes del ciudadano
         $solicitudes = SolicitudLimpieza::whereHas('detalleSolicitud', function ($query) use ($contribuyente) {
             $query->where('id_contribuyente', $contribuyente->id_contribuyente);
         })->count();
 
-        // 📌 2. Contar solicitudes en proceso ("en_atencion")
+        //  2. Contar solicitudes en proceso ("en_atencion")
         $enProceso = SolicitudLimpieza::whereHas('detalleSolicitud', function ($query) use ($contribuyente) {
             $query->where('id_contribuyente', $contribuyente->id_contribuyente);
         })->where('estado', 'en_atencion')->count();
 
-        // 📌 3. Contar infracciones del ciudadano (como infractor)
+        //  3. Contar infracciones del ciudadano (como infractor)
         $infracciones = DetalleInfraccion::where('id_contribuyente', $contribuyente->id_contribuyente)->count();
 
-        // 📌 4. Contar áreas verdes en su distrito
+        //  4. Contar áreas verdes en su distrito
         $areasVerdes = 0;
         if ($contribuyente->domicilio && $contribuyente->domicilio->id_distrito) {
             $areasVerdes = AreaVerde::where('id_distrito', $contribuyente->domicilio->id_distrito)->count();
         }
 
-        // 📤 Enviar datos a la vista
+        // Enviar datos a la vista
         return view('vistasHome.homeCiudadano', compact(
             'solicitudes',
             'enProceso',

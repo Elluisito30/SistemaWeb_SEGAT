@@ -47,8 +47,7 @@ if ($trabajador) {
                     </h4>
                     <p class="mb-0" style="font-size: 0.9rem; opacity: 0.9;">
                       Bienvenido, <strong>{{ Auth::user()->name }}</strong> | 
-                      <i class="fas fa-calendar-alt ml-2 mr-1"></i>{{ date('d/m/Y') }} | 
-                      <i class="fas fa-clock ml-2 mr-1"></i>{{ date('H:i') }}
+                      <i class="fas fa-calendar-alt ml-2 mr-1"></i>{{ date('d/m/Y') }} 
                     </p>
                   </div>
                   <div class="text-white d-none d-md-block">

@@ -2,155 +2,141 @@
 @section('titulo', 'Historial de Infracciones Validadas')
 @section('contenido')
 
-<section class="content pt-4">
-  <div class="container-fluid">
-    
-    <div class="card border-0 shadow-sm" style="border-radius: 20px;">
-      <div class="card-header bg-white border-0 pt-4 pb-3">
-        <div class="d-flex justify-content-between align-items-center">
-          <h4 class="font-weight-bold mb-0">
-            <i class="fas fa-history mr-2" style="color: #16a34a;"></i>
-            Mis Infracciones Validadas
-          </h4>
-          <a href="{{ route('trabajador.infracciones.index') }}" 
-             class="btn btn-outline-success">
-            <i class="fas fa-arrow-left mr-2"></i>Volver a Pendientes
-          </a>
-        </div>
-      </div>
-
-      <div class="card-body p-4">
-        
-        <!-- Buscador -->
-        <div class="row mb-4">
-          <div class="col-md-8">
-            <form method="GET" action="{{ route('trabajador.infracciones.historial') }}">
-              <div class="input-group">
-                <input type="text" 
-                       name="buscarpor" 
-                       class="form-control" 
-                       placeholder="Buscar por documento o email del infractor..."
-                       value="{{ $buscarpor }}">
-                <div class="input-group-append">
-                  <button class="btn btn-success" type="submit">
-                    <i class="fas fa-search"></i> Buscar
-                  </button>
+<div class="container-fluid p-4">
+    <div class="mt-3 row justify-content-center">
+        <div class="col-md-12">
+            <div class="card shadow-sm border-0">
+                <!-- Header verde -->
+                <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #2d5f3f;">
+                    <h5 class="font-weight-bold m-0">
+                        <i class="fas fa-history me-2"></i> HISTORIAL DE INFRACCIONES VALIDADAS
+                    </h5>
                 </div>
-              </div>
-            </form>
-          </div>
-        </div>
 
-        <!-- Tabla de historial -->
-        <div class="table-responsive">
-          <table class="table table-hover">
-            <thead class="bg-light">
-              <tr>
-                <th>Fecha Validación</th>
-                <th>Infractor</th>
-                <th>Tipo Infracción</th>
-                <th>Lugar</th>
-                <th>Monto Multa</th>
-                <th>Estado Pago</th>
-                <th>Fecha Límite</th>
-              </tr>
-            </thead>
-            <tbody>
-              @if(count($infracciones) <= 0)
-              <tr>
-                <td colspan="7" class="text-center text-muted py-4">
-                  <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
-                  No has validado infracciones aún
-                </td>
-              </tr>
-              @else
-                @foreach($infracciones as $item)
-                <tr>
-                  <td>
-                    <strong>{{ date('d/m/Y', strtotime($item->fechaHoraEmision)) }}</strong><br>
-                    <small class="text-muted">{{ date('H:i', strtotime($item->fechaHoraEmision)) }}</small>
-                  </td>
-                  <td>
-                    <div>
-                      <strong>{{ $item->detalleInfraccion->contribuyente->numDocumento ?? 'N/A' }}</strong>
+                <div class="card-body p-4">
+
+                    <!-- Buscador y botón Volver a Pendientes -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <form method="GET" action="{{ route('trabajador.infracciones.historial') }}">
+                                <div class="input-group shadow-sm">
+                                    <input type="text" 
+                                           name="buscarpor" 
+                                           class="form-control border-0" 
+                                           placeholder="Buscar por documento o email del infractor..."
+                                           value="{{ $buscarpor }}"
+                                           style="background-color: #f8f9fa;">
+                                    <button class="btn text-white" type="submit" style="background-color: #2d5f3f;">
+                                        <i class="fas fa-search me-2"></i> Buscar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <a href="{{ route('trabajador.infracciones.index') }}" 
+                               class="btn text-white shadow-sm" 
+                               style="background-color: #5cb85c;">
+                                <i class="fas fa-arrow-left me-2"></i> Volver a Pendientes
+                            </a>
+                        </div>
                     </div>
-                    <small class="text-muted">
-                      {{ $item->detalleInfraccion->contribuyente->email ?? 'N/A' }}
-                    </small>
-                  </td>
-                  <td>
-                    <span class="badge badge-warning">
-                      {{ $item->detalleInfraccion->tipo->descripcion ?? 'N/A' }}
-                    </span>
-                  </td>
-                  <td>{{ $item->detalleInfraccion->lugarOcurrencia ?? 'N/A' }}</td>
-                  <td>
-                    <strong class="text-danger">
-                      S/. {{ number_format($item->detalleInfraccion->infraccion->montoMulta, 2) }}
-                    </strong>
-                  </td>
-                  <td>
-                    @if($item->detalleInfraccion->infraccion->estadoPago == 'Pendiente')
-                      <span class="badge badge-warning">Pendiente</span>
-                    @elseif($item->detalleInfraccion->infraccion->estadoPago == 'Pagada')
-                      <span class="badge badge-success">Pagada</span>
-                    @else
-                      <span class="badge badge-danger">Vencida</span>
-                    @endif
-                  </td>
-                  <td>
-                    {{ date('d/m/Y', strtotime($item->detalleInfraccion->infraccion->fechaLimitePago)) }}
-                  </td>
-                </tr>
-                @endforeach
-              @endif
-            </tbody>
-          </table>
-        </div>
 
-        <!-- Paginación -->
-        <div class="d-flex justify-content-center mt-4">
-          {{ $infracciones->links() }}
-        </div>
+                    <!-- Tabla de historial -->
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle text-center" style="border-collapse: separate; border-spacing: 0 8px;">
+                            <thead style="background-color: #2d5f3f; color: white;">
+                                <tr>
+                                    <th>Fecha de validación</th>
+                                    <th>Infractor</th>
+                                    <th>Tipo de infracción</th>
+                                    <th>Lugar de la infracción</th>
+                                    <th>Monto de multa</th>
+                                    <th>Estado del pago</th>
+                                    <th>Fecha límite de pago</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if($infracciones->isEmpty())
+                                    <tr>
+                                        <td colspan="7" class="text-center py-5">
+                                            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                                            <p class="text-muted">No has validado infracciones aún</p>
+                                        </td>
+                                    </tr>
+                                @else
+                                    @foreach($infracciones as $item)
+                                        <tr class="shadow-sm" style="background-color: white;">
+                                            <td>
+                                                <strong>{{ \Carbon\Carbon::parse($item->fechaHoraEmision)->format('d/m/Y') }}</strong><br>
+                                                <small class="text-muted">{{ \Carbon\Carbon::parse($item->fechaHoraEmision)->format('H:i') }}</small>
+                                            </td>
+                                            <td class="text-start">
+                                                <div><strong>{{ $item->detalleInfraccion->contribuyente->numDocumento ?? 'N/A' }}</strong></div>
+                                                <small class="text-muted">{{ $item->detalleInfraccion->contribuyente->email ?? 'N/A' }}</small>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-warning text-dark px-2 py-1">
+                                                    {{ $item->detalleInfraccion->tipo->descripcion ?? 'N/A' }}
+                                                </span>
+                                            </td>
+                                            <td>{{ $item->detalleInfraccion->lugarOcurrencia ?? 'N/A' }}</td>
+                                            <td>
+                                                <strong class="text-danger">
+                                                    S/ {{ number_format($item->detalleInfraccion->infraccion->montoMulta, 2) }}
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                @if($item->detalleInfraccion->infraccion->estadoPago == 'Pendiente')
+                                                    <span class="badge bg-warning text-dark px-2 py-1">Pendiente</span>
+                                                @elseif($item->detalleInfraccion->infraccion->estadoPago == 'Pagada')
+                                                    <span class="badge bg-success px-2 py-1">Pagada</span>
+                                                @else
+                                                    <span class="badge bg-danger px-2 py-1">Vencida</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                {{ \Carbon\Carbon::parse($item->detalleInfraccion->infraccion->fechaLimitePago)->format('d/m/Y') }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
 
-        <!-- Estadísticas rápidas -->
-        <div class="row mt-4">
-          <div class="col-md-4">
-            <div class="card border-0 shadow-sm" style="background: #dcfce7;">
-              <div class="card-body text-center">
-                <h3 class="font-weight-bold mb-1" style="color: #16a34a;">
-                  {{ $infracciones->total() }}
-                </h3>
-                <p class="text-muted mb-0">Total Validadas</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card border-0 shadow-sm" style="background: #fef3c7;">
-              <div class="card-body text-center">
-                <h3 class="font-weight-bold mb-1" style="color: #f59e0b;">
-                  {{ $infracciones->where('detalleInfraccion.infraccion.estadoPago', 'Pendiente')->count() }}
-                </h3>
-                <p class="text-muted mb-0">Pendientes de Pago</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card border-0 shadow-sm" style="background: #d1fae5;">
-              <div class="card-body text-center">
-                <h3 class="font-weight-bold mb-1" style="color: #10b981;">
-                  {{ $infracciones->where('detalleInfraccion.infraccion.estadoPago', 'Pagada')->count() }}
-                </h3>
-                <p class="text-muted mb-0">Pagadas</p>
-              </div>
-            </div>
-          </div>
-        </div>
+                    <!-- Paginación -->
+                    <div class="d-flex justify-content-center mt-4">
+                        {{ $infracciones->links() }}
+                    </div>
 
-      </div>
+                    <!-- Estadísticas rápidas -->
+                    <div class="row mt-4 g-3">
+                        <!-- Total Validadas -->
+                        <div class="col-md-4">
+                            <div class="card p-3 text-center shadow-sm" style="background-color: #d1ecf1; border-left: 4px solid #17a2b8;">
+                                <h3 class="mb-1">{{ $infracciones->total() }}</h3>
+                                <p class="mb-0 text-muted">Total Validadas</p>
+                            </div>
+                        </div>
+                        <!-- Pendientes de Pago -->
+                        <div class="col-md-4">
+                            <div class="card p-3 text-center shadow-sm" style="background-color: #fff3cd; border-left: 4px solid #ffc107;">
+                                <h3 class="mb-1">{{ $infracciones->where('detalleInfraccion.infraccion.estadoPago', 'Pendiente')->count() }}</h3>
+                                <p class="mb-0 text-muted">Pendientes de Pago</p>
+                            </div>
+                        </div>
+                        <!-- Pagadas -->
+                        <div class="col-md-4">
+                            <div class="card p-3 text-center shadow-sm" style="background-color: #d4edda; border-left: 4px solid #28a745;">
+                                <h3 class="mb-1">{{ $infracciones->where('detalleInfraccion.infraccion.estadoPago', 'Pagada')->count() }}</h3>
+                                <p class="mb-0 text-muted">Pagadas</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
-
-  </div>
-</section>
-
+</div>
 @endsection
