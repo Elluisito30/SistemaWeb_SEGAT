@@ -119,7 +119,7 @@
                                                    name="telefono_infractor"
                                                    value="{{ old('telefono_infractor') }}"
                                                    maxlength="20"
-                                                   placeholder="987654321">
+                                                   placeholder="Teléfono del infractor">
                                         </div>
                                     </div>
                                 </div>

@@ -45,7 +45,7 @@ class TrabajadorController extends Controller
             ->when($estado, function ($query) use ($estado) {
                 $query->where('estado', $estado);
             })
-            ->orderBy('fechaTentativaEjecucion', 'desc')
+            ->orderBy('id_solicitud', 'desc')
             ->paginate(self::PAGINATION);
 
         return view('mantenedor.trabajador.solicitudes.index', compact('solicitudes', 'buscarpor', 'estado'));

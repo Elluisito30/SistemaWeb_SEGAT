@@ -45,7 +45,7 @@ class SolicitudLimpiezaController extends Controller
                     $q->where('nombre', 'like', '%' . $buscarpor . '%');
                 });
             })
-            ->orderBy('id_solicitud', 'asc')
+            ->orderBy('id_solicitud', 'desc')
             ->paginate(self::PAGINATION);
 
         // Contadores totales del contribuyente
