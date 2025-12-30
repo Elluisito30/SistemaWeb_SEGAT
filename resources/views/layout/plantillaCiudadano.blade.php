@@ -50,7 +50,7 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-clipboard-list"></i>
               <p>
-                Registrar
+                Registros
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -76,7 +76,7 @@
           <li class="nav-item">
             <a href="{{ route('ciudadano.pagos.index')}}" class="nav-link">
               <i class="nav-icon fas fa-file-invoice-dollar"></i>
-              <p>Consultar pagos/multas
+              <p>Consultas
               </p>
             </a>
           </li>  
