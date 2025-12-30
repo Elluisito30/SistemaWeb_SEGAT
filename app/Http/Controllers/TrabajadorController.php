@@ -79,16 +79,15 @@ class TrabajadorController extends Controller
             'fechaProgramada.date' => 'Formato de fecha no válido.'
         ]);
 
-        // Si se asigna monto y fecha, cambiar automáticamente a "en atención"
-        if ($request->monto && $request->fechaProgramada) {
-            $solicitud->estado = 'en atención';
+        // Actualizar campos según lo enviado
+        $solicitud->estado = $request->estado;
+        
+        if ($request->monto) {
             $solicitud->monto = $request->monto;
+        }
+        
+        if ($request->fechaProgramada) {
             $solicitud->fechaProgramada = $request->fechaProgramada;
-        } else {
-            // Solo cambiar estado manualmente
-            $solicitud->estado = $request->estado;
-            if ($request->monto) $solicitud->monto = $request->monto;
-            if ($request->fechaProgramada) $solicitud->fechaProgramada = $request->fechaProgramada;
         }
 
         $solicitud->save();

@@ -67,7 +67,7 @@
                                     <label for="estado">Estado <span class="text-danger">*</span></label>
                                     <select name="estado" id="estado" class="form-control select-wide @error('estado') is-invalid @enderror" required>
                                         <option value="registrada" {{ $solicitud->estado == 'registrada' ? 'selected' : '' }}>Registrada</option>
-                                        <option value="en_atencion" {{ $solicitud->estado == 'en_atencion' ? 'selected' : '' }}>En Atención</option>
+                                        <option value="en atención" {{ $solicitud->estado == 'en atención' ? 'selected' : '' }}>En Atención</option>
                                         <option value="atendida" {{ $solicitud->estado == 'atendida' ? 'selected' : '' }}>Atendida</option>
                                         <option value="rechazada" {{ $solicitud->estado == 'rechazada' ? 'selected' : '' }}>Rechazada</option>
                                     </select>

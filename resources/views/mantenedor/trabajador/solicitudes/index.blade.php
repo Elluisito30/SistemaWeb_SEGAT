@@ -38,7 +38,7 @@
                                 <select name="estado" class="form-select">
                                     <option value="">-- Todos los estados --</option>
                                     <option value="registrada" {{ $estado == 'registrada' ? 'selected' : '' }}>Registrada</option>
-                                    <option value="en_atencion" {{ $estado == 'en_atencion' ? 'selected' : '' }}>En Atención</option>
+                                    <option value="en atención" {{ $estado == 'en atención' ? 'selected' : '' }}>En Atención</option>
                                     <option value="atendida" {{ $estado == 'atendida' ? 'selected' : '' }}>Atendida</option>
                                     <option value="rechazada" {{ $estado == 'rechazada' ? 'selected' : '' }}>Rechazada</option>
                                 </select>
@@ -104,7 +104,7 @@
                                                         <i class="fas fa-file-alt me-1"></i> Registrada
                                                     </span>
                                                     @break
-                                                @case('en_atencion')
+                                                @case('en atención')
                                                     <span class="badge bg-primary px-3 py-2">
                                                         <i class="fas fa-user-clock me-1"></i> En Atención
                                                     </span>
