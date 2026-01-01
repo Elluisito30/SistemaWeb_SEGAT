@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SEGAT - @yield('titulo', 'Sistema de Gestión')</title>
-  
+
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
-  
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -17,7 +17,7 @@
   <!-- SEGAT Custom Theme -->
   <link rel="stylesheet" href="/general/css/segat-theme.css">
   @yield('estilos')
-  
+
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -26,8 +26,8 @@
   <aside class="main-sidebar sidebar-dark-success elevation-4">
     <!-- Brand Logo -->
     <a href="{{ route('home') }}" class="brand-link d-flex align-items-center" style="padding: 0.5rem 0.75rem;">
-      <img src="{{ asset('login/img/segat_Logo.png') }}" 
-          alt="Logo SEGAT" 
+      <img src="{{ asset('login/img/segat_Logo.png') }}"
+          alt="Logo SEGAT"
           class="brand-image img-circle elevation-3"
           style="opacity: .8; width: 2.25rem; height: 2.25rem; margin-right: 0.75rem;">
       <span class="brand-text font-weight-bold">SEGAT</span>
@@ -38,13 +38,13 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          
+
           <li class="nav-item">
             <a href="{{ route('trabajador.index')}}" class="nav-link">
               <i class="nav-icon fas fa-id-card"></i>
               <p>Registro de Trabajadores</p>
             </a>
-          </li>  
+          </li>
 
           <li class="nav-item">
             <a href="#" class="nav-link">
@@ -55,31 +55,31 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              
+
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{ route('gerente.solicitudes') }}" class="nav-link">
                   <i class="fas fa-list-alt nav-icon"></i>
                   <p>Solicitudes <br>Registradas</p>
                 </a>
               </li>
-              
+
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('gerente.infracciones') }}" class="nav-link">
                   <i class="fas fa-exclamation-triangle nav-icon"></i>
                   <p>Infracciones <br>Registradas</p>
                 </a>
               </li>
-              
+
             </ul>
           </li>
-                    
+
           <li class="nav-item">
             <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>Cerrar Sesión</p>
             </a>
           </li>
-          
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -97,8 +97,8 @@
     <!-- Main content -->
     <section class="content">
       @yield('contenido')
-    </section> 
-       
+    </section>
+
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
