@@ -2,51 +2,89 @@
 @section('titulo', 'Reporte Infracciones')
 @section('contenido')
 
-<div class="card shadow-sm">
-    <div class="card-header bg-danger text-white">
-        <h3 class="card-title">Listado de Infracciones y Multas</h3>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-hover table-striped">
-                <thead class="thead-light">
-                    <tr>
-                        <th>ID</th>
-                        <th>Lugar</th>
-                        <th>Fecha</th>
-                        <th>Monto</th>
-                        <th>Estado Pago</th>
-                        <th>Foto</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($infracciones as $inf)
-                    <tr>
-                        <td>{{ $inf->id_infraccion }}</td>
-                        <td>{{ $inf->lugarOcurrencia }}</td>
-                        <td>{{ \Carbon\Carbon::parse($inf->fechaHora)->format('d/m/Y H:i') }}</td>
-                        <td class="font-weight-bold text-danger">S/. {{ number_format($inf->montoMulta, 2) }}</td>
-                        <td>
-                            @if(strtolower($inf->estadoPago) == 'pagado')
-                                <span class="badge badge-success">Pagado</span>
-                            @else
-                                <span class="badge badge-warning">Pendiente</span>
-                            @endif
-                        </td>
-                        <td>
-                            @if($inf->documentoAdjunto)
-                                <a href="{{ asset('storage/'.$inf->documentoAdjunto) }}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></a>
-                            @else - @endif
-                        </td>
-                    </tr>
-                    @empty
-                    <tr><td colspan="6" class="text-center">No hay datos</td></tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-        <div class="mt-3">
-            {{ $infracciones->links('pagination::bootstrap-4') }}
+<div class="container-fluid p-4">
+    <div class="mt-3 row justify-content-center">
+        <div class="col-md-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #dc3545;">
+                    <h5 class="font-weight-bold m-0">
+                        <i class="fas fa-exclamation-circle me-2"></i> LISTADO DE INFRACCIONES Y MULTAS
+                    </h5>
+                </div>
+
+                <div class="card-body p-4">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle text-center" style="border-collapse: separate; border-spacing: 0 8px;">
+                            <thead style="background-color: #dc3545; color: white;">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Lugar</th>
+                                    <th>Fecha/Hora</th>
+                                    <th>Monto</th>
+                                    <th>Estado Pago</th>
+                                    <th>Evidencia</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($infracciones as $inf)
+                                    <tr class="shadow-sm" style="background-color: white;">
+                                        <td>
+                                            <span class="badge bg-dark px-2 py-1">#{{ $inf->id_infraccion }}</span>
+                                        </td>
+                                        <td class="text-start">
+                                            <i class="fas fa-map-marker-alt text-muted me-1"></i>
+                                            {{ $inf->lugarOcurrencia }}
+                                        </td>
+                                        <td>
+                                            {{ \Carbon\Carbon::parse($inf->fechaHora)->format('d/m/Y H:i') }}
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-danger px-3 py-2">
+                                                S/ {{ number_format($inf->montoMulta, 2) }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            @if(strtolower($inf->estadoPago) == 'pagado')
+                                                <span class="badge bg-success px-3 py-2">
+                                                    <i class="fas fa-check-circle me-1"></i> Pagado
+                                                </span>
+                                            @else
+                                                <span class="badge bg-warning text-dark px-3 py-2">
+                                                    <i class="fas fa-clock me-1"></i> Pendiente
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($inf->documentoAdjunto)
+                                                <a href="{{ asset('storage/' . $inf->documentoAdjunto) }}" 
+                                                   target="_blank"
+                                                   class="btn btn-sm btn-info"
+                                                   title="Ver evidencia">
+                                                    <i class="fas fa-image"></i>
+                                                </a>
+                                            @else
+                                                <span class="text-muted">—</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="text-center py-5">
+                                            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                                            <p class="text-muted">No hay infracciones registradas</p>
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Paginación -->
+                    <div class="d-flex justify-content-center mt-4">
+                        {{ $infracciones->links() }}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
