@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Trabajador;
+use App\Models\User;
 use App\Models\SolicitudLimpieza;
 use App\Models\Infraccion;
 use App\Models\RegistroInfraccion;
 use App\Models\DetalleInfraccion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
 class TrabajadorController extends Controller
@@ -100,9 +102,6 @@ class TrabajadorController extends Controller
     // GESTIÓN DE INFRACCIONES
     // ========================================
     
-    /**
-     * Listar todas las infracciones pendientes de validación
-     */
     public function indexInfracciones(Request $request)
     {
         $buscarpor = $request->get('buscarpor');
@@ -111,7 +110,7 @@ class TrabajadorController extends Controller
                 'detalleInfraccion.contribuyente',
                 'detalleInfraccion.tipo'
             ])
-            ->whereDoesntHave('detalleInfraccion.registroInfraccion') // Solo infracciones sin validar
+            ->whereDoesntHave('detalleInfraccion.registroInfraccion')
             ->when($buscarpor, function ($query) use ($buscarpor) {
                 $query->whereHas('detalleInfraccion.contribuyente', function ($q) use ($buscarpor) {
                     $q->where('numDocumento', 'like', '%' . $buscarpor . '%')
@@ -124,9 +123,6 @@ class TrabajadorController extends Controller
         return view('mantenedor.trabajador.infracciones.index', compact('infracciones', 'buscarpor'));
     }
 
-    /**
-     * Mostrar formulario para validar infracción
-     */
     public function validarInfraccion($id)
     {
         $infraccion = Infraccion::with([
@@ -134,7 +130,6 @@ class TrabajadorController extends Controller
             'detalleInfraccion.tipo'
         ])->findOrFail($id);
         
-        // Verificar que no esté ya validada
         if ($infraccion->detalleInfraccion->registroInfraccion) {
             return redirect()->route('trabajador.infracciones.index')
                 ->with('error', 'Esta infracción ya fue validada anteriormente.');
@@ -143,14 +138,10 @@ class TrabajadorController extends Controller
         return view('mantenedor.trabajador.infracciones.validar', compact('infraccion'));
     }
 
-    /**
-     * Guardar validación de infracción
-     */
     public function storeValidacion(Request $request, $id)
     {
         $infraccion = Infraccion::findOrFail($id);
 
-        // Verificar que no esté ya validada
         if ($infraccion->detalleInfraccion->registroInfraccion) {
             return redirect()->route('trabajador.infracciones.index')
                 ->with('error', 'Esta infracción ya fue validada.');
@@ -175,21 +166,18 @@ class TrabajadorController extends Controller
         try {
             DB::beginTransaction();
 
-            // Actualizar infracción con monto
             $infraccion->montoMulta = $request->montoMulta;
             $infraccion->fechaLimitePago = $request->fechaLimitePago;
             $infraccion->estadoPago = $request->estadoPago;
             $infraccion->save();
 
-            // Obtener el trabajador del usuario logueado
-            $user = Auth::user();
-            $trabajador = Trabajador::where('email', $user->email)->first();
+            // Obtener trabajador del usuario logueado usando relación
+            $trabajador = Auth::user()->trabajador;
             
             if (!$trabajador) {
                 throw new \Exception('No se encontró trabajador asociado al usuario.');
             }
 
-            // Crear registro de infracción (validación)
             RegistroInfraccion::create([
                 'id_detalleInfraccion' => $infraccion->id_detalleInfraccion,
                 'idtrabajador' => $trabajador->idtrabajador,
@@ -211,13 +199,10 @@ class TrabajadorController extends Controller
         }
     }
 
-    /**
-     * Ver historial de infracciones validadas por el trabajador
-     */
     public function historialInfracciones(Request $request)
     {
-        $user = Auth::user();
-        $trabajador = Trabajador::where('email', $user->email)->first();
+        // Usar relación en lugar de buscar por email
+        $trabajador = Auth::user()->trabajador;
         
         if (!$trabajador) {
             return redirect()->route('trabajador.dashboard')
@@ -254,6 +239,7 @@ class TrabajadorController extends Controller
 
         $trabajadores = Trabajador::where('nombres', 'like', '%'.$buscarpor.'%')
             ->orWhere('apellidos', 'like', '%'.$buscarpor.'%')
+            ->orWhere('email', 'like', '%'.$buscarpor.'%')
             ->paginate($this::PAGINATION);
 
         return view('mantenedor.gerente.trabajador.index', compact('trabajadores', 'buscarpor'));
@@ -270,9 +256,10 @@ class TrabajadorController extends Controller
             'nombres' => 'required|max:80|regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/',
             'apellidos' => 'required|max:80|regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/',
             'edad' => 'required|integer|min:18|max:100|digits_between:1,3',
-            'email' => 'required|email|max:100|unique:trabajadores,email',
+            'email' => 'required|email|max:100|unique:users,email',
             'sexo' => 'required|in:Masculino,Femenino',
             'estado_civil' => 'required|in:Soltero,Casado,Viudo,Divorciado',
+            'password' => 'required|min:8|confirmed'
         ],
         [
             'nombres.required' => 'Ingrese nombres del trabajador',
@@ -293,18 +280,41 @@ class TrabajadorController extends Controller
             'sexo.in' => 'El sexo debe ser Masculino o Femenino',
             'estado_civil.required' => 'Seleccione el estado civil del trabajador',
             'estado_civil.in' => 'El estado civil debe ser Soltero, Casado, Viudo o Divorciado',
+            'password.required' => 'Ingrese la contraseña',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres',
+            'password.confirmed' => 'Las contraseñas no coinciden'
         ]);
 
-        $trabajador = new Trabajador();
-        $trabajador->nombres = $request->nombres;
-        $trabajador->apellidos = $request->apellidos;
-        $trabajador->edad = $request->edad;
-        $trabajador->email = $request->email;
-        $trabajador->sexo = $request->sexo;
-        $trabajador->estado_civil = $request->estado_civil;
-        $trabajador->save();
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('trabajador.index')->with('datos', 'Trabajador registrado exitosamente');
+            // 1. Crear usuario
+            $user = new User();
+            $user->name = $request->nombres . ' ' . $request->apellidos;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->role = 'trabajador';
+            $user->save();
+
+            // 2. Crear trabajador vinculado al usuario
+            $trabajador = new Trabajador();
+            $trabajador->user_id = $user->id;
+            $trabajador->nombres = $request->nombres;
+            $trabajador->apellidos = $request->apellidos;
+            $trabajador->edad = $request->edad;
+            $trabajador->email = $request->email;
+            $trabajador->sexo = $request->sexo;
+            $trabajador->estado_civil = $request->estado_civil;
+            $trabajador->save();
+
+            DB::commit();
+
+            return redirect()->route('trabajador.index')->with('datos', 'Trabajador registrado exitosamente');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withInput()->with('error', 'Error al registrar trabajador: ' . $e->getMessage());
+        }
     }
 
     public function edit(string $id)
@@ -315,13 +325,16 @@ class TrabajadorController extends Controller
 
     public function update(Request $request, string $id)
     {
+        $trabajador = Trabajador::findOrFail($id);
+
         $data = $request->validate([
             'nombres' => 'required|max:80|regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/',
             'apellidos' => 'required|max:80|regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/',
             'edad' => 'required|integer|min:18|max:100|digits_between:1,3',
-            'email' => 'required|email|max:100|unique:trabajadores,email,'.$id.',idtrabajador',
+            'email' => 'required|email|max:100|unique:users,email,' . $trabajador->user_id,
             'sexo' => 'required|in:Masculino,Femenino',
             'estado_civil' => 'required|in:Soltero,Casado,Viudo,Divorciado',
+            'password' => 'nullable|min:8|confirmed',
         ],
         [
             'nombres.required' => 'Ingrese nombres del trabajador',
@@ -342,18 +355,43 @@ class TrabajadorController extends Controller
             'sexo.in' => 'El sexo debe ser Masculino o Femenino',
             'estado_civil.required' => 'Seleccione el estado civil del trabajador',
             'estado_civil.in' => 'El estado civil debe ser Soltero, Casado, Viudo o Divorciado',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres',
+            'password.confirmed' => 'Las contraseñas no coinciden',
         ]);
 
-        $trabajador = Trabajador::findOrFail($id);
-        $trabajador->nombres = $request->nombres;
-        $trabajador->apellidos = $request->apellidos;
-        $trabajador->edad = $request->edad;
-        $trabajador->email = $request->email;
-        $trabajador->sexo = $request->sexo;
-        $trabajador->estado_civil = $request->estado_civil;
-        $trabajador->save();
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('trabajador.index')->with('datos', 'Trabajador actualizado correctamente');
+            // Actualizar trabajador
+            $trabajador->nombres = $request->nombres;
+            $trabajador->apellidos = $request->apellidos;
+            $trabajador->edad = $request->edad;
+            $trabajador->email = $request->email;
+            $trabajador->sexo = $request->sexo;
+            $trabajador->estado_civil = $request->estado_civil;
+            $trabajador->save();
+
+            // Actualizar usuario relacionado
+            if ($trabajador->user) {
+                $trabajador->user->name = $request->nombres . ' ' . $request->apellidos;
+                $trabajador->user->email = $request->email;
+                
+                // Actualizar contraseña si se proporciona
+                if ($request->password) {
+                    $trabajador->user->password = Hash::make($request->password);
+                }
+                
+                $trabajador->user->save();
+            }
+
+            DB::commit();
+
+            return redirect()->route('trabajador.index')->with('datos', 'Trabajador actualizado correctamente');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withInput()->with('error', 'Error al actualizar trabajador: ' . $e->getMessage());
+        }
     }
 
     public function confirmar($id)
@@ -365,6 +403,7 @@ class TrabajadorController extends Controller
     public function destroy(string $id)
     {
         $trabajador = Trabajador::findOrFail($id);
+        // Al eliminar trabajador, también se elimina usuario (por CASCADE)
         $trabajador->delete();
         return redirect()->route('trabajador.index')->with('datos', 'Trabajador eliminado correctamente');
     }
