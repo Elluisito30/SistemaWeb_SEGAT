@@ -56,7 +56,7 @@
                                         </td>
                                         <td>
                                             @if($inf->documentoAdjunto)
-                                                <a href="{{ asset('storage/' . $inf->documentoAdjunto) }}" 
+                                                <a href="{{ asset('storage/infracciones/' . $inf->documentoAdjunto) }}" 
                                                    target="_blank"
                                                    class="btn btn-sm btn-info"
                                                    title="Ver evidencia">
