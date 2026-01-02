@@ -91,6 +91,29 @@
                             @enderror
                         </div>
 
+                        <!-- Contraseña (opcional) -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label fw-bold">Nueva Contraseña <span class="text-muted">(opcional)</span></label>
+                            <input type="password" 
+                                   class="form-control @error('password') is-invalid @enderror" 
+                                   id="password" 
+                                   name="password"
+                                   placeholder="Dejar en blanco para mantener la actual">
+                            @error('password')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Confirmar Contraseña (opcional) -->
+                        <div class="mb-3">
+                            <label for="password_confirmation" class="form-label fw-bold">Confirmar Nueva Contraseña</label>
+                            <input type="password" 
+                                   class="form-control" 
+                                   id="password_confirmation" 
+                                   name="password_confirmation"
+                                   placeholder="Confirme la nueva contraseña">
+                        </div>
+
                         <!-- Sexo -->
                         <div class="mb-3">
                             <label class="form-label fw-bold">Sexo <span class="text-danger">*</span></label>

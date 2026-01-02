@@ -54,6 +54,7 @@
                                     <th>Apellidos</th>
                                     <th>Edad</th>
                                     <th>Email</th>
+                                    <th>Usuario</th>
                                     <th>Sexo</th>
                                     <th>Estado Civil</th>
                                     <th>Acciones</th>
@@ -62,7 +63,7 @@
                             <tbody>
                                 @if($trabajadores->isEmpty())
                                     <tr>
-                                        <td colspan="8" class="text-center py-5">
+                                        <td colspan="9" class="text-center py-5">
                                             <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
                                             <p class="text-muted">No hay trabajadores registrados</p>
                                         </td>
@@ -77,6 +78,17 @@
                                             <td>{{ $itemtrabajador->apellidos }}</td>
                                             <td>{{ $itemtrabajador->edad }} años</td>
                                             <td>{{ $itemtrabajador->email }}</td>
+                                            <td>
+                                                @if($itemtrabajador->user)
+                                                    <span class="badge bg-success px-2 py-1">
+                                                        <i class="fas fa-check-circle me-1"></i> Vinculado
+                                                    </span>
+                                                @else
+                                                    <span class="badge bg-warning text-dark px-2 py-1">
+                                                        <i class="fas fa-exclamation-triangle me-1"></i> Sin vincular
+                                                    </span>
+                                                @endif
+                                            </td>
                                             <td>
                                                 @if($itemtrabajador->sexo == 'Masculino')
                                                     <span class="badge bg-primary px-2 py-1">

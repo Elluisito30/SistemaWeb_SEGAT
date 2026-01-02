@@ -15,12 +15,12 @@ class pruebaRolesSeeder extends Seeder
     public function run(): void
     {
         
-        /*User::create([
+        User::create([
             'name' => 'Gerente Municipal',
             'email' => 'gerente@segat.com',
             'password' => Hash::make('gerente123'),
             'role' => 'gerente',
-        ]);*/
+        ]);
         
 
         User::create([

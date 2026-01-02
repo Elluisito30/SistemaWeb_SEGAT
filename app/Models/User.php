@@ -43,6 +43,11 @@ class User extends Authenticatable
         return $this->hasOne(\App\Models\Contribuyente::class, 'user_id', 'id');
     }
 
+    public function trabajador()
+    {
+        return $this->hasOne(Trabajador::class, 'user_id', 'id');
+    }
+
     // ========================================
     // MÉTODOS PARA VERIFICAR ROLES
     // ========================================
