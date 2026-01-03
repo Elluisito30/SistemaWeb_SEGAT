@@ -95,9 +95,13 @@
                     </div>
 
                     <!-- Paginación -->
-                    <div class="d-flex justify-content-center mt-4">
-                        {{ $solicitudes->links() }}
-                    </div>
+                    @if($solicitudes->hasPages())
+                        <div class="d-flex justify-content-center mt-4">
+                            <nav aria-label="Page navigation">
+                                {{ $solicitudes->links('pagination::bootstrap-4') }}
+                            </nav>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

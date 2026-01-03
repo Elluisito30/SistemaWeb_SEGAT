@@ -232,9 +232,13 @@
                 </table>
             </div>
 
-            <div class="d-flex justify-content-center mt-4">
-                {{ $solicitud->links() }}
-            </div>
+            @if($solicitud->hasPages())
+                <div class="d-flex justify-content-center mt-4">
+                    <nav aria-label="Page navigation">
+                        {{ $solicitud->links('pagination::bootstrap-4') }}
+                    </nav>
+                </div>
+            @endif
         </div>
     </div>
 

@@ -105,9 +105,13 @@
                     </div>
 
                     <!-- Paginación -->
-                    <div class="d-flex justify-content-center mt-4">
-                        {{ $infracciones->links() }}
-                    </div>
+                    @if($infracciones->hasPages())
+                        <div class="d-flex justify-content-center mt-4">
+                            <nav aria-label="Page navigation">
+                                {{ $infracciones->links('pagination::bootstrap-4') }}
+                            </nav>
+                        </div>
+                    @endif
 
                     <!-- Estadísticas rápidas -->
                     <div class="row mt-4 g-3">

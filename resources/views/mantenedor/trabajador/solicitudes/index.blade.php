@@ -151,9 +151,13 @@
                     </div>
 
                     <!-- Paginación -->
-                    <div class="d-flex justify-content-center mt-4">
-                        {{ $solicitudes->appends(['buscarpor' => $buscarpor, 'estado' => $estado])->links() }}
-                    </div>
+                    @if($solicitudes->hasPages())
+                        <div class="d-flex justify-content-center mt-4">
+                            <nav aria-label="Page navigation">
+                                {{ $solicitudes->appends(['buscarpor' => $buscarpor, 'estado' => $estado])->links('pagination::bootstrap-4') }}
+                            </nav>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

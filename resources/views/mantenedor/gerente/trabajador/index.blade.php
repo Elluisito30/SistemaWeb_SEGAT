@@ -123,9 +123,13 @@
                     </div>
 
                     <!-- Paginación -->
-                    <div class="d-flex justify-content-center mt-4">
-                        {{ $trabajadores->links() }}
-                    </div>
+                    @if($trabajadores->hasPages())
+                        <div class="d-flex justify-content-center mt-4">
+                            <nav aria-label="Page navigation">
+                                {{ $trabajadores->links('pagination::bootstrap-4') }}
+                            </nav>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
