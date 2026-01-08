@@ -115,7 +115,7 @@
                                     <!-- Método de pago -->
                                     <div class="col-md-4">
                                         <label class="form-label fw-bold">Método de Pago <span class="text-danger">*</span></label>
-                                        <select name="metodoPago" class="form-control @error('metodoPago') is-invalid @enderror" required>
+                                        <select name="metodoPago" class="form-control select-wide @error('metodoPago') is-invalid @enderror" required>
                                             <option value="">Seleccione...</option>
                                             <option value="Efectivo" {{ old('metodoPago') == 'Efectivo' ? 'selected' : '' }}>Efectivo</option>
                                             <option value="Transferencia" {{ old('metodoPago') == 'Transferencia' ? 'selected' : '' }}>Transferencia Bancaria</option>
@@ -163,7 +163,7 @@
                                         <label class="form-label fw-bold">Comprobante de Pago (Voucher)</label>
                                         <input type="file" 
                                                name="comprobanteAdjunto" 
-                                               class="form-control @error('comprobanteAdjunto') is-invalid @enderror"
+                                               class="form-control select-wide @error('comprobanteAdjunto') is-invalid @enderror"
                                                accept=".pdf,.jpg,.jpeg,.png">
                                         <small class="form-text text-muted">Formatos: PDF, JPG, PNG. Tamaño máximo: 5MB (opcional)</small>
                                         @error('comprobanteAdjunto')

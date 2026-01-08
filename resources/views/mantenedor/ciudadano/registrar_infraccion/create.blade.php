@@ -193,7 +193,7 @@
                                             <label for="documentoAdjunto">Foto de Evidencia: <span class="text-danger">*</span></label>
                                             <div class="input-group">
                                                 <input type="file"
-                                                       class="form-control @error('documentoAdjunto') is-invalid @enderror"
+                                                       class="form-control select-wide @error('documentoAdjunto') is-invalid @enderror"
                                                        id="documentoAdjunto"
                                                        name="documentoAdjunto"
                                                        accept="image/jpeg,image/png,image/jpg">
