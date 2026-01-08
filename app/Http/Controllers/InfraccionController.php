@@ -9,6 +9,8 @@ use App\Models\Infraccion;
 use App\Models\RegistroInfraccion;
 use App\Models\TipoInfraccion;
 use App\Models\TipoDocumento;
+use App\Models\User;
+use App\Models\Notificacion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -19,10 +21,7 @@ class InfraccionController extends Controller
      */
     public function create()
     {
-        // Obtener tipos de infracción para el dropdown
         $tiposInfraccion = TipoInfraccion::all();
-        
-        // Obtener tipos de documento para el dropdown
         $tiposDocumento = TipoDocumento::all();
         
         return view('mantenedor.ciudadano.registrar_infraccion.create', [
@@ -36,7 +35,6 @@ class InfraccionController extends Controller
      */
     public function store(Request $request)
     {
-        // Validar los datos
         $request->validate([
             'email_infractor' => 'required|email|max:100',
             'numDocumento_infractor' => 'required|max:20',
@@ -46,7 +44,7 @@ class InfraccionController extends Controller
             'tipoInfraccion' => 'required|exists:tipoinfraccion,tipoInfraccion',
             'lugarOcurrencia' => 'required|max:50',
             'descripcion' => 'nullable|max:500',
-            'documentoAdjunto' => 'nullable|image|mimes:jpeg,png,jpg|max:5120' // 5MB máximo
+            'documentoAdjunto' => 'nullable|image|mimes:jpeg,png,jpg|max:5120'
         ]);
 
         try {
@@ -56,13 +54,12 @@ class InfraccionController extends Controller
             $infractor = Contribuyente::where('numDocumento', $request->numDocumento_infractor)->first();
             
             if (!$infractor) {
-                // Crear nuevo contribuyente (infractor)
                 $infractor = Contribuyente::create([
                     'numDocumento' => $request->numDocumento_infractor,
                     'email' => $request->email_infractor,
                     'telefono' => $request->telefono_infractor,
-                    'tipoContribuyente' => 'N', // Natural
-                    'id_tipoDocumento' => 1, // Por defecto DNI
+                    'tipoContribuyente' => 'N',
+                    'id_tipoDocumento' => 1,
                     'genero' => null,
                     'celula' => null,
                     'id_domicilio' => null,
@@ -86,17 +83,36 @@ class InfraccionController extends Controller
                 'fechaHora' => now()
             ]);
 
-            // 4. Crear registro en infraccion (sin monto, será asignado por trabajador)
-            Infraccion::create([
+            // 4. Crear registro en infraccion
+            $infraccion = Infraccion::create([
                 'id_detalleInfraccion' => $detalleInfraccion->id_detalleInfraccion,
-                'montoMulta' => 0.00, // Será asignado por el trabajador
+                'montoMulta' => 0.00,
                 'fechaLimitePago' => now()->addDays(30),
                 'estadoPago' => 'Pendiente',
                 'documentoAdjunto' => $nombreArchivo
             ]);
 
-            // 5. RegistroInfraccion se creará cuando el trabajador valide la infracción
-            // Por ahora no se crea porque no hay trabajador asignado
+            // 5. NOTIFICAR AL CIUDADANO (quien reportó)
+            Notificacion::create([
+                'user_id' => Auth::id(),
+                'tipo' => 'infraccion',
+                'titulo' => 'Infracción registrada',
+                'mensaje' => 'Tu reporte de infracción por sido registrado exitosamente. Será revisado por un trabajador.',
+                'url' => route('ciudadano.infracciones.index')
+            ]);
+
+            // 6. NOTIFICAR A TODOS LOS TRABAJADORES
+            $trabajadores = User::where('role', 'trabajador')->get();
+            
+            foreach ($trabajadores as $trabajador) {
+                Notificacion::create([
+                    'user_id' => $trabajador->id,
+                    'tipo' => 'infraccion',
+                    'titulo' => 'Nueva infracción reportada',
+                    'mensaje' => 'Se ha reportado una infracción por "' . $request->tipoInfraccion . '" en ' . $request->lugarOcurrencia,
+                    'url' => route('trabajador.infracciones.index')
+                ]);
+            }
 
             DB::commit();
 

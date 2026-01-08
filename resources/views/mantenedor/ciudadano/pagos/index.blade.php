@@ -8,28 +8,28 @@
             <div class="card shadow-sm border-0">
                 <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #28a745;">
                     <h5 class="font-weight-bold m-0">
-                        <i class="fas fa-money-bill-wave me-2"></i> REGISTRAR PAGO DE MULTA
+                        <i class="fas fa-money-bill-wave mr-2"></i> REGISTRAR PAGO DE MULTA
                     </h5>
                 </div>
 
                 <div class="card-body">
                     @if(session('success'))
                         <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-                            <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
+                            <i class="fas fa-check-circle mr-2"></i> {{ session('success') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
 
                     @if(session('error'))
                         <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
-                            <i class="fas fa-exclamation-triangle me-2"></i> {{ session('error') }}
+                            <i class="fas fa-exclamation-triangle mr-2"></i> {{ session('error') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
 
                     @if(isset($mensaje))
                         <div class="alert alert-warning alert-dismissible fade show shadow-sm" role="alert">
-                            <i class="fas fa-info-circle me-2"></i> {{ $mensaje }}
+                            <i class="fas fa-info-circle mr-2"></i> {{ $mensaje }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @else
@@ -39,7 +39,7 @@
                                 <h5 class="text-muted">No tiene multas pendientes de pago.</h5>
                                 <p class="text-muted">Todas sus infracciones están al día.</p>
                                 <a href="{{ route('ciudadano.pagos.historial') }}" class="btn btn-primary mt-3">
-                                    <i class="fas fa-history me-2"></i> Ver historial de pagos
+                                    <i class="fas fa-history mr-2"></i> Ver historial de pagos
                                 </a>
                             </div>
                         @else
@@ -47,7 +47,7 @@
                             <div class="card mb-4 shadow-sm border-0">
                                 <div class="card-header bg-light">
                                     <h6 class="mb-0 text-dark">
-                                        <i class="fas fa-user me-2"></i> Información del Contribuyente
+                                        <i class="fas fa-user mr-2"></i> Información del Contribuyente
                                     </h6>
                                 </div>
                                 <div class="card-body">
@@ -58,7 +58,7 @@
                                         </div>
                                         <div class="col-md-6 text-end">
                                             <a href="{{ route('ciudadano.pagos.historial') }}" class="btn btn-sm btn-info">
-                                                <i class="fas fa-history me-1"></i> Ver historial de pagos
+                                                <i class="fas fa-history mr-2"></i> Ver historial de pagos
                                             </a>
                                         </div>
                                     </div>
@@ -70,7 +70,7 @@
                                 <div class="col-md-4">
                                     <div class="card p-3" style="background-color: #ffc107; color: #2d5f3f; border-radius: 8px;">
                                         <div class="d-flex align-items-center">
-                                            <div class="bg-dark rounded-circle p-2 me-3">
+                                            <div class="bg-dark rounded-circle p-2 mr-3">
                                                 <i class="fas fa-exclamation-triangle text-white"></i>
                                             </div>
                                             <div>
@@ -84,7 +84,7 @@
                                 <div class="col-md-8">
                                     <div class="card p-3" style="background-color: #dc3545; color: white; border-radius: 8px;">
                                         <div class="d-flex align-items-center">
-                                            <div class="bg-dark rounded-circle p-2 me-3">
+                                            <div class="bg-dark rounded-circle p-2 mr-3">
                                                 <i class="fas fa-dollar-sign text-white"></i>
                                             </div>
                                             <div>
@@ -137,7 +137,7 @@
                                             <td>
                                                 <a href="{{ route('ciudadano.pagos.create', $detalleInfraccion->infraccion->id_infraccion) }}" 
                                                    class="btn btn-success btn-sm">
-                                                    <i class="fas fa-credit-card me-1"></i> Pagar
+                                                    <i class="fas fa-credit-card mr-1"></i> Pagar
                                                 </a>
                                             </td>
                                         </tr>
@@ -148,7 +148,7 @@
 
                             <!-- Nota informativa -->
                             <div class="alert alert-info mt-4 shadow-sm" role="alert">
-                                <i class="fas fa-info-circle me-2"></i>
+                                <i class="fas fa-info-circle mr-2"></i>
                                 <strong>Importante:</strong> 
                                 Una vez registrado el pago, la multa será marcada automáticamente como pagada. 
                                 Asegúrese de ingresar correctamente los datos de la transacción y adjuntar el comprobante de pago.

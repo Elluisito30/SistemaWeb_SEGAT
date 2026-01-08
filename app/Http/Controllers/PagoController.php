@@ -7,6 +7,7 @@ use App\Models\PagoInfraccion;
 use App\Models\Infraccion;
 use App\Models\DetalleInfraccion;
 use App\Models\Contribuyente;
+use App\Models\Notificacion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -126,7 +127,7 @@ class PagoController extends Controller
             'entidadFinanciera' => 'nullable|max:100',
             'fechaPago' => 'required|date',
             'observaciones' => 'nullable|max:500',
-            'comprobanteAdjunto' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120'
+            'comprobanteAdjunto' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120'
         ], [
             'id_infraccion.required' => 'La infracción es requerida',
             'montoPagado.required' => 'El monto pagado es requerido',
@@ -152,7 +153,8 @@ class PagoController extends Controller
             }
 
             // Verificar que la infracción existe y no está pagada
-            $infraccion = Infraccion::where('id_infraccion', $request->id_infraccion)
+            $infraccion = Infraccion::with('detalleInfraccion.registroInfraccion.trabajador')
+                ->where('id_infraccion', $request->id_infraccion)
                 ->where('estadoPago', '!=', 'Pagada')
                 ->first();
 
@@ -187,6 +189,17 @@ class PagoController extends Controller
             $infraccion->update([
                 'estadoPago' => 'Pagada'
             ]);
+
+            // 🔔 NOTIFICAR AL TRABAJADOR QUE VALIDÓ LA INFRACCIÓN
+            if ($infraccion->detalleInfraccion->registroInfraccion?->trabajador?->user_id) {
+                Notificacion::create([
+                    'user_id' => $infraccion->detalleInfraccion->registroInfraccion->trabajador->user_id,
+                    'tipo' => 'pago',
+                    'titulo' => 'Multa pagada',
+                    'mensaje' => 'El ciudadano ' . $contribuyente->email . ' ha pagado la multa por "' . $infraccion->detalleInfraccion->tipo->descripcion . '".',
+                    'url' => route('trabajador.infracciones.historial')
+                ]);
+            }
 
             DB::commit();
 

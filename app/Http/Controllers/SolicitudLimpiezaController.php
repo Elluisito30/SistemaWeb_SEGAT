@@ -7,6 +7,8 @@ use App\Models\SolicitudLimpieza;
 use App\Models\DetalleSolicitud;
 use App\Models\AreaVerde;
 use App\Models\Servicio;
+use App\Models\Notificacion;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class SolicitudLimpiezaController extends Controller
@@ -138,6 +140,20 @@ class SolicitudLimpiezaController extends Controller
         $solicitud->documentoAdjunto = $request->documentoAdjunto ?? '';
         $solicitud->estado = 'registrada';
         $solicitud->save();
+
+        // NOTIFICAR A TODOS LOS TRABAJADORES
+        $areaVerde = AreaVerde::find($request->id_area);
+        $trabajadores = User::where('role', 'trabajador')->get();
+        
+        foreach ($trabajadores as $trabajador) {
+            Notificacion::create([
+                'user_id' => $trabajador->id,
+                'tipo' => $request->prioridad == 'ALTA' ? 'urgente' : 'solicitud',
+                'titulo' => $request->prioridad == 'ALTA' ? '¡Solicitud URGENTE!' : 'Nueva solicitud de limpieza',
+                'mensaje' => 'Se ha registrado una nueva solicitud con prioridad ' . $request->prioridad . ' en ' . ($areaVerde ? $areaVerde->nombre : 'área verde'),
+                'url' => route('trabajador.solicitudes.index')
+            ]);
+        }
 
         return redirect()->route('ciudadano.solicitud.index')->with('datos', 'Registro nuevo guardado.');
     }

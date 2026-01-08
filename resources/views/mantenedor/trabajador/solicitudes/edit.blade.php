@@ -8,7 +8,7 @@
             <div class="card shadow-sm border-0">
                 <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #ffc107;">
                     <h5 class="font-weight-bold m-0">
-                        <i class="fas fa-calendar-alt me-2"></i> PROGRAMAR / CAMBIAR ESTADO DE SOLICITUD
+                        <i class="fas fa-calendar-alt mr-2"></i> PROGRAMAR / CAMBIAR ESTADO DE SOLICITUD
                     </h5>
                 </div>
 
@@ -18,7 +18,7 @@
                     <div class="card mb-4 shadow-sm border-0">
                         <div class="card-header" style="background-color: #e9ecef;">
                             <h6 class="mb-0 text-dark">
-                                <i class="fas fa-info-circle text-primary me-2"></i>
+                                <i class="fas fa-info-circle text-primary mr-2"></i>
                                 <strong>Información de la Solicitud N° {{ $solicitud->id_solicitud }}</strong>
                             </h6>
                         </div>
@@ -35,15 +35,15 @@
                                         <strong>Prioridad:</strong>
                                         @if($solicitud->prioridad == 'ALTA')
                                             <span class="badge bg-danger px-2 py-1">
-                                                <i class="fas fa-exclamation-circle me-1"></i> ALTA
+                                                <i class="fas fa-exclamation-circle mr-1"></i> ALTA
                                             </span>
                                         @elseif($solicitud->prioridad == 'MEDIA')
                                             <span class="badge bg-warning text-dark px-2 py-1">
-                                                <i class="fas fa-exclamation-triangle me-1"></i> MEDIA
+                                                <i class="fas fa-exclamation-triangle mr-1"></i> MEDIA
                                             </span>
                                         @else
                                             <span class="badge bg-info px-2 py-1">
-                                                <i class="fas fa-info-circle me-1"></i> BAJA
+                                                <i class="fas fa-info-circle mr-1"></i> BAJA
                                             </span>
                                         @endif
                                     </p>
@@ -75,7 +75,7 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <small class="form-text text-muted">
-                                        <i class="fas fa-info-circle me-1"></i> Al asignar monto y fecha, el estado cambia automáticamente a "En Atención".
+                                        <i class="fas fa-info-circle mr-1"></i> Al asignar monto y fecha, el estado cambia automáticamente a "En Atención".
                                     </small>
                                 </div>
                             </div>
@@ -84,7 +84,7 @@
                         <hr class="my-4">
 
                         <h5 class="text-primary mb-3">
-                            <i class="fas fa-calendar-check me-2"></i> Programación (Opcional)
+                            <i class="fas fa-calendar-check mr-2"></i> Programación (Opcional)
                         </h5>
                         <p class="text-muted mb-4">Asigne monto y fecha para programar la solicitud</p>
 
@@ -124,10 +124,10 @@
 
                         <div class="d-flex justify-content-center gap-3 mt-4">
                             <button type="submit" class="btn text-white px-4" style="background-color: #5cb85c;">
-                                <i class="fas fa-save me-1"></i> Guardar Cambios
+                                <i class="fas fa-save mr-1"></i> Guardar Cambios
                             </button>
-                            <a href="{{ route('trabajador.solicitudes.cancelar') }}" class="btn btn-secondary px-4">
-                                <i class="fas fa-ban me-1"></i> Cancelar
+                            <a href="{{ route('trabajador.solicitudes.cancelar') }}" class="btn btn-secondary px-4 ml-3">
+                                <i class="fas fa-ban mr-1"></i> Cancelar
                             </a>
                         </div>
 

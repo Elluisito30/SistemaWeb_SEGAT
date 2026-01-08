@@ -10,6 +10,7 @@ use App\Http\Controllers\CiudadanoController;
 use App\Http\Controllers\SolicitudLimpiezaController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\InfraccionController;
+use App\Http\Controllers\NotificacionController;
 
 // -----------------------------------
 // RUTAS DE LOGIN
@@ -35,29 +36,37 @@ Route::post('/salir', [UserController::class, 'salir'])->name('logout')->middlew
 Route::middleware(['auth', 'role:ciudadano'])->prefix('ciudadano')->name('ciudadano.')->group(function () {
     Route::get('/dashboard', [CiudadanoController::class, 'dashboard'])->name('dashboard');
 
-    // PUNTO 1: Registrar solicitudes de limpieza
+    // REGISTRO DE SOLICITUDES DE LIMPIEZA
     Route::resource('/solicitud', SolicitudLimpiezaController::class)->except(['show']);
     Route::get('solicitud/cancelar', function () {
         return redirect()->route('ciudadano.solicitud.index')->with('datos','Acción Cancelada..!');
     })->name('solicitud.cancelar');
     Route::get('solicitud/{id}/confirmar',[SolicitudLimpiezaController::class,'confirmar'])->name('solicitud.confirmar');
 
-    // PUNTO 2: Registrar infracciones
+    // REGISTRO DE INFRACCIONES
     Route::get('/infracciones/crear', [InfraccionController::class, 'create'])->name('infracciones.create');
     Route::post('/infracciones', [InfraccionController::class, 'store'])->name('infracciones.store');
+    Route::get('/infracciones', [InfraccionController::class, 'index'])->name('infracciones.index');
 
-    // PUNTO 3: Consultar pagos y multas (solo lectura)
+    // CONSULTA DE PAGOS Y MULTAS (solo lectura)
     Route::get('/consultas', [PagoController::class, 'index'])->name('consultas.index');
 
-    // PUNTO 4: Registrar pagos de multas
+    // REGISTRAR PAGOS DE MULTAS
     Route::get('/pagos', [PagoController::class, 'indexPagos'])->name('pagos.index');
     Route::get('/pagos/crear/{id}', [PagoController::class, 'create'])->name('pagos.create');
     Route::post('/pagos', [PagoController::class, 'store'])->name('pagos.store');
     Route::get('/pagos/historial', [PagoController::class, 'historial'])->name('pagos.historial');
+
+    // NOTIFICACIONES PARA CIUDADANOS
+    Route::get('/notificaciones', [NotificacionController::class, 'indexCiudadano'])->name('notificaciones.index');
+    Route::get('/notificaciones/no-leidas', [NotificacionController::class, 'noLeidasCiudadano'])->name('notificaciones.noLeidas');
+    Route::post('/notificaciones/{id}/marcar-leida', [NotificacionController::class, 'marcarLeida'])->name('notificaciones.marcarLeida');
+    Route::post('/notificaciones/marcar-todas', [NotificacionController::class, 'marcarTodasLeidas'])->name('notificaciones.marcarTodas');
 });
 
 // ------------------------
 // RUTAS PARA TRABAJADOR
+// ------------------------
 Route::middleware(['auth', 'role:trabajador'])->prefix('trabajador')->name('trabajador.')->group(function () {
     Route::get('/dashboard', [TrabajadorController::class, 'dashboard'])->name('dashboard');
 
@@ -77,10 +86,17 @@ Route::middleware(['auth', 'role:trabajador'])->prefix('trabajador')->name('trab
     Route::get('/infracciones/cancelar', function () {
         return redirect()->route('trabajador.infracciones.index')->with('datos', 'Acción Cancelada.');
     })->name('infracciones.cancelar');
+
+    // NOTIFICACIONES PARA TRABAJADORES
+    Route::get('/notificaciones', [NotificacionController::class, 'indexTrabajador'])->name('notificaciones.index');
+    Route::get('/notificaciones/no-leidas', [NotificacionController::class, 'noLeidasTrabajador'])->name('notificaciones.noLeidas');
+    Route::post('/notificaciones/{id}/marcar-leida', [NotificacionController::class, 'marcarLeida'])->name('notificaciones.marcarLeida');
+    Route::post('/notificaciones/marcar-todas', [NotificacionController::class, 'marcarTodasLeidas'])->name('notificaciones.marcarTodas');
 });
 
 // ------------------------
 // RUTAS PARA GERENTE
+// ------------------------
 Route::middleware(['auth', 'role:gerente'])->prefix('gerente')->name('gerente.')->group(function () {
     // Dashboard principal (Con gráficos)
     Route::get('/dashboard', [GerenteController::class, 'dashboard'])->name('dashboard');
@@ -101,6 +117,7 @@ Route::get('/cancelar',function(){
 
 // -----------------------------
 // RUTA HOME SEGÚN TIPO DE ROL
+// -----------------------------
 Route::get('/home', function () {   // Al entrar en la ruta Home redirige al home indicado
     $user = auth()->user();
 
@@ -114,5 +131,3 @@ Route::get('/home', function () {   // Al entrar en la ruta Home redirige al hom
 
     return redirect()->route('login');
 })->name('home')->middleware('auth');
-
-

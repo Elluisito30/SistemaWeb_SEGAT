@@ -10,7 +10,7 @@
                 <!-- Header verde -->
                 <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #68b76f;">
                     <h5 class="font-weight-bold m-0">
-                        <i class="fas fa-clipboard-list me-2"></i> GESTIÓN DE SOLICITUDES DE LIMPIEZA
+                        <i class="fas fa-clipboard-list mr-2"></i> GESTIÓN DE SOLICITUDES DE LIMPIEZA
                     </h5>
                 </div>
 
@@ -19,7 +19,7 @@
 
                     @if(session('datos'))
                         <div class="alert alert-success alert-dismissible fade show shadow-sm mb-4" role="alert">
-                            <i class="fas fa-check-circle me-2"></i> {{ session('datos') }}
+                            <i class="fas fa-check-circle mr-2"></i> {{ session('datos') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
@@ -45,7 +45,7 @@
                             </div>
                             <div class="col-md-2">
                                 <button type="submit" class="btn text-white w-60" style="background-color: #2d5f3f;">
-                                    <i class="fas fa-search me-2"></i> Buscar
+                                    <i class="fas fa-search mr-2"></i> Buscar
                                 </button>
                             </div>
                         </div>
@@ -74,26 +74,26 @@
                                             <span class="badge bg-dark px-3 py-2">{{ $item->id_solicitud }}</span>
                                         </td>
                                         <td class="text-start">
-                                            <i class="fas fa-map-marker-alt text-muted me-1"></i>
+                                            <i class="fas fa-map-marker-alt text-muted mr-1"></i>
                                             {{ $item->detalleSolicitud->areaVerde->nombre ?? 'N/A' }}
                                         </td>
                                         <td class="text-start">
-                                            <i class="fas fa-id-card text-muted me-1"></i>
+                                            <i class="fas fa-id-card text-muted mr-1"></i>
                                             {{ $item->detalleSolicitud->contribuyente->numDocumento ?? 'N/A' }}
                                         </td>
                                         <td>{{ $item->servicio->descripcionServicio ?? 'N/A' }}</td>
                                         <td>
                                             @if($item->prioridad == 'ALTA')
                                                 <span class="badge bg-danger px-3 py-2">
-                                                    <i class="fas fa-exclamation-circle me-1"></i> ALTA
+                                                    <i class="fas fa-exclamation-circle mr-1"></i> ALTA
                                                 </span>
                                             @elseif($item->prioridad == 'MEDIA')
                                                 <span class="badge bg-warning text-dark px-3 py-2">
-                                                    <i class="fas fa-exclamation-triangle me-1"></i> MEDIA
+                                                    <i class="fas fa-exclamation-triangle mr-1"></i> MEDIA
                                                 </span>
                                             @else
                                                 <span class="badge bg-info px-3 py-2">
-                                                    <i class="fas fa-info-circle me-1"></i> BAJA
+                                                    <i class="fas fa-info-circle mr-1"></i> BAJA
                                                 </span>
                                             @endif
                                         </td>
@@ -101,22 +101,22 @@
                                             @switch($item->estado)
                                                 @case('registrada')
                                                     <span class="badge bg-secondary px-3 py-2">
-                                                        <i class="fas fa-file-alt me-1"></i> Registrada
+                                                        <i class="fas fa-file-alt mr-1"></i> Registrada
                                                     </span>
                                                     @break
                                                 @case('en atención')
                                                     <span class="badge bg-primary px-3 py-2">
-                                                        <i class="fas fa-user-clock me-1"></i> En Atención
+                                                        <i class="fas fa-user-clock mr-1"></i> En Atención
                                                     </span>
                                                     @break
                                                 @case('atendida')
                                                     <span class="badge bg-success px-3 py-2">
-                                                        <i class="fas fa-check-circle me-1"></i> Atendida
+                                                        <i class="fas fa-check-circle mr-1"></i> Atendida
                                                     </span>
                                                     @break
                                                 @case('rechazada')
                                                     <span class="badge bg-danger px-3 py-2">
-                                                        <i class="fas fa-times-circle me-1"></i> Rechazada
+                                                        <i class="fas fa-times-circle mr-1"></i> Rechazada
                                                     </span>
                                                     @break
                                                 @default

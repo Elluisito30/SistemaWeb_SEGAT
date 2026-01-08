@@ -8,6 +8,7 @@ use App\Models\SolicitudLimpieza;
 use App\Models\Infraccion;
 use App\Models\RegistroInfraccion;
 use App\Models\DetalleInfraccion;
+use App\Models\Notificacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -81,6 +82,8 @@ class TrabajadorController extends Controller
             'fechaProgramada.date' => 'Formato de fecha no válido.'
         ]);
 
+        $estadoAnterior = $solicitud->estado;
+
         // Actualizar campos según lo enviado
         $solicitud->estado = $request->estado;
         
@@ -93,6 +96,23 @@ class TrabajadorController extends Controller
         }
 
         $solicitud->save();
+
+        // NOTIFICAR AL CIUDADANO 
+        if ($estadoAnterior !== $solicitud->estado && $solicitud->detalleSolicitud->contribuyente->user_id) {
+            $mensajes = [
+                'en atención' => 'Su solicitud más reciente está siendo atendida por un trabajador.',
+                'atendida' => 'Su solicitud más reciente ha sido atendida exitosamente.',
+                'rechazada' => 'Su solicitud más reciente ha sido rechazada.'
+            ];
+
+            Notificacion::create([
+                'user_id' => $solicitud->detalleSolicitud->contribuyente->user_id,
+                'tipo' => 'solicitud',
+                'titulo' => 'Actualización de solicitud',
+                'mensaje' => 'Su solicitud ha sido actualizada.',
+                'url' => route('ciudadano.solicitud.index')
+            ]);
+        }
 
         return redirect()->route('trabajador.solicitudes.index')
             ->with('datos', 'Solicitud actualizada exitosamente.');
@@ -184,6 +204,17 @@ class TrabajadorController extends Controller
                 'fechaHoraEmision' => now(),
                 'estado' => 'Validada'
             ]);
+
+            // NOTIFICAR AL CIUDADANO sobre la nueva multa
+            if ($infraccion->detalleInfraccion->contribuyente->user_id) {
+                Notificacion::create([
+                    'user_id' => $infraccion->detalleInfraccion->contribuyente->user_id,
+                    'tipo' => 'multa',
+                    'titulo' => 'Nueva multa registrada',
+                    'mensaje' => 'Se ha registrado una multa a su nombre por un monto de S/ ' . number_format($request->montoMulta, 2) . '.',
+                    'url' => route('ciudadano.infracciones.index')
+                ]);
+            }
 
             DB::commit();
 

@@ -91,10 +91,10 @@
 
                         <div class="form-group mt-4 d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-2"></i> Guardar
+                                <i class="fas fa-save mr-2"></i> Guardar
                             </button>
-                            <a href="{{ route('ciudadano.solicitud.cancelar') }}" class="btn btn-danger ms-3">
-                                <i class="fas fa-ban me-2"></i> Cancelar
+                            <a href="{{ route('ciudadano.solicitud.cancelar') }}" class="btn btn-danger ml-3">
+                                <i class="fas fa-ban mr-2"></i> Cancelar
                             </a>
                         </div>
 

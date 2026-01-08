@@ -9,7 +9,7 @@
                 <!-- Header verde -->
                 <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #2d5f3f;">
                     <h5 class="font-weight-bold m-0">
-                        <i class="fas fa-check-circle me-2"></i> VALIDAR INFRACCIÓN N°{{ $infraccion->id_infraccion }}
+                        <i class="fas fa-check-circle mr-2"></i> VALIDAR INFRACCIÓN N°{{ $infraccion->id_infraccion }}
                     </h5>
                 </div>
 
@@ -21,7 +21,7 @@
                             <div class="card shadow-sm border-0" style="background-color: #fff8e1;">
                                 <div class="card-header bg-light">
                                     <h6 class="mb-0 text-dark">
-                                        <i class="fas fa-exclamation-triangle text-warning me-2"></i>
+                                        <i class="fas fa-exclamation-triangle text-warning mr-2"></i>
                                         <strong>Detalles de la Infracción</strong>
                                     </h6>
                                 </div>
@@ -37,7 +37,7 @@
                             <div class="card shadow-sm border-0" style="background-color: #ffebee;">
                                 <div class="card-header bg-light">
                                     <h6 class="mb-0 text-dark">
-                                        <i class="fas fa-user text-danger me-2"></i>
+                                        <i class="fas fa-user text-danger mr-2"></i>
                                         <strong>Datos del Infractor</strong>
                                     </h6>
                                 </div>
@@ -57,7 +57,7 @@
                             <div class="card shadow-sm border-0">
                                 <div class="card-header bg-light">
                                     <h6 class="mb-0 text-dark">
-                                        <i class="fas fa-image text-success me-2"></i>
+                                        <i class="fas fa-image text-success mr-2"></i>
                                         <strong>Evidencia Fotográfica</strong>
                                     </h6>
                                 </div>
@@ -89,7 +89,7 @@
                         <div class="card shadow-sm border-0 mb-4">
                             <div class="card-header bg-light">
                                 <h6 class="mb-0 text-dark">
-                                    <i class="fas fa-gavel text-success me-2"></i>
+                                    <i class="fas fa-gavel text-success mr-2"></i>
                                     <strong>Asignar Multa</strong>
                                 </h6>
                             </div>
@@ -152,7 +152,7 @@
 
                         <!-- Información importante -->
                         <div class="alert alert-info shadow-sm mb-4">
-                            <i class="fas fa-info-circle me-2"></i>
+                            <i class="fas fa-info-circle mr-2"></i>
                             <strong>Importante:</strong> Al validar esta infracción, se registrará tu nombre como trabajador responsable 
                             y se notificará al infractor sobre la multa asignada.
                         </div>
@@ -161,10 +161,10 @@
                         <div class="d-flex justify-content-between gap-3">
                             <a href="{{ route('trabajador.infracciones.index') }}" 
                                class="btn btn-secondary px-4">
-                                <i class="fas fa-arrow-left me-2"></i> Regresar
+                                <i class="fas fa-arrow-left mr-2"></i> Regresar
                             </a>
                             <button type="submit" class="btn text-white px-4" style="background-color: #5cb85c;">
-                                <i class="fas fa-check me-2"></i> Validar infracción y asignar multa
+                                <i class="fas fa-check mr-2"></i> Validar infracción y asignar multa
                             </button>
                         </div>
 

@@ -8,7 +8,7 @@
             <div class="card shadow-sm border-0">
                 <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #2d5f3f;">
                     <h5 class="font-weight-bold m-0">
-                        <i class="fas fa-file-invoice-dollar me-2"></i> CONSULTA DE ARBITRIOS Y MULTAS
+                        <i class="fas fa-file-invoice-dollar mr-2"></i> CONSULTA DE ARBITRIOS Y MULTAS
                     </h5>
                 </div>
 
@@ -29,7 +29,7 @@
                             <div class="card mb-4 shadow-sm border-0">
                                 <div class="card-header bg-light">
                                     <h6 class="mb-0 text-dark">
-                                        <i class="fas fa-user me-2"></i> Información del Contribuyente
+                                        <i class="fas fa-user mr-2"></i> Información del Contribuyente
                                     </h6>
                                 </div>
                                 <div class="card-body">
@@ -56,7 +56,7 @@
                                 <div class="col-md-4">
                                     <div class="card p-3" style="background-color: #00b0cc; color: white; border-radius: 8px;">
                                         <div class="d-flex align-items-center">
-                                            <div class="bg-dark rounded-circle p-2 me-3">
+                                            <div class="bg-dark rounded-circle p-2 mr-3">
                                                 <i class="fas fa-clipboard-list text-white"></i>
                                             </div>
                                             <div>
@@ -71,7 +71,7 @@
                                 <div class="col-md-4">
                                     <div class="card p-3" style="background-color: #ffc107; color: #2d5f3f; border-radius: 8px;">
                                         <div class="d-flex align-items-center">
-                                            <div class="bg-dark rounded-circle p-2 me-3">
+                                            <div class="bg-dark rounded-circle p-2 mr-3">
                                                 <i class="fas fa-clock text-white"></i>
                                             </div>
                                             <div>
@@ -86,7 +86,7 @@
                                 <div class="col-md-4">
                                     <div class="card p-3" style="background-color: #dc3545; color: white; border-radius: 8px;">
                                         <div class="d-flex align-items-center">
-                                            <div class="bg-dark rounded-circle p-2 me-3">
+                                            <div class="bg-dark rounded-circle p-2 mr-3">
                                                 <i class="fas fa-dollar-sign text-white"></i>
                                             </div>
                                             <div>
@@ -129,7 +129,7 @@
                                                     </span>
                                                 @else
                                                     <span class="badge bg-secondary px-2 py-1">
-                                                        <i class="fas fa-clock me-1"></i> En revisión
+                                                        <i class="fas fa-clock mr-1"></i> En revisión
                                                     </span>
                                                 @endif
                                             </td>
@@ -148,14 +148,14 @@
                                             <td>
                                                 @if($detalleInfraccion->registroInfraccion)
                                                     @if($detalleInfraccion->infraccion->estadoPago == 'Pagada')
-                                                        <span class="badge bg-success px-2 py-1"><i class="fas fa-check me-1"></i> Pagada</span>
+                                                        <span class="badge bg-success px-2 py-1"><i class="fas fa-check mr-1"></i> Pagada</span>
                                                     @elseif($detalleInfraccion->infraccion->estadoPago == 'Vencida')
-                                                        <span class="badge bg-danger px-2 py-1"><i class="fas fa-times me-1"></i> Vencida</span>
+                                                        <span class="badge bg-danger px-2 py-1"><i class="fas fa-times mr-1"></i> Vencida</span>
                                                     @else
-                                                        <span class="badge bg-warning text-dark px-2 py-1"><i class="fas fa-hourglass-half me-1"></i> Pendiente</span>
+                                                        <span class="badge bg-warning text-dark px-2 py-1"><i class="fas fa-hourglass-half mr-1"></i> Pendiente</span>
                                                     @endif
                                                 @else
-                                                    <span class="badge bg-secondary px-2 py-1"><i class="fas fa-clock me-1"></i> Sin validar</span>
+                                                    <span class="badge bg-secondary px-2 py-1"><i class="fas fa-clock mr-1"></i> Sin validar</span>
                                                 @endif
                                             </td>
                                             <td>
@@ -178,7 +178,7 @@
 
                             <!-- Nota informativa -->
                             <div class="alert alert-info mt-4 text-center shadow-sm" role="alert">
-                                <i class="fas fa-info-circle me-2"></i>
+                                <i class="fas fa-info-circle mr-2"></i>
                                 <strong>Importante:</strong> 
                                 Para realizar el pago de sus multas, puede acercarse a las oficinas de la municipalidad 
                                 o realizar el pago en línea a través del portal de pagos.

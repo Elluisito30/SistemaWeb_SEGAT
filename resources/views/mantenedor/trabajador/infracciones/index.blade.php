@@ -9,7 +9,7 @@
                 <!-- Header verde claro -->
                 <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #2d5f3f;">
                     <h5 class="font-weight-bold m-0">
-                        <i class="fas fa-exclamation-triangle me-2"></i> INFRACCIONES POR VALIDAR
+                        <i class="fas fa-exclamation-triangle mr-2"></i> INFRACCIONES POR VALIDAR
                     </h5>
                 </div>
 
@@ -17,14 +17,14 @@
 
                     @if(session('datos'))
                         <div class="alert alert-success alert-dismissible fade show shadow-sm mb-4" role="alert">
-                            <i class="fas fa-check-circle me-2"></i> {{ session('datos') }}
+                            <i class="fas fa-check-circle mr-2"></i> {{ session('datos') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
 
                     @if(session('error'))
                         <div class="alert alert-danger alert-dismissible fade show shadow-sm mb-4" role="alert">
-                            <i class="fas fa-exclamation-triangle me-2"></i> {{ session('error') }}
+                            <i class="fas fa-exclamation-triangle mr-2"></i> {{ session('error') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
@@ -41,7 +41,7 @@
                                            value="{{ $buscarpor }}"
                                            style="background-color: #f8f9fa;">
                                     <button class="btn text-white" type="submit" style="background-color: #2d5f3f;">
-                                        <i class="fas fa-search me-2"></i> Buscar
+                                        <i class="fas fa-search mr-2"></i> Buscar
                                     </button>
                                 </div>
                             </form>
@@ -50,7 +50,7 @@
                             <a href="{{ route('trabajador.infracciones.historial') }}" 
                                class="btn text-white shadow-sm" 
                                style="background-color: #5cb85c;">
-                                <i class="fas fa-history me-2"></i> Ver Historial
+                                <i class="fas fa-history mr-2"></i> Ver Historial
                             </a>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
                                                    class="btn btn-success btn-sm" 
                                                    title="Validar infracción"
                                                    data-toggle="tooltip">
-                                                    <i class="fas fa-check me-2"></i> Validar
+                                                    <i class="fas fa-check mr-2"></i> Validar
                                                 </a>
                                             </td>
                                         </tr>

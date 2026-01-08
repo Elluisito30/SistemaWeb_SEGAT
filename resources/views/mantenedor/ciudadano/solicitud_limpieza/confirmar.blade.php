@@ -24,10 +24,10 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger mr-2">
-                            <i class="fas fa-check-square"></i> Confirmar
+                            <i class="fas fa-check-square mr-2"></i> Confirmar
                         </button>
                         <a href="{{ route('ciudadano.solicitud.cancelar') }}" class="btn btn-secondary">
-                            <i class="fas fa-times-circle"></i> Cancelar
+                            <i class="fas fa-times-circle mr-2"></i> Cancelar
                         </a>
                     </form>
                 </div>

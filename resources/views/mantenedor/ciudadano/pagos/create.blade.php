@@ -20,7 +20,7 @@
                             <div class="card shadow-sm border-0" style="background-color: #fff8e1;">
                                 <div class="card-header bg-light">
                                     <h6 class="mb-0 text-dark">
-                                        <i class="fas fa-exclamation-triangle text-warning me-2"></i>
+                                        <i class="fas fa-exclamation-triangle text-warning mr-2"></i>
                                         <strong>Detalles de la Infracción</strong>
                                     </h6>
                                 </div>
@@ -36,7 +36,7 @@
                             <div class="card shadow-sm border-0" style="background-color: #ffebee;">
                                 <div class="card-header bg-light">
                                     <h6 class="mb-0 text-dark">
-                                        <i class="fas fa-dollar-sign text-danger me-2"></i>
+                                        <i class="fas fa-dollar-sign text-danger mr-2"></i>
                                         <strong>Información de la Multa</strong>
                                     </h6>
                                 </div>
@@ -51,7 +51,7 @@
 
                     @if(session('error'))
                         <div class="alert alert-danger shadow-sm mb-4">
-                            <i class="fas fa-exclamation-triangle me-2"></i> {{ session('error') }}
+                            <i class="fas fa-exclamation-triangle mr-2"></i> {{ session('error') }}
                         </div>
                     @endif
 
@@ -74,7 +74,7 @@
                         <div class="card shadow-sm border-0 mb-4">
                             <div class="card-header bg-light">
                                 <h6 class="mb-0 text-dark">
-                                    <i class="fas fa-file-invoice-dollar text-success me-2"></i>
+                                    <i class="fas fa-file-invoice-dollar text-success mr-2"></i>
                                     <strong>Datos del Pago</strong>
                                 </h6>
                             </div>
@@ -115,7 +115,7 @@
                                     <!-- Método de pago -->
                                     <div class="col-md-4">
                                         <label class="form-label fw-bold">Método de Pago <span class="text-danger">*</span></label>
-                                        <select name="metodoPago" class="form-control select-wide @error('metodoPago') is-invalid @enderror" required>
+                                        <select name="metodoPago" id="metodoPago" class="form-control select-wide @error('metodoPago') is-invalid @enderror" required>
                                             <option value="">Seleccione...</option>
                                             <option value="Efectivo" {{ old('metodoPago') == 'Efectivo' ? 'selected' : '' }}>Efectivo</option>
                                             <option value="Transferencia" {{ old('metodoPago') == 'Transferencia' ? 'selected' : '' }}>Transferencia Bancaria</option>
@@ -133,11 +133,11 @@
                                         <label class="form-label fw-bold">Número de Operación</label>
                                         <input type="text" 
                                                name="numeroOperacion" 
+                                               id="numeroOperacion"
                                                class="form-control @error('numeroOperacion') is-invalid @enderror" 
                                                value="{{ old('numeroOperacion') }}"
-                                               placeholder="Ej: 0527210"
                                                maxlength="50">
-                                        <small class="form-text text-muted">N° de operación bancaria (opcional)</small>
+                                        <small class="form-text text-muted">N° de operación</small>
                                         @error('numeroOperacion')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -148,11 +148,11 @@
                                         <label class="form-label fw-bold">Entidad Financiera</label>
                                         <input type="text" 
                                                name="entidadFinanciera" 
+                                               id="entidadFinanciera"
                                                class="form-control @error('entidadFinanciera') is-invalid @enderror" 
                                                value="{{ old('entidadFinanciera') }}"
-                                               placeholder="Ej: INTERBANK, BCP, BBVA"
                                                maxlength="100">
-                                        <small class="form-text text-muted">Banco o entidad (opcional)</small>
+                                        <small class="form-text text-muted">Banco o entidad</small>
                                         @error('entidadFinanciera')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -163,9 +163,10 @@
                                         <label class="form-label fw-bold">Comprobante de Pago (Voucher)</label>
                                         <input type="file" 
                                                name="comprobanteAdjunto" 
+                                               id="comprobanteAdjunto"
                                                class="form-control select-wide @error('comprobanteAdjunto') is-invalid @enderror"
                                                accept=".pdf,.jpg,.jpeg,.png">
-                                        <small class="form-text text-muted">Formatos: PDF, JPG, PNG. Tamaño máximo: 5MB (opcional)</small>
+                                        <small class="form-text text-muted">Formatos: PDF, JPG, PNG. Tamaño máximo: 5MB</small>
                                         @error('comprobanteAdjunto')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -175,10 +176,11 @@
                                     <div class="col-md-12">
                                         <label class="form-label fw-bold">Observaciones</label>
                                         <textarea name="observaciones" 
+                                                  id="observaciones"
                                                   class="form-control @error('observaciones') is-invalid @enderror" 
                                                   rows="3"
                                                   maxlength="500"
-                                                  placeholder="Ingrese cualquier comentario adicional (opcional)">{{ old('observaciones') }}</textarea>
+                                                  placeholder="Indique algún comentario adicional...">{{ old('observaciones') }}</textarea>
                                         <small class="form-text text-muted">Información adicional sobre el pago</small>
                                         @error('observaciones')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -213,4 +215,70 @@
         </div>
     </div>
 </div>
+
+{{-- Script actualizado --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const metodoPago = document.getElementById('metodoPago');
+    const numOperacion = document.getElementById('numeroOperacion');
+    const entidadFin = document.getElementById('entidadFinanciera');
+    const comprobante = document.getElementById('comprobanteAdjunto');
+    const observaciones = document.getElementById('observaciones');
+
+    const numOperacionSmall = numOperacion.nextElementSibling;
+    const entidadFinSmall = entidadFin.nextElementSibling;
+    const comprobanteSmall = comprobante.nextElementSibling;
+    const observacionesSmall = observaciones ? observaciones.nextElementSibling : null;
+
+    function actualizarCampos() {
+        const valor = metodoPago.value;
+        const metodoSeleccionado = valor !== '';
+
+        // --- Número de Operación ---
+        if (valor === 'Transferencia' || valor === 'Tarjeta') {
+            numOperacion.disabled = false;
+            numOperacion.placeholder = 'Número de Operación Bancaria';
+            if (numOperacionSmall) numOperacionSmall.textContent = 'Indique el número de operación bancaria';
+        } 
+        else if (valor === 'Yape' || valor === 'Plin') {
+            numOperacion.disabled = false;
+            numOperacion.placeholder = 'Código de Operación';
+            if (numOperacionSmall) numOperacionSmall.textContent = 'Indique el código de operación';
+        } 
+        else {
+            // Efectivo o vacío
+            numOperacion.disabled = true;
+            numOperacion.value = '';
+            numOperacion.placeholder = '';
+            if (numOperacionSmall) numOperacionSmall.textContent = 'N° de operación';
+        }
+
+        // --- Entidad Financiera ---
+        if (valor === 'Transferencia' || valor === 'Tarjeta') {
+            entidadFin.disabled = false;
+            entidadFin.placeholder = 'BCP, Interbank u otros bancos';
+            if (entidadFinSmall) entidadFinSmall.textContent = 'Indique el banco o entidad financiera';
+        } else {
+            entidadFin.disabled = true;
+            entidadFin.value = '';
+            entidadFin.placeholder = '';
+            if (entidadFinSmall) entidadFinSmall.textContent = 'Banco o entidad';
+        }
+
+        // --- Comprobante ---
+        comprobante.disabled = !metodoSeleccionado;
+
+        // --- Observaciones ---
+        if (observaciones) {
+            observaciones.disabled = !metodoSeleccionado;
+            observaciones.placeholder = 'Indique algún comentario adicional...';
+            if (observacionesSmall) observacionesSmall.textContent = 'Información adicional sobre el pago';
+        }
+    }
+
+    metodoPago.addEventListener('change', actualizarCampos);
+    actualizarCampos(); // Inicializar estado
+});
+</script>
+
 @endsection

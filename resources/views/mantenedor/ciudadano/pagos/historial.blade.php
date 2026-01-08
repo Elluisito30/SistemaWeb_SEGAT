@@ -8,14 +8,14 @@
             <div class="card shadow-sm border-0">
                 <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #17a2b8;">
                     <h5 class="font-weight-bold m-0">
-                        <i class="fas fa-history me-2"></i> HISTORIAL DE PAGOS REALIZADOS
+                        <i class="fas fa-history mr-2"></i> HISTORIAL DE PAGOS REALIZADOS
                     </h5>
                 </div>
 
                 <div class="card-body">
                     @if(isset($mensaje))
                         <div class="alert alert-warning alert-dismissible fade show shadow-sm" role="alert">
-                            <i class="fas fa-info-circle me-2"></i> {{ $mensaje }}
+                            <i class="fas fa-info-circle mr-2"></i> {{ $mensaje }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @else
@@ -24,7 +24,7 @@
                                 <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
                                 <h5 class="text-muted">No has realizado ningún pago aún.</h5>
                                 <a href="{{ route('ciudadano.pagos.index') }}" class="btn btn-success mt-3">
-                                    <i class="fas fa-credit-card me-2"></i> Registrar pago
+                                    <i class="fas fa-credit-card mr-2"></i> Registrar pago
                                 </a>
                             </div>
                         @else
@@ -32,7 +32,7 @@
                             <div class="card mb-4 shadow-sm border-0">
                                 <div class="card-header bg-light">
                                     <h6 class="mb-0 text-dark">
-                                        <i class="fas fa-user me-2"></i> Información del Contribuyente
+                                        <i class="fas fa-user mr-2"></i> Información del Contribuyente
                                     </h6>
                                 </div>
                                 <div class="card-body">
@@ -43,7 +43,7 @@
                                         </div>
                                         <div class="col-md-6 text-end">
                                             <a href="{{ route('ciudadano.pagos.index') }}" class="btn btn-sm btn-success">
-                                                <i class="fas fa-credit-card me-1"></i> Registrar nuevo pago
+                                                <i class="fas fa-credit-card mr-1"></i> Registrar nuevo pago
                                             </a>
                                         </div>
                                     </div>

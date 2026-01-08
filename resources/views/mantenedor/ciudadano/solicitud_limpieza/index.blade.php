@@ -92,7 +92,7 @@
     <div class="card shadow-sm border-0">
         <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #2d5f3f;">
             <h5 class="font-weight-bold m-0">
-                <i class="fas fa-folder-open me-2"></i> MIS SOLICITUDES DE LIMPIEZA
+                <i class="fas fa-folder-open mr-2"></i> MIS SOLICITUDES DE LIMPIEZA
             </h5>
         </div>
 
@@ -100,7 +100,7 @@
             <div class="row mb-4">
                 <div class="col-md-6">
                     <a href="{{ route('ciudadano.solicitud.create') }}" class="btn btn-lg text-white shadow-sm" style="background-color: #5cb85c;">
-                        <i class="fas fa-plus-circle me-1"></i> Nueva Solicitud
+                        <i class="fas fa-plus-circle mr-1"></i> Nueva Solicitud
                     </a>
                 </div>
                 <div class="col-md-6">
@@ -158,7 +158,7 @@
                                         </span>
                                     </td>
                                     <td class="align-middle">
-                                        <i class="fas fa-map-marker-alt me-1" style="color: #2d5f3f;"></i>
+                                        <i class="fas fa-map-marker-alt mr-1" style="color: #2d5f3f;"></i>
                                         {{ $itemsolicitud->detalleSolicitud->areaVerde->nombre ?? 'N/A' }}
                                     </td>
                                     <td class="align-middle"> 
@@ -171,38 +171,38 @@
                                             </span>
                                         @elseif($itemsolicitud->prioridad == 'MEDIA')
                                             <span class="badge badge-warning px-3 py-2">
-                                                <i class="fas fa-exclamation-triangle me-1"></i> MEDIA
+                                                <i class="fas fa-exclamation-triangle mr-1"></i> MEDIA
                                             </span>
                                         @else
                                             <span class="badge badge-info px-3 py-2">
-                                                <i class="fas fa-info-circle me-1"></i> BAJA
+                                                <i class="fas fa-info-circle mr-1"></i> BAJA
                                             </span>
                                         @endif
                                     </td>
                                     <td class="align-middle">
-                                        <i class="far fa-calendar-alt text-muted me-1"></i>
+                                        <i class="far fa-calendar-alt text-muted mr-1"></i>
                                         {{ date('d/m/Y', strtotime($itemsolicitud->fechaTentativaEjecucion)) }}
                                     </td>
                                     <td class="align-middle"> 
                                         @switch($itemsolicitud->estado)
                                             @case('registrada')
                                                 <span class="badge bg-info px-3 py-2">
-                                                    <i class="fas fa-file-alt me-1"></i> Registrada
+                                                    <i class="fas fa-file-alt mr-1"></i> Registrada
                                                 </span>
                                                 @break
                                             @case('en_atencion')
                                                 <span class="badge bg-warning px-3 py-2">
-                                                    <i class="fas fa-user-clock me-1"></i> En atención
+                                                    <i class="fas fa-user-clock mr-1"></i> En atención
                                                 </span>
                                                 @break
                                             @case('atendida')
                                                 <span class="badge bg-success px-3 py-2">
-                                                    <i class="fas fa-check-circle me-1"></i> Atendida
+                                                    <i class="fas fa-check-circle mr-1"></i> Atendida
                                                 </span>
                                                 @break
                                             @case('rechazada')
                                                 <span class="badge bg-danger px-3 py-2">
-                                                    <i class="fas fa-times-circle me-1"></i> Rechazada
+                                                    <i class="fas fa-times-circle mr-1"></i> Rechazada
                                                 </span>
                                                 @break
                                             @default

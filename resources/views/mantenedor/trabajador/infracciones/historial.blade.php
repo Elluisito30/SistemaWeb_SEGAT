@@ -9,7 +9,7 @@
                 <!-- Header verde -->
                 <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #2d5f3f;">
                     <h5 class="font-weight-bold m-0">
-                        <i class="fas fa-history me-2"></i> HISTORIAL DE INFRACCIONES VALIDADAS
+                        <i class="fas fa-history mr-2"></i> HISTORIAL DE INFRACCIONES VALIDADAS
                     </h5>
                 </div>
 
@@ -27,7 +27,7 @@
                                            value="{{ $buscarpor }}"
                                            style="background-color: #f8f9fa;">
                                     <button class="btn text-white" type="submit" style="background-color: #2d5f3f;">
-                                        <i class="fas fa-search me-2"></i> Buscar
+                                        <i class="fas fa-search mr-2"></i> Buscar
                                     </button>
                                 </div>
                             </form>
@@ -36,7 +36,7 @@
                             <a href="{{ route('trabajador.infracciones.index') }}" 
                                class="btn text-white shadow-sm" 
                                style="background-color: #5cb85c;">
-                                <i class="fas fa-arrow-left me-2"></i> Volver a Pendientes
+                                <i class="fas fa-arrow-left mr-2"></i> Volver a Pendientes
                             </a>
                         </div>
                     </div>
