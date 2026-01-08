@@ -47,12 +47,17 @@ Route::middleware(['auth', 'role:ciudadano'])->prefix('ciudadano')->name('ciudad
     Route::post('/infracciones', [InfraccionController::class, 'store'])->name('infracciones.store');
 
     // PUNTO 3: Consultar pagos y multas (solo lectura)
-    Route::get('/pagos', [PagoController::class, 'index'])->name('pagos.index');
+    Route::get('/consultas', [PagoController::class, 'index'])->name('consultas.index');
+
+    // PUNTO 4: Registrar pagos de multas
+    Route::get('/pagos', [PagoController::class, 'indexPagos'])->name('pagos.index');
+    Route::get('/pagos/crear/{id}', [PagoController::class, 'create'])->name('pagos.create');
+    Route::post('/pagos', [PagoController::class, 'store'])->name('pagos.store');
+    Route::get('/pagos/historial', [PagoController::class, 'historial'])->name('pagos.historial');
 });
 
 // ------------------------
 // RUTAS PARA TRABAJADOR
-// ------------------------
 Route::middleware(['auth', 'role:trabajador'])->prefix('trabajador')->name('trabajador.')->group(function () {
     Route::get('/dashboard', [TrabajadorController::class, 'dashboard'])->name('dashboard');
 
@@ -76,7 +81,6 @@ Route::middleware(['auth', 'role:trabajador'])->prefix('trabajador')->name('trab
 
 // ------------------------
 // RUTAS PARA GERENTE
-// ------------------------
 Route::middleware(['auth', 'role:gerente'])->prefix('gerente')->name('gerente.')->group(function () {
     // Dashboard principal (Con gráficos)
     Route::get('/dashboard', [GerenteController::class, 'dashboard'])->name('dashboard');
@@ -88,9 +92,15 @@ Route::middleware(['auth', 'role:gerente'])->prefix('gerente')->name('gerente.')
     Route::get('/reporte-infracciones', [GerenteController::class, 'reporteInfracciones'])->name('infracciones');
 });
 
+// Ruta para Trabajador
+Route::Resource('/trabajador', TrabajadorController::class);
+Route::get('/trabajador/{id}/confirmar', [TrabajadorController::class, 'confirmar'])->name('trabajador.confirmar');
+Route::get('/cancelar',function(){
+    return redirect()->route('trabajador.index')->with('datos','Acción cancelada  !!!');
+})->name('trabajador.cancelar');
+
 // -----------------------------
 // RUTA HOME SEGÚN TIPO DE ROL
-// -----------------------------
 Route::get('/home', function () {   // Al entrar en la ruta Home redirige al home indicado
     $user = auth()->user();
 
@@ -106,9 +116,3 @@ Route::get('/home', function () {   // Al entrar en la ruta Home redirige al hom
 })->name('home')->middleware('auth');
 
 
-// Ruta para Trabajador
-Route::Resource('/trabajador', TrabajadorController::class);
-Route::get('/trabajador/{id}/confirmar', [TrabajadorController::class, 'confirmar'])->name('trabajador.confirmar');
-Route::get('/cancelar',function(){
-    return redirect()->route('trabajador.index')->with('datos','Acción cancelada  !!!');
-})->name('trabajador.cancelar');

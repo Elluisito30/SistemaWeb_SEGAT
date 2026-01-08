@@ -81,9 +81,17 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ route('ciudadano.pagos.index')}}" class="nav-link">
+            <a href="{{ route('ciudadano.consultas.index')}}" class="nav-link">
               <i class="nav-icon fas fa-file-invoice-dollar"></i>
               <p>Consultas
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('ciudadano.pagos.index')}}" class="nav-link">
+              <i class="nav-icon fas fa-credit-card"></i>
+              <p>Pagos
               </p>
             </a>
           </li>  
