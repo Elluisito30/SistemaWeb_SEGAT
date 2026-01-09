@@ -41,9 +41,9 @@
                                             <p class="mb-1"><strong>Email:</strong> {{ $contribuyente->email }}</p>
                                             <p class="mb-0"><strong>N° Documento:</strong> {{ $contribuyente->numDocumento }}</p>
                                         </div>
-                                        <div class="col-md-6 text-end">
+                                        <div class="col-md-6 d-flex justify-content-end align-items-center">
                                             <a href="{{ route('ciudadano.pagos.index') }}" class="btn btn-sm btn-success">
-                                                <i class="fas fa-credit-card mr-1"></i> Registrar nuevo pago
+                                                <i class="fas fa-credit-card mr-2"></i> Registrar nuevo pago
                                             </a>
                                         </div>
                                     </div>

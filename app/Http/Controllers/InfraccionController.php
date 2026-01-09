@@ -97,7 +97,7 @@ class InfraccionController extends Controller
                 'user_id' => Auth::id(),
                 'tipo' => 'infraccion',
                 'titulo' => 'Infracción registrada',
-                'mensaje' => 'Tu reporte de infracción por sido registrado exitosamente. Será revisado por un trabajador.',
+                'mensaje' => 'Tu reporte de infracción ha sido registrado exitosamente. Será revisado por un trabajador.',
                 'url' => route('ciudadano.infracciones.index')
             ]);
 

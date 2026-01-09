@@ -56,7 +56,7 @@
                                             <p class="mb-1"><strong>Email:</strong> {{ $contribuyente->email }}</p>
                                             <p class="mb-0"><strong>N° Documento:</strong> {{ $contribuyente->numDocumento }}</p>
                                         </div>
-                                        <div class="col-md-6 text-end">
+                                        <div class="col-md-6 d-flex justify-content-end align-items-center">
                                             <a href="{{ route('ciudadano.pagos.historial') }}" class="btn btn-sm btn-info">
                                                 <i class="fas fa-history mr-2"></i> Ver historial de pagos
                                             </a>

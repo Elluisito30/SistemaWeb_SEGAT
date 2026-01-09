@@ -8,7 +8,7 @@
             <div class="card shadow-sm border-0">
                 <div class="card-header text-white" style="background-color: #28a745;">
                     <h5 class="font-weight-bold m-0">
-                        <i class="fas fa-credit-card me-2"></i> FORMULARIO DE PAGO - INFRACCIÓN #{{ $infraccion->id_infraccion }}
+                        <i class="fas fa-credit-card mr-2"></i> FORMULARIO DE PAGO - INFRACCIÓN #{{ $infraccion->id_infraccion }}
                     </h5>
                 </div>
 
@@ -81,7 +81,7 @@
                             <div class="card-body">
                                 <div class="row g-3">
                                     <!-- Monto pagado -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 mb-4">
                                         <label class="form-label fw-bold">Monto Pagado (S/.) <span class="text-danger">*</span></label>
                                         <input type="number" 
                                                name="montoPagado" 
@@ -98,7 +98,7 @@
                                     </div>
 
                                     <!-- Fecha de pago -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 mb-4">
                                         <label class="form-label fw-bold">Fecha de Pago <span class="text-danger">*</span></label>
                                         <input type="date" 
                                                name="fechaPago" 
@@ -113,7 +113,7 @@
                                     </div>
 
                                     <!-- Método de pago -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 mb-4">
                                         <label class="form-label fw-bold">Método de Pago <span class="text-danger">*</span></label>
                                         <select name="metodoPago" id="metodoPago" class="form-control select-wide @error('metodoPago') is-invalid @enderror" required>
                                             <option value="">Seleccione...</option>
@@ -129,7 +129,7 @@
                                     </div>
 
                                     <!-- Número de operación -->
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 mb-4">
                                         <label class="form-label fw-bold">Número de Operación</label>
                                         <input type="text" 
                                                name="numeroOperacion" 
@@ -144,7 +144,7 @@
                                     </div>
 
                                     <!-- Entidad financiera -->
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 mb-4">
                                         <label class="form-label fw-bold">Entidad Financiera</label>
                                         <input type="text" 
                                                name="entidadFinanciera" 
@@ -159,7 +159,7 @@
                                     </div>
 
                                     <!-- Comprobante adjunto -->
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 mb-4">
                                         <label class="form-label fw-bold">Comprobante de Pago (Voucher)</label>
                                         <input type="file" 
                                                name="comprobanteAdjunto" 
@@ -173,7 +173,7 @@
                                     </div>
 
                                     <!-- Observaciones -->
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 mb-4">
                                         <label class="form-label fw-bold">Observaciones</label>
                                         <textarea name="observaciones" 
                                                   id="observaciones"
@@ -192,7 +192,7 @@
 
                         <!-- Información importante -->
                         <div class="alert alert-warning shadow-sm mb-4">
-                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
                             <strong>Importante:</strong> Al confirmar el pago, la multa será marcada como pagada automáticamente. 
                             Asegúrese de que los datos sean correctos antes de continuar.
                         </div>
@@ -201,10 +201,10 @@
                         <div class="d-flex justify-content-between gap-3">
                             <a href="{{ route('ciudadano.pagos.index') }}" 
                                class="btn btn-secondary px-4">
-                                <i class="fas fa-arrow-left me-2"></i> Cancelar
+                                <i class="fas fa-arrow-left mr-2"></i> Cancelar
                             </a>
                             <button type="submit" class="btn btn-success px-4">
-                                <i class="fas fa-check me-2"></i> Confirmar Pago
+                                <i class="fas fa-check mr-2"></i> Confirmar Pago
                             </button>
                         </div>
 

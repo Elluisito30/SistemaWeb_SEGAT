@@ -8,7 +8,7 @@
             <div class="card shadow-sm border-0">
                 <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #2d5f3f;">
                     <h5 class="font-weight-bold m-0">
-                        <i class="fas fa-exclamation-triangle me-2"></i> REGISTRAR INFRACCIÓN
+                        <i class="fas fa-exclamation-triangle mr-2"></i> REGISTRAR INFRACCIÓN
                     </h5>
                 </div>
 
@@ -16,14 +16,14 @@
                     {{-- Mensajes de sesión --}}
                     @if(session('success'))
                         <div class="alert alert-success alert-dismissible fade show shadow-sm mb-4" role="alert">
-                            <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
+                            <i class="fas fa-check-circle mr-2"></i> {{ session('success') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
 
                     @if(session('error'))
                         <div class="alert alert-danger alert-dismissible fade show shadow-sm mb-4" role="alert">
-                            <i class="fas fa-exclamation-triangle me-2"></i> {{ session('error') }}
+                            <i class="fas fa-exclamation-triangle mr-2"></i> {{ session('error') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
@@ -45,7 +45,7 @@
                         <div class="card mb-4 shadow-sm border-0">
                             <div class="card-header" style="background-color: #e9ecef;">
                                 <h6 class="mb-0 text-dark">
-                                    <i class="fas fa-user-times text-danger me-2"></i> <strong>Datos del Infractor</strong>
+                                    <i class="fas fa-user-times text-danger mr-2"></i> <strong>Datos del Infractor</strong>
                                 </h6>
                             </div>
                             <div class="card-body">
@@ -130,7 +130,7 @@
                         <div class="card mb-4 shadow-sm border-0">
                             <div class="card-header" style="background-color: #e9ecef;">
                                 <h6 class="mb-0 text-dark">
-                                    <i class="fas fa-exclamation-circle text-warning me-2"></i> <strong>Información de la Infracción</strong>
+                                    <i class="fas fa-exclamation-circle text-warning mr-2"></i> <strong>Información de la Infracción</strong>
                                 </h6>
                             </div>
                             <div class="card-body">
@@ -207,7 +207,7 @@
                                 </div>
 
                                 <div class="alert alert-light border border-info mt-4 mb-0">
-                                    <i class="fas fa-info-circle text-info me-2"></i>
+                                    <i class="fas fa-info-circle text-info mr-2"></i>
                                     <strong>Nota:</strong> La fecha y hora de la infracción se registrarán automáticamente al momento de enviar este formulario.
                                 </div>
                             </div>
@@ -216,10 +216,10 @@
                         {{-- Botones de acción --}}
                         <div class="d-flex justify-content-center gap-3 mt-4">
                             <button type="submit" class="btn text-white px-4" style="background-color: #5cb85c;">
-                                <i class="fas fa-paper-plane me-1"></i> Reportar Infracción
+                                <i class="fas fa-paper-plane mr-1"></i> Reportar Infracción
                             </button>
-                            <a href="{{ route('ciudadano.dashboard') }}" class="btn btn-secondary px-4">
-                                <i class="fas fa-ban me-1"></i> Cancelar
+                            <a href="{{ route('ciudadano.dashboard') }}" class="btn btn-secondary px-4 ml-3">
+                                <i class="fas fa-ban mr-1"></i> Cancelar
                             </a>
                         </div>
                     </form>
